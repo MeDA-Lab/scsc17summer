@@ -3,9 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <getopt.h>
-#ifdef USEMKL
-#include <mkl.h>
-#endif
+#include "harmonic.hpp"
 using namespace std;
 const char *const short_opt = ":hf:w:";
 const struct option long_opt[] = {
@@ -49,8 +47,9 @@ int main ( int argc, char** argv ){
     // cout << filename << " " << method << endl;
 
     // Read Obj file
-    
+    // void ReadObj (filename, face, vertex, color);
     // Construct Laplacian matrix
+    // void ConstrutLaplacian (method, face, vertex);
 
     // Find the boundary and interior vertex
 
