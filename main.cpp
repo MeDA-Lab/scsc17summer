@@ -47,5 +47,20 @@ int main ( int argc, char** argv ){
         }
     }
     // cout << filename << " " << method << endl;
+
+    // Read Obj file
+    
+    // Construct Laplacian matrix
+
+    // Find the boundary and interior vertex
+
+    // Build linear system (Ax=b, A=L_ii b=-L_ibub)
+
+    // Solve linear system
+    
+    // Connect the answer u_i and u_b
+
+    // Plot mesh
+
     return 0;
 }
