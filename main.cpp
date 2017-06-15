@@ -62,7 +62,7 @@ int main ( int argc, char** argv ){
     A   = new double [ lda * lda * sizeof(double)];
     ldr = vertex_i.size();
     rhs = new double [ ldr * 2 * sizeof(double)];
-    void Finduvb(&face, &vertex, &vertex_b, *uvb, ldu);
+    void Finduvb(&vertex, &vertex_b, *uvb, ldu);
     // Build linear system (Ax=b, A=L_ii b=-L_ibub)
     void BuildLS(vector<int> &face, vector<double> &vertex, 
                 double *uvb, int ldu, double *A, int lda, double* rhs, int ldr);
