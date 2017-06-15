@@ -4,35 +4,19 @@
 #include <cstdlib>
 #include "harmonic.hpp"
 #include "utility.hpp"
+
 using namespace std;
+
 int main ( int argc, char** argv ){
-    int c=0;
-    string filename="";
+    char *filename = nullptr;
     int method = 0; // default : simple weight
-    while ( (c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1 ) {
-        switch ( c ) {
-            case 'h':
-                Usage( argv[0] );
-                return 0;
-            case 'f':
-                filename = optarg;
-                break;
-            case 'w':
-                method = atoi(optarg);
-                break;
-            case ':':
-                cout << "Option -" << optopt << " requires an argument.\n";
-                return -1;
-            case '?':
-                char c_char = optopt;
-                cout << "Unknown option -" << c_char << endl;
-                return -1;
-        }
-    }
+
+    read_args(argc, argv, filename, method);
+
     // cout << filename << " " << method << endl;
     vector <int> face;
     vector <double> vertex, color, vertex_i, vertex_b;
-    double *uvb = NULL, *A = NULL, *rhs = NULL;
+    double *uvb = nullptr, *A = nullptr, *rhs = nullptr;
     int ldu = 0, ldr = 0, lda = 0;
     // // Read Obj file
     // void ReadObj (filename, face, vertex, color);

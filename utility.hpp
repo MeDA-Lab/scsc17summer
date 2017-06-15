@@ -9,13 +9,5 @@
 
 #include <getopt.h>
 
-const char* const short_opt = ":hf:w:";
-
-const struct option long_opt[] = {
-  {"help",   0, NULL, 'h'},
-  {"file",   1, NULL, 'f'},
-  {"weight", 1, NULL, 'w'},
-  {NULL,     0, NULL, 0}
-};
-
-void Usage ( const char *bin );
+void read_args( int argc, char** argv, char *&filename, int &method );
+void disp_usage( const char *bin );

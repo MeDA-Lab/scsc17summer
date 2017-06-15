@@ -9,8 +9,6 @@
 #include <vector>
 #include <cmath>
 using namespace std;
-// typedef tuple<int, int, int> int3;
-// typedef tuple<double, double, double> double3;
 void ReadObj (const string filename, vector<int> &face,  vector<double> &vertex, vector<double> &color);
 void ConstructLaplacian (const int method, vector<int> &face, vector<double> &vertex, double *A, int lda);
 void VerifyBoundary(vector<int> &face, vector<int> &vertex_b, vector<int> &vertex_i);
