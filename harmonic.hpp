@@ -16,6 +16,5 @@ void ConstructLaplacian (const int method, vector<int> &face, vector<double> &ve
 void VerifyBoundary(vector<int> &face, vector<int> &vertex_b, vector<int> &vertex_i);
 void Finduvb(vector<double> &vertex, vector<int> &vertex_b, double *uvb, int ldu);
 void BuildLS(vector<int> &face, vector<double> &vertex, double *uvb, int ldu, double *A, int lda, double* rhs, int ldr);
-void SolveLS_MKL(double* A, int lda, int nrhs, double *rhs, int ldr, double *x, int ldx);
-void SolveLS_MAGMA(double* A, int lda, int nrhs, double *rhs, int ldr, double *x, int ldx);
+void SolveLS(int n, double* A, int lda, int nrhs, double *rhs, int ldr, double *x, int ldx);
 #endif
