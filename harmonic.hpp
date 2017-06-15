@@ -7,6 +7,7 @@
 #include <getopt.h>
 #include <tuple>
 #include <vector>
+#include <cassert>
 using namespace std;
 // typedef tuple<int, int, int> int3;
 // typedef tuple<double, double, double> double3;
