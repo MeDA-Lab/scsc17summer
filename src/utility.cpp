@@ -3,10 +3,11 @@
 /// @brief   The utilities
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
+/// @author  Yuhsiang Tsai <<yhmtsai@gmail.com>>
 ///
 
 #include <iostream>
-#include "utility.hpp"
+#include <utility.hpp>
 
 using namespace std;
 
@@ -20,11 +21,19 @@ const struct option long_opt[] = {
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @brief  Read arguments
+/// @brief  Display the usage.
 ///
 /// @param  bin  the name of binary file.
 ///
-void read_args( int argc, char** argv, char *&filename, int &method ) {
+void disp_usage( const char *bin ) {
+  cout << "Usage: " << bin << " [OPTIONS]" << endl;
+  cout << "Options:" << endl;
+  cout << "  -h, --help            Display this information" << endl;
+  cout << "  -f, --file            The graph file" << endl;
+  cout << "  -w, --weight          0: Simple, 1: Complex" << endl;
+}
+
+void read_args( int argc, char** argv, char *&filename, Method &method ) {
   int c = 0;
   while ( (c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1 ) {
     switch ( c ) {
@@ -39,7 +48,8 @@ void read_args( int argc, char** argv, char *&filename, int &method ) {
       }
 
       case 'w': {
-        method = atoi(optarg);
+        method = static_cast<Method>(atoi(optarg));
+        assert(method >= Method::SIMPLE && method < Method::COUNT );
         break;
       }
 
@@ -54,17 +64,4 @@ void read_args( int argc, char** argv, char *&filename, int &method ) {
       }
     }
   }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @brief  Display usage
-///
-/// @param  bin  the name of binary file.
-///
-void disp_usage( const char *bin ) {
-  cout << "Usage: " << bin << " [OPTIONS]" << endl;
-  cout << "Options:" << endl;
-  cout << "  -h, --help            Display this information" << endl;
-  cout << "  -f, --file            The graph file" << endl;
-  cout << "  -w, --weight          0: Simple, 1: Complex" << endl;
 }
