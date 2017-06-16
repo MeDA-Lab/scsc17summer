@@ -3,6 +3,8 @@ CXXFLAGS  = -O2 -std=c++11 -Wall -Wextra -pedantic
 
 RM = rm -rf
 
+DOX = doxygen
+
 TGT  = main
 HDRS = src/harmonic.hpp src/utility.hpp
 INCS = ./src
@@ -14,7 +16,7 @@ OBJS = utility.o \
 			 map_boundary.o \
 			 solve_harmonic.o \
 
-.PHONY: all
+.PHONY: all run doc clean
 
 all: main
 
@@ -36,5 +38,8 @@ main: main.o $(OBJS)
 run: $(TGT)
 	./$(TGT)
 
+doc:
+	$(DOX) doxygen/Doxyfile
+
 clean:
-	$(RM) $(TGT) *.o
+	$(RM) $(TGT) *.o docs

@@ -7,6 +7,9 @@
 
 #include <harmonic.hpp>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @todo  To be implemented!
+///
 void reorderVertex(
     const int nv,
     const int nb,
@@ -14,5 +17,9 @@ void reorderVertex(
     double *V,
     double *C
 ) {
-  return;
+  static_cast<void>(nv);
+  static_cast<void>(nb);
+  static_cast<void>(idx_b);
+  static_cast<void>(V);
+  static_cast<void>(C);
 }

@@ -7,6 +7,9 @@
 
 #include <harmonic.hpp>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @todo  To be implemented!
+///
 void solveHarmonic(
     const int nv,
     const int nb,
@@ -14,6 +17,9 @@ void solveHarmonic(
     const double *V,
     double *U
 ) {
-  return;
+  static_cast<void>(nv);
+  static_cast<void>(nb);
+  static_cast<void>(L);
+  static_cast<void>(V);
+  static_cast<void>(U);
 }
-

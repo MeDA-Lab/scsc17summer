@@ -7,6 +7,9 @@
 
 #include <harmonic.hpp>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @todo  To be implemented!
+///
 void readObject(
     const char *filename,
     int *ptr_nv,
@@ -15,5 +18,10 @@ void readObject(
     double *C,
     int *F
 ) {
-  return;
+  static_cast<void>(filename);
+  static_cast<void>(ptr_nv);
+  static_cast<void>(ptr_nf);
+  static_cast<void>(V);
+  static_cast<void>(C);
+  static_cast<void>(F);
 }

@@ -29,6 +29,6 @@
 *.app
 
 # Others
-build
-*.json
+docs
 main
+*.json

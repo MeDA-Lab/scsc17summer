@@ -7,11 +7,17 @@
 
 #include <harmonic.hpp>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @todo  To be implemented!
+///
 void mapBoundary(
     const int nv,
     const int nb,
     const double *Vb,
     double *Ub
 ) {
-  return;
+  static_cast<void>(nv);
+  static_cast<void>(nb);
+  static_cast<void>(Vb);
+  static_cast<void>(Ub);
 }

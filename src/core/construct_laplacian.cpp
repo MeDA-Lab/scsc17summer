@@ -7,6 +7,9 @@
 
 #include <harmonic.hpp>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @todo  To be implemented!
+///
 void constructLaplacian(
     const Method method,
     const int nv,
@@ -16,5 +19,11 @@ void constructLaplacian(
     const int *F,
     double *L
 ) {
-  return;
+  static_cast<void>(method);
+  static_cast<void>(nv);
+  static_cast<void>(nf);
+  static_cast<void>(V);
+  static_cast<void>(C);
+  static_cast<void>(F);
+  static_cast<void>(L);
 }

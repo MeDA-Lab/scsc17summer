@@ -7,6 +7,9 @@
 
 #include <harmonic.hpp>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @todo  To be implemented!
+///
 void verifyBoundary(
     const int nv,
     const int nf,
@@ -14,5 +17,9 @@ void verifyBoundary(
     int *ptr_nb,
     int *idx_b
 ) {
-  return;
+  static_cast<void>(nv);
+  static_cast<void>(nf);
+  static_cast<void>(F);
+  static_cast<void>(ptr_nb);
+  static_cast<void>(idx_b);
 }
