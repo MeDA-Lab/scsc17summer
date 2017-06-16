@@ -8,6 +8,7 @@
 #include <tuple>
 #include <vector>
 #include <cmath>
+#include <cassert>
 using namespace std;
 void ReadObj (const string filename, vector<int> &face,  vector<double> &vertex, vector<double> &color);
 void ConstructLaplacian (const int method, vector<int> &face, vector<double> &vertex, double *A, int lda);
