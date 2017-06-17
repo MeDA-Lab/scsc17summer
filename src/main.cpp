@@ -26,8 +26,15 @@ int main( int argc, char** argv ){
   read_args(argc, argv, filename, method);
 
   // Read object
-  readObject(filename, &nv, &nf, V, C, F);
-
+  readObject(filename, &nv, &nf, &V, &C, &F);
+  cout<<"nv"<<nv<<endl;
+  for (int i=0; i<nv; i++){
+    printf("%lf %lf %lf %lf %lf %lf\n", V[i], V[nv+i], V[2*nv+i], C[i], C[nv+i], C[2*nv+i]);
+  }
+  cout<<"nf"<<nf<<endl;
+  for (int i=0; i<nf; i++){
+    printf("%d %d %d\n", F[i], F[nf+i], F[2*nf+i]);
+  }
   // Verify boundary
   idx_b = (int*) malloc(sizeof(int) * nv);
   verifyBoundary(nv, nf, F, &nb, idx_b);
