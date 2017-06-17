@@ -92,9 +92,9 @@ void mapBoundary( const int nv, const int nb, const double *Vb, double *Ub );
 /// @param[in]   nb      the number of boundary vertices.
 /// @param[in]   L       the Laplacian matrix; nv by nv matrix.
 /// @param[in]   V       the coordinate of vertices; nv by 3 matrix.
-/// @param[in]   U       the coordinate of vertices on the disk; nb by 2 matrix. The first nb vertices are given.
+/// @param[in]   U       the coordinate of vertices on the disk; nv by 2 matrix. The first nb vertices are given.
 ///
-/// @param[out]  U       the coordinate of vertices on the disk; nb by 2 matrix. The last (nv-nb) vertices are replaced.
+/// @param[out]  U       the coordinate of vertices on the disk; nv by 2 matrix. The last (nv-nb) vertices are replaced.
 ///
 /// @note  The output arrays should be allocated before calling this routine.
 ///
