@@ -17,13 +17,13 @@
 ///
 /// @param[out]  ptr_nv    the number of vertices; pointer.
 /// @param[out]  ptr_nf    the number of faces;    pointer.
-/// @param[out]  V         the coordinate of vertices; nv by 3 matrix.
-/// @param[out]  C         the color of the vertices; nv by 3 matrix; RGB.
-/// @param[out]  F         the faces; nf by 3 matrix.
+/// @param[out]  V         the coordinate of vertices; nv by 3 matrix.      pointer-to-pointer
+/// @param[out]  C         the color of the vertices; nv by 3 matrix; RGB.  pointer-to-pointer
+/// @param[out]  F         the faces; nf by 3 matrix.                       pointer-to-pointer
 ///
 /// @note  The arrays are allocated by this routine (using malloc).
 ///
-void readObject( const char *filename, int *ptr_nv, int *ptr_nf, double *V, double *C, int *F );
+void readObject( const char *filename, int *ptr_nv, int *ptr_nf, double **V, double **C, int **F );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Verify the boundary vertices.

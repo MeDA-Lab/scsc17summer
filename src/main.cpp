@@ -26,8 +26,7 @@ int main( int argc, char** argv ){
   read_args(argc, argv, filename, method);
 
   // Read object
-  readObject(filename, &nv, &nf, V, C, F);
-
+  readObject(filename, &nv, &nf, &V, &C, &F);
   // Verify boundary
   idx_b = (int*) malloc(sizeof(int) * nv);
   verifyBoundary(nv, nf, F, &nb, idx_b);
