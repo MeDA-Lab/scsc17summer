@@ -27,17 +27,17 @@ void constructLaplacian(
       double F_y = F[nf+i];
       double F_z = F[2*nf+i];
       L[F_x*nv+F_y] = 1;
-      L[F_x*nv+F_x] += L[F_x*nv+F_y];
+      L[F_x*nv+F_x] -= L[F_x*nv+F_y];
       L[F_y*nv+F_z] = 1;
-      L[F_y*nv+F_y] += L[F_y*nv+F_z];
+      L[F_y*nv+F_y] -= L[F_y*nv+F_z];
       L[F_z*nv+F_x] = 1;
-      L[F_z*nv+F_z] += L[F_z*nv+F_x];
+      L[F_z*nv+F_z] -= L[F_z*nv+F_x];
       L[F_y*nv+F_x] = 1;
-      L[F_y*nv+F_y] += L[F_y*nv+F_x];
+      L[F_y*nv+F_y] -= L[F_y*nv+F_x];
       L[F_z*nv+F_y] = 1;
-      L[F_z*nv+F_z] += L[F_z*nv+F_y];
+      L[F_z*nv+F_z] -= L[F_z*nv+F_y];
       L[F_x*nv+F_z] = 1;
-      L[F_x*nv+F_x] += L[F_x*nv+F_z];
+      L[F_x*nv+F_x] -= L[F_x*nv+F_z];
     }
   }else if (method == 1) // Cotengent Laplacian Matrix
   {
