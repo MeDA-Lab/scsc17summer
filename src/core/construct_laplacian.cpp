@@ -19,27 +19,28 @@ void constructLaplacian(
     const int *F,
     double *L
 ) {
-  double *L_d = new double [nv];
-  
   if (method == 0) //Simple Laplacian Matrix
   {
     for (int i = 0; i < nf; ++i)
     {
-      L[i*nv+i*2] = 1;
-      L[i*nv+i] += 1;
-      L[i*2*nv+i*3] = 1;
-      L[i*2*nv+i*2] += 1;
-      L[i*3*nv+i] = 1;
-      L[i*3*nv+i*3] += 1;
-      L[i*2*nv+i] = 1;
-      L[i*2*nv+i*2] += 1;
-      L[i*3*nv+i*2] = 1;
-      L[i*3*nv+i*3] += 1;
-      L[i*nv+i*3] = 1;
-      L[i*nv+i] += 1;
+      double F_x = F[i];
+      double F_y = F[nf+i];
+      double F_z = F[2*nf+i];
+      L[F_x*nv+F_y] = 1;
+      L[F_x*nv+F_x] += L[F_x*nv+F_y];
+      L[F_y*nv+F_z] = 1;
+      L[F_y*nv+F_y] += L[F_y*nv+F_z];
+      L[F_z*nv+F_x] = 1;
+      L[F_z*nv+F_z] += L[F_z*nv+F_x];
+      L[F_y*nv+F_x] = 1;
+      L[F_y*nv+F_y] += L[F_y*nv+F_x];
+      L[F_z*nv+F_y] = 1;
+      L[F_z*nv+F_z] += L[F_z*nv+F_y];
+      L[F_x*nv+F_z] = 1;
+      L[F_x*nv+F_x] += L[F_x*nv+F_z];
     }
   }else if (method == 1) // Cotengent Laplacian Matrix
   {
-    /* code */
+    double *v_ki = new double [3]
   }
 }
