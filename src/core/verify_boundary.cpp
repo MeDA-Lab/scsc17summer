@@ -74,5 +74,8 @@ void verifyBoundary(
   for (int i=0; i<*ptr_nb; i++){
     (*idx_b)[i]=VB[i];
   }
+  delete [] Bi;
+  delete [] Bj;
+  delete [] Gvv;
   return;
 }
