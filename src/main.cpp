@@ -28,7 +28,7 @@ int main( int argc, char** argv ){
   // Read object
   readObject(filename, &nv, &nf, &V, &C, &F);
   // Verify boundary
-  idx_b = (int*) malloc(sizeof(int) * nv);
+  // idx_b = (int*) malloc(sizeof(int) * nv);
   verifyBoundary(nv, nf, F, &nb, idx_b);
 
   // Reorder vertex
