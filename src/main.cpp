@@ -29,7 +29,7 @@ int main( int argc, char** argv ){
   readObject(filename, &nv, &nf, &V, &C, &F);
   // Verify boundary
   // idx_b = (int*) malloc(sizeof(int) * nv);
-  verifyBoundary(nv, nf, F, &nb, idx_b);
+  verifyBoundary(nv, nf, F, &nb, &idx_b);
 
   // Reorder vertex
   reorderVertex(nv, nb, idx_b, V, C);
