@@ -30,18 +30,10 @@ int main( int argc, char** argv ){
   
   // Verify boundary
   verifyBoundary(nv, nf, F, &nb, &idx_b);
-  for (int i=0; i<nb; i++){
-    cout<<idx_b[i]<<" ";
-  }
-  cout<<"\n";
+
   // Reorder vertex
   reorderVertex(nv, nb, idx_b, V, C);
-  for (int i=0; i<nv; i++){
-    for (int j=0; j<3; j++){
-      cout<<V[j*nv+i]<<" ";
-    }
-    cout<<"\n";
-  }
+
   // Construct Laplacian
   L = (double*) malloc(sizeof(double) * nv * nv);
   constructLaplacian(method, nv, nf, V, C, F, L);
