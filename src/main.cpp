@@ -30,6 +30,7 @@ int main( int argc, char** argv ){
   
   // Verify boundary
   verifyBoundary(nv, nf, F, &nb, &idx_b);
+
   // Reorder vertex
   reorderVertex(nv, nb, idx_b, V, C);
 
