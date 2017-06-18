@@ -39,7 +39,7 @@ int main( int argc, char** argv ){
   constructLaplacian(method, nv, nf, V, C, F, L);
 
   // Map boundary
-  U = (double*) malloc(sizeof(double) * nv);
+  U = (double*) malloc(sizeof(double) * 2 * nv);
   mapBoundary(nv, nb, V, U);
 
   // Solve harmonic
