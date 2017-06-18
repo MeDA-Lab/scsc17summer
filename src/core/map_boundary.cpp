@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    verify_boundary.cpp
-/// @brief   The implementation of boundary verification.
+/// @file    map_boundary.cpp
+/// @brief   The implementation of boundary mapping.
 ///
 /// @author  Unknown
 ///
@@ -10,16 +10,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @todo  To be implemented!
 ///
-void verifyBoundary(
+void mapBoundary(
     const int nv,
-    const int nf,
-    const int *F,
-    int *ptr_nb,
-    int *idx_b
+    const int nb,
+    const double *Vb,
+    double *Ub
 ) {
   static_cast<void>(nv);
-  static_cast<void>(nf);
-  static_cast<void>(F);
-  static_cast<void>(ptr_nb);
-  static_cast<void>(idx_b);
+  static_cast<void>(nb);
+  static_cast<void>(Vb);
+  static_cast<void>(Ub);
 }
