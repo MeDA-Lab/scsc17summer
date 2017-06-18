@@ -77,13 +77,13 @@ void constructLaplacian( const Method method, const int nv, const int nf, const 
 ///
 /// @param[in]   nv      the number of vertices.
 /// @param[in]   nb      the number of boundary vertices.
-/// @param[in]   Vb      the coordinate of boundary vertices; nb by 3 matrix.
+/// @param[in]   V      the coordinate of vertices; nv by 3 matrix.
 ///
-/// @param[out]  Ub      the coordinate of boundary vertices on the disk; nb by 2 matrix.
+/// @param[out]  U      the coordinate of boundary vertices on the disk; nv by 2 matrix.
 ///
 /// @note  The output arrays should be allocated before calling this routine.
 ///
-void mapBoundary( const int nv, const int nb, const double *Vb, double *Ub );
+void mapBoundary( const int nv, const int nb, const double *V, double *U );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Solve the harmonic problem.
