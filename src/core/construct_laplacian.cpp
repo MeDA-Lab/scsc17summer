@@ -19,11 +19,27 @@ void constructLaplacian(
     const int *F,
     double *L
 ) {
-  static_cast<void>(method);
-  static_cast<void>(nv);
-  static_cast<void>(nf);
-  static_cast<void>(V);
-  static_cast<void>(C);
-  static_cast<void>(F);
-  static_cast<void>(L);
+  double *L_d = new double [nv];
+  
+  if (method == 0) //Simple Laplacian Matrix
+  {
+    for (int i = 0; i < nf; ++i)
+    {
+      L[i*nv+i*2] = 1;
+      L[i*nv+i] += 1;
+      L[i*2*nv+i*3] = 1;
+      L[i*2*nv+i*2] += 1;
+      L[i*3*nv+i] = 1;
+      L[i*3*nv+i*3] += 1;
+      L[i*2*nv+i] = 1;
+      L[i*2*nv+i*2] += 1;
+      L[i*3*nv+i*2] = 1;
+      L[i*3*nv+i*3] += 1;
+      L[i*nv+i*3] = 1;
+      L[i*nv+i] += 1;
+    }
+  }else if (method == 1) // Cotengent Laplacian Matrix
+  {
+    /* code */
+  }
 }
