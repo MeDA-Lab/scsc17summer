@@ -41,9 +41,7 @@ int main( int argc, char** argv ){
   // Map boundary
   U = (double*) malloc(sizeof(double) * 2 * nv);
   mapBoundary(nv, nb, V, U);
-  for (int i=0; i<nb; i++){
-    cout<<U[i]<<" "<<U[nv+i]<<"\n";
-  }
+
   // Solve harmonic
   solveHarmonic(nv, nb, L, V, U);
 
