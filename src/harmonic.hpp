@@ -35,9 +35,9 @@ void readObject( const char *filename, int *ptr_nv, int *ptr_nf, double **V, dou
 /// @param[out]  ptr_nb  the number of boundary vertices; pointer.
 /// @param[out]  idx_b   the indices of boundary vertices, nb by 1 vector.
 ///
-/// @note  The output arrays should be allocated before calling this routine.
+/// 
 ///
-void verifyBoundary( const int nv, const int nf, const int *F, int *ptr_nb, int *idx_b );
+void verifyBoundary( const int nv, const int nf, const int *F, int *ptr_nb, int **idx_b );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reorder the vertices.
