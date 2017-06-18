@@ -54,10 +54,10 @@ void verifyBoundary(
       // (i,j)
       if (Gvv[j*nv+i]-Gvv[i*nv+j]==1){
         nb++;
-        Bi[nb-1]=i;
-        Bj[nb-1]=j;
-        if (i<bd_vertex){
-          bd_vertex = i;
+        Bi[nb-1]=i+1;
+        Bj[nb-1]=j+1;
+        if (i+1<bd_vertex){
+          bd_vertex = i+1;
           bd_ind = nb-1;
         }
       }
