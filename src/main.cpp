@@ -13,7 +13,7 @@ using namespace std;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Main function
 ///
-int main( int argc, char** argv ){
+int main( int argc, char** argv ) {
 
   const char *filename = "UNSPECIFIED FILE";
   Method method  = Method::SIMPLE;

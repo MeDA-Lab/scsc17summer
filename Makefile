@@ -57,7 +57,7 @@ all: main
 	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MKLINC)
 
 %.o: src/magma/%.cpp $(HDR)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC)
+	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MAGMAINC)
 
 main: main.o | libcore.a
 	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK)
@@ -65,11 +65,17 @@ main: main.o | libcore.a
 main_mkl: main.o $(MKL_OBJ) | libcore.a
 	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MKLLIB) $(MKLLNK)
 
+main_magma: main.o $(MAGMA_OBJ) | libcore.a
+	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MAGMALIB) $(MAGMALNK)
+
 run: $(TGT)
 	./$(TGT) -f square.txt
 
 run_mkl: $(MKL_TGT)
 	./$(MKL_TGT) -f square.txt
+
+run_magma: $(MAGMA_TGT)
+	./$(MAGMA_TGT) -f square.txt
 
 doc:
 	$(DOX) doxygen/Doxyfile
