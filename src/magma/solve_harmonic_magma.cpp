@@ -15,11 +15,9 @@
 void solveHarmonic(
     const int nv,
     const int nb,
-    const double *L,
-    const double *V,
+    double *L,
     double *U
 ) {
-  static_cast<void>(V);
   // Liiui=Libub
   magma_queue_t queue;
   magma_queue_create(0, &queue);

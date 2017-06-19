@@ -42,7 +42,7 @@ int main( int argc, char** argv ){
   mapBoundary(nv, nb, V, U);
 
   // Solve harmonic
-  solveHarmonic(nv, nb, L, V, U);
+  solveHarmonic(nv, nb, L, U);
 
   // Free memory
   delete[] V;

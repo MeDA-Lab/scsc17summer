@@ -87,11 +87,11 @@ void constructLaplacian( const Method method, const int nv, const int nf, const 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Map the boundary vertices.
 ///
-/// @param[in]   nv      the number of vertices.
-/// @param[in]   nb      the number of boundary vertices.
-/// @param[in]   V      the coordinate of vertices; nv by 3 matrix.
+/// @param[in]   nv  the number of vertices.
+/// @param[in]   nb  the number of boundary vertices.
+/// @param[in]   V   the coordinate of vertices; nv by 3 matrix.
 ///
-/// @param[out]  U      the coordinate of boundary vertices on the disk; nv by 2 matrix.
+/// @param[out]  U   the coordinate of boundary vertices on the disk; nv by 2 matrix.
 ///
 /// @note  The output arrays should be allocated before calling this routine.
 ///
@@ -100,16 +100,15 @@ void mapBoundary( const int nv, const int nb, const double *V, double *U );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Solve the harmonic problem.
 ///
-/// @param[in]   nv      the number of vertices.
-/// @param[in]   nb      the number of boundary vertices.
-/// @param[in]   L       the Laplacian matrix; nv by nv matrix.
-/// @param[in]   V       the coordinate of vertices; nv by 3 matrix.
-/// @param[in]   U       the coordinate of vertices on the disk; nv by 2 matrix. The first nb vertices are given.
+/// @param[in]   nv  the number of vertices.
+/// @param[in]   nb  the number of boundary vertices.
+/// @param[in]   L   the Laplacian matrix; nv by nv matrix.
+/// @param[in]   U   the coordinate of vertices on the disk; nv by 2 matrix. The first nb vertices are given.
 ///
-/// @param[out]  U       the coordinate of vertices on the disk; nv by 2 matrix. The last (nv-nb) vertices are replaced.
+/// @param[out]  U   the coordinate of vertices on the disk; nv by 2 matrix. The last (nv-nb) vertices are replaced.
 ///
 /// @note  The output arrays should be allocated before calling this routine.
 ///
-void solveHarmonic( const int nv, const int nb, const double *L, const double *V, double *U );
+void solveHarmonic( const int nv, const int nb, double *L, double *U );
 
 #endif  // SCSC_HARMONIC_HPP
