@@ -7,7 +7,7 @@ AR       = ar
 ARFLAGS  = rv
 ARCHIVE  = $(AR) $(ARFLAGS)
 
-DOX = doxygen
+DOX      = doxygen
 
 MKLROOT ?=
 MKLINC   = $(MKLROOT)/include
@@ -39,7 +39,7 @@ OBJ = \
 	solve_harmonic.o \
 
 MKL_OBJ = \
-	solve_harmonic_mkl.o \
+	solve_harmonic_mkl_potrfi.o \
 
 MAGMA_OBJ = \
 	solve_harmonic_magma.o \
