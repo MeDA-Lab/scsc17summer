@@ -21,7 +21,7 @@ void readObject(
 ) {
   ifstream fin(filename, ifstream::in);
   if ( fin.good() == 0 ) {
-    cerr<<"Open File "<<filename<<" Error\n";
+    cerr << "Open File \"" << filename << "\" Error" << endl;
     exit(1);
   }
   // Read vertex
@@ -32,7 +32,7 @@ void readObject(
     while (fin.get()!='\n');
   }
   int nv=*ptr_nv;
-  
+
   *V = new double [nv * 3];
   *C = new double [nv * 3];
   double *VV=*V, *CC=*C;
@@ -49,9 +49,9 @@ void readObject(
       fin>>CC[i]>>CC[nv+i]>>CC[2*nv+i];
     }
     else{
-      CC[i]        = -1;
-      CC[nv+i]     = -1;
-      CC[2*nv+i]  = -1;
+      CC[i]      = -1;
+      CC[nv+i]   = -1;
+      CC[2*nv+i] = -1;
     }
     while (fin.get()!='\n');
   }
@@ -63,7 +63,7 @@ void readObject(
     while (fin.get()!='\n');
   }
   int nf = *ptr_nf;
-  
+
   *F = new int [ nf * 3 ];
   int *FF=*F;
   for (int i=0; i<nf; i++){

@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <harmonic.hpp>
-#include <utility.hpp>
 
 using namespace std;
 
@@ -16,7 +15,7 @@ using namespace std;
 ///
 int main( int argc, char** argv ){
 
-  char *filename = nullptr;
+  const char *filename = "UNSPECIFIED FILE";
   Method method  = Method::SIMPLE;
 
   int nv, nf, nb, *F = nullptr, *idx_b;
@@ -27,7 +26,7 @@ int main( int argc, char** argv ){
 
   // Read object
   readObject(filename, &nv, &nf, &V, &C, &F);
-  
+
   // Verify boundary
   verifyBoundary(nv, nf, F, &nb, &idx_b);
 
@@ -35,23 +34,23 @@ int main( int argc, char** argv ){
   reorderVertex(nv, nb, idx_b, V, C);
 
   // Construct Laplacian
-  L = (double*) malloc(sizeof(double) * nv * nv);
+  L = new double[nv * nv];
   constructLaplacian(method, nv, nf, V, C, F, L);
 
   // Map boundary
-  U = (double*) malloc(sizeof(double) * 2 * nv);
+  U = new double[2 * nv];
   mapBoundary(nv, nb, V, U);
 
   // Solve harmonic
   solveHarmonic(nv, nb, L, V, U);
 
   // Free memory
-  free(V);
-  free(C);
-  free(F);
-  free(L);
-  free(U);
-  free(idx_b);
+  delete[] V;
+  delete[] C;
+  delete[] F;
+  delete[] L;
+  delete[] U;
+  delete[] idx_b;
 
   return 0;
 }

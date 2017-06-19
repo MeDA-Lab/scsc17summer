@@ -8,7 +8,19 @@
 #ifndef SCSC_HARMONIC_HPP
 #define SCSC_HARMONIC_HPP
 
+#include <getopt.h>
 #include <def.hpp>
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  Reads the arguments.
+///
+/// @param[in]   argc      The number of input arguments.
+/// @param[in]   argv      The input arguments.
+///
+/// @param[out]  filename  The filename.
+/// @param[out]  method    The method.
+///
+void read_args( int argc, char** argv, const char *&filename, Method &method );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reads the object file.
@@ -21,7 +33,7 @@
 /// @param[out]  C         the color of the vertices; nv by 3 matrix; RGB.  pointer-to-pointer
 /// @param[out]  F         the faces; nf by 3 matrix.                       pointer-to-pointer
 ///
-/// @note  The arrays are allocated by this routine (using malloc).
+/// @note  The arrays are allocated by this routine (using new).
 ///
 void readObject( const char *filename, int *ptr_nv, int *ptr_nf, double **V, double **C, int **F );
 
@@ -35,7 +47,7 @@ void readObject( const char *filename, int *ptr_nv, int *ptr_nf, double **V, dou
 /// @param[out]  ptr_nb  the number of boundary vertices; pointer.
 /// @param[out]  idx_b   the indices of boundary vertices, nb by 1 vector.
 ///
-/// 
+///
 ///
 void verifyBoundary( const int nv, const int nf, const int *F, int *ptr_nb, int **idx_b );
 

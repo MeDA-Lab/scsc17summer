@@ -6,9 +6,9 @@ RM = rm -rf
 DOX = doxygen
 
 TGT  = main
-HDRS = src/harmonic.hpp src/utility.hpp
+HDRS = src/harmonic.hpp
 INCS = ./src
-OBJS = utility.o \
+OBJS = read_args.o \
 			 read_object.o \
 			 verify_boundary.o \
 			 reorder_vertex.o \
