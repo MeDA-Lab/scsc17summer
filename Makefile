@@ -10,14 +10,14 @@ ARCHIVE  = $(AR) $(ARFLAGS)
 DOX      = doxygen
 
 MKLROOT ?=
-MKLINC   = $(MKLROOT)/include
-MKLLIB   = $(MKLROOT)/lib/intel64
+MKLINC   = -isystem $(MKLROOT)/include
+MKLLIB   = -L$(MKLROOT)/lib/intel64
 MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_rt -lpthread -lm -ldl
 
 MAGMAROOT ?= /opt/magma/2.2/
-MAGMAINC   = $(MAGMAROOT)/include
-MAGMALIB   = $(MAGMAROOT)/lib
-MAGMALNK   = -lmagma -lcusparse -lcublas -lcudart 
+MAGMAINC   = -isystem $(MAGMAROOT)/include
+MAGMALIB   = -L$(MAGMAROOT)/lib
+MAGMALNK   = -lmagma -lcusparse -lcublas -lcudart
 
 TGT      = main
 MKLTGT   = main_mkl
@@ -25,8 +25,8 @@ MAGMATGT = main_magma
 TGTS     = $(TGT) $(MKLTGT) $(MAGMATGT)
 HDRS     = src/harmonic.hpp
 
-INC = ./src
-LIB = .
+INC = -I./src
+LIB = -L.
 LNK = -lcore
 
 OBJ = \
@@ -44,34 +44,34 @@ MKL_OBJ = \
 MAGMA_OBJ = \
 	solve_harmonic_magma.o \
 
-.PHONY: all run doc clean
+.PHONY: all run run_mkl run_magma doc clean
 
 all: main
 
 %.o: src/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC)
+	$(CXX) $(CXXFLAGS) -c $< $(INC)
 
 %.o: src/core/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC)
+	$(CXX) $(CXXFLAGS) -c $< $(INC)
 
 %.o: src/mkl/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MKLINC)
+	$(CXX) $(CXXFLAGS) -c $< $(INC) $(MKLINC)
 
 %.o: src/magma/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MKLINC) -I$(MAGMAINC)
+	$(CXX) $(CXXFLAGS) -c $< $(INC) $(MKLINC) $(MAGMAINC)
 
 libcore.a: $(OBJ)
 	$(ARCHIVE) $@ $(OBJ)
 	-$(RANLIB) $@
 
 main: main.o | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK)
 
 main_mkl: main.o $(MKL_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MKLLIB) $(MKLLNK)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK) $(MKLLIB) $(MKLLNK)
 
 main_magma: main.o $(MAGMA_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MKLLIB) -L$(MAGMALIB) $(MKLLNK) $(MAGMALNK)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK) $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
 
 run: $(TGT)
 	./$(TGT) -f square.txt
