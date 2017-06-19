@@ -19,11 +19,12 @@ MAGMAINC   = $(MAGMAROOT)/include
 MAGMALIB   = $(MAGMAROOT)/lib
 MAGMALNK   = -lmagma
 
-TGT       = main
-MKL_TGT   = main_mkl
-MAGMA_TGT = main_magma
+TGT      = main
+MKLTGT   = main_mkl
+MAGMATGT = main_magma
+TGTS     = $(TGT) $(MKLTGT) $(MAGMATGT)
+HDRS     = src/harmonic.hpp
 
-HDR = src/harmonic.hpp
 INC = ./src
 LIB = .
 LNK = -lcore
@@ -47,17 +48,21 @@ MAGMA_OBJ = \
 
 all: main
 
-%.o: src/%.cpp $(HDR)
+%.o: src/%.cpp $(HDRS)
 	$(CXX) $(CXXFLAGS) -c $< -I$(INC)
 
-%.o: src/core/%.cpp $(HDR)
+%.o: src/core/%.cpp $(HDRS)
 	$(CXX) $(CXXFLAGS) -c $< -I$(INC)
 
-%.o: src/mkl/%.cpp $(HDR)
+%.o: src/mkl/%.cpp $(HDRS)
 	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MKLINC)
 
-%.o: src/magma/%.cpp $(HDR)
+%.o: src/magma/%.cpp $(HDRS)
 	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MAGMAINC)
+
+libcore.a: $(OBJ)
+	$(ARCHIVE) $@ $(OBJ)
+	-$(RANLIB) $@
 
 main: main.o | libcore.a
 	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK)
@@ -71,14 +76,14 @@ main_magma: main.o $(MAGMA_OBJ) | libcore.a
 run: $(TGT)
 	./$(TGT) -f square.txt
 
-run_mkl: $(MKL_TGT)
-	./$(MKL_TGT) -f square.txt
+run_mkl: $(MKLTGT)
+	./$(MKLTGT) -f square.txt
 
-run_magma: $(MAGMA_TGT)
-	./$(MAGMA_TGT) -f square.txt
+run_magma: $(MAGMATGT)
+	./$(MAGMATGT) -f square.txt
 
 doc:
 	$(DOX) doxygen/Doxyfile
 
 clean:
-	$(RM) $(TGT) *.o *.a docs
+	$(RM) $(TGTS) *.o *.a docs
