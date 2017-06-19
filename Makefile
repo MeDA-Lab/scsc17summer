@@ -1,5 +1,5 @@
 CXX      ?= g++
-CXXFLAGS  = -O2 -std=c++11 -Wall -Wextra -pedantic
+CXXFLAGS  = -O2 -std=c++11 -fopenmp -Wall -Wextra -pedantic
 
 RM       = rm -rf
 RANLIB   = ranlib
@@ -17,7 +17,7 @@ MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_rt -lpthread -lm -ldl
 MAGMAROOT ?= /opt/magma/2.2/
 MAGMAINC   = $(MAGMAROOT)/include
 MAGMALIB   = $(MAGMAROOT)/lib
-MAGMALNK   = -lmagma
+MAGMALNK   = -lmagma -lcusparse -lcublas -lcudart 
 
 TGT      = main
 MKLTGT   = main_mkl
@@ -58,7 +58,7 @@ all: main
 	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MKLINC)
 
 %.o: src/magma/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MAGMAINC)
+	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MKLINC) -I$(MAGMAINC)
 
 libcore.a: $(OBJ)
 	$(ARCHIVE) $@ $(OBJ)
@@ -71,7 +71,7 @@ main_mkl: main.o $(MKL_OBJ) | libcore.a
 	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MKLLIB) $(MKLLNK)
 
 main_magma: main.o $(MAGMA_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MAGMALIB) $(MAGMALNK)
+	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MKLLIB) -L$(MAGMALIB) $(MKLLNK) $(MAGMALNK)
 
 run: $(TGT)
 	./$(TGT) -f square.txt
