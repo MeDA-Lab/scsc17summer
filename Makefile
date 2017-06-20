@@ -64,14 +64,14 @@ libcore.a: $(OBJ)
 	$(ARCHIVE) $@ $(OBJ)
 	-$(RANLIB) $@
 
-main: main.o | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK)
+main: main.o $(OBJ) libcore.a
+	$(CXX) $(CXXFLAGS) $< $(OBJ) -o $@ $(LIB) $(LNK)
 
-main_mkl: main.o $(MKL_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK) $(MKLLIB) $(MKLLNK)
+main_mkl: main.o $(MKL_OBJ) libcore.a
+	$(CXX) $(CXXFLAGS) $< $(MKL_OBJ) -o $@ $(LIB) $(LNK) $(MKLLIB) $(MKLLNK)
 
-main_magma: main.o $(MAGMA_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK) $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
+main_magma: main.o $(MAGMA_OBJ) libcore.a
+	$(CXX) $(CXXFLAGS) $< $(MAGMA_OBJ) -o $@ $(LIB) $(LNK) $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
 
 run: $(TGT)
 	./$(TGT) -f square.txt
