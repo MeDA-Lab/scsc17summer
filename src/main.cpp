@@ -31,17 +31,12 @@ int main( int argc, char** argv ) {
   verifyBoundary(nv, nf, F, &nb, &idx_b);
 
   // Reorder vertex
-  // reorderVertex(nv, nb, idx_b, V, C);
+  reorderVertex(nv, nb, idx_b, V, C);
 
   // Construct Laplacian
   L = new double[nv * nv];
   constructLaplacian(method, nv, nf, V, C, F, L);
-  for (int i=0; i<nv; i++) {
-    for (int j=0; j<nv; j++){
-      cout<<L[j*nv+i]<<" ";
-    }
-    cout<<"\n";
-  }
+  
   // Map boundary
   U = new double[2 * nv];
   mapBoundary(nv, nb, V, U);
