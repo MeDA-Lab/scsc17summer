@@ -43,9 +43,6 @@ int main( int argc, char** argv ) {
 
   // Solve harmonic
   solveHarmonic(nv, nb, L, U);
-  for (int i=0; i<nv; i++){
-    cout<<U[i]<<" "<<U[nv+i]<<"\n";
-  }
   // Free memory
   delete[] V;
   delete[] C;
