@@ -111,4 +111,19 @@ void mapBoundary( const int nv, const int nb, const double *V, double *U );
 ///
 void solveHarmonic( const int nv, const int nb, double *L, double *U );
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  write the object file
+///
+/// @param[in]   filename  the path to the object file.
+///
+/// @param[in]   nv  the number of vertices.
+/// @param[in]   nf  the number of faces.
+/// @param[in]   U   the coordinate of vertices on the disk; nv by 2 matrix.
+/// @param[in]   C   the color of vertices. RGB.
+/// @param[in]   F   the faces; nf by 3 matrix.
+///
+///
+void writeObject( const filename, const int nv, const int nf, double *U, double *C, double *F );
+
+
 #endif  // SCSC_HARMONIC_HPP
