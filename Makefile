@@ -7,17 +7,17 @@ AR       = ar
 ARFLAGS  = rv
 ARCHIVE  = $(AR) $(ARFLAGS)
 
-DOX = doxygen
+DOX      = doxygen
 
 MKLROOT ?=
-MKLINC   = $(MKLROOT)/include
-MKLLIB   = $(MKLROOT)/lib/intel64
+MKLINC   = -isystem $(MKLROOT)/include
+MKLLIB   = -L$(MKLROOT)/lib/intel64
 MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_rt -lpthread -lm -ldl
 
 MAGMAROOT ?= /opt/magma/2.2/
-MAGMAINC   = $(MAGMAROOT)/include
-MAGMALIB   = $(MAGMAROOT)/lib
-MAGMALNK   = -lmagma -lcusparse -lcublas -lcudart 
+MAGMAINC   = -isystem $(MAGMAROOT)/include
+MAGMALIB   = -L$(MAGMAROOT)/lib
+MAGMALNK   = -lmagma -lcusparse -lcublas -lcudart
 
 TGT      = main
 MKLTGT   = main_mkl
@@ -25,9 +25,7 @@ MAGMATGT = main_magma
 TGTS     = $(TGT) $(MKLTGT) $(MAGMATGT)
 HDRS     = src/harmonic.hpp
 
-INC = ./src
-LIB = .
-LNK = -lcore
+INC = -I./src
 
 OBJ = \
 	read_args.o \
@@ -39,39 +37,47 @@ OBJ = \
 	solve_harmonic.o \
 
 MKL_OBJ = \
+	read_args.o \
+	read_object.o \
+	verify_boundary.o \
+	reorder_vertex.o \
+	construct_laplacian.o \
+	map_boundary.o \
 	solve_harmonic_mkl.o \
 
 MAGMA_OBJ = \
+	read_args.o \
+	read_object.o \
+	verify_boundary.o \
+	reorder_vertex.o \
+	construct_laplacian.o \
+	map_boundary.o \
 	solve_harmonic_magma.o \
 
-.PHONY: all run doc clean
+.PHONY: all run run_mkl run_magma doc clean
 
 all: main
 
 %.o: src/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC)
+	$(CXX) $(CXXFLAGS) -c $< $(INC)
 
 %.o: src/core/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC)
+	$(CXX) $(CXXFLAGS) -c $< $(INC)
 
 %.o: src/mkl/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MKLINC)
+	$(CXX) $(CXXFLAGS) -c $< $(INC) $(MKLINC)
 
 %.o: src/magma/%.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -I$(INC) -I$(MKLINC) -I$(MAGMAINC)
+	$(CXX) $(CXXFLAGS) -c $< $(INC) $(MKLINC) $(MAGMAINC)
 
-libcore.a: $(OBJ)
-	$(ARCHIVE) $@ $(OBJ)
-	-$(RANLIB) $@
+main: main.o $(OBJ)
+	$(CXX) $(CXXFLAGS) $< $(OBJ) -o $@
 
-main: main.o | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK)
+main_mkl: main.o $(MKL_OBJ)
+	$(CXX) $(CXXFLAGS) $< $(MKL_OBJ) -o $@ $(MKLLIB) $(MKLLNK)
 
-main_mkl: main.o $(MKL_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MKLLIB) $(MKLLNK)
-
-main_magma: main.o $(MAGMA_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ -L$(LIB) $(LNK) -L$(MKLLIB) -L$(MAGMALIB) $(MKLLNK) $(MAGMALNK)
+main_magma: main.o $(MAGMA_OBJ)
+	$(CXX) $(CXXFLAGS) $< $(MAGMA_OBJ) -o $@ $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
 
 run: $(TGT)
 	./$(TGT) -f square.txt

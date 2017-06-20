@@ -36,7 +36,7 @@ int main( int argc, char** argv ) {
   // Construct Laplacian
   L = new double[nv * nv];
   constructLaplacian(method, nv, nf, V, C, F, L);
-
+  
   // Map boundary
   U = new double[2 * nv];
   mapBoundary(nv, nb, V, U);
