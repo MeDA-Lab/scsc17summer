@@ -24,7 +24,7 @@ int main( int argc, char** argv ) {
 
   // Read arguments
   read_args(argc, argv, filename, output, method);
-
+  
   // Read object
   readObject(filename, &nv, &nf, &V, &C, &F);
 
