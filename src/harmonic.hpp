@@ -65,7 +65,7 @@ void verifyBoundary( const int nv, const int nf, const int *F, int *ptr_nb, int 
 ///
 /// @note  the vertices are reordered so that the first nb vertices are the boundary vertices.
 ///
-void reorderVertex( const int nv, const int nb, const int *idx_b, double *V, double *C );
+void reorderVertex( const int nv, const int nb, const int nf, const int *idx_b, double *V, double *C, int *F );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Construct the Laplacian.

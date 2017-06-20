@@ -31,8 +31,17 @@ int main( int argc, char** argv ) {
   verifyBoundary(nv, nf, F, &nb, &idx_b);
 
   // Reorder vertex
-  reorderVertex(nv, nb, idx_b, V, C);
-
+  for (int i=0; i<nb; i++) {
+    cout<<idx_b[i]<<" ";
+  }
+  cout<<"\n";
+  reorderVertex(nv, nb, nf, idx_b, V, C, F);
+  for (int i=0; i<nf; i++) {
+    for (int j=0; j<3; j++){
+      cout<<F[j*nf+i]<<" ";
+    }
+    cout<<"\n";
+  }
   // Construct Laplacian
   L = new double[nv * nv];
   constructLaplacian(method, nv, nf, V, F, L);
