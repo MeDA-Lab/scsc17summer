@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    solve_harmonic_mkl.cpp
+/// @file    solve_harmonic_mkl_getrfi.cpp
 /// @brief   The implementation of harmonic problem solving using MKL.
 ///
 /// @author  Unknown
@@ -33,6 +33,7 @@ void solveHarmonic(
   cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, ni, 2, nb, 1.0, Lib, nv, Ub, nv, 0.0, Ui, nv);
 
   // Solve Lii Ui = Tmp [in Ui]
-  int info = LAPACKE_dgesv(LAPACK_COL_MAJOR, ni, 2, Lii, nv, ipiv, Ui, nv);
-  assert(info == 0);
+  int info;
+  info = LAPACKE_dgetrf(LAPACK_COL_MAJOR, ni, ni, Lii, nv, ipiv); assert(info == 0);
+  info = LAPACKE_dgetrs(LAPACK_COL_MAJOR, CblasNoTrans, ni, 2, Lii, nv, ipiv, Ui, nv); assert(info == 0);
 }

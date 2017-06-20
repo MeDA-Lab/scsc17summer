@@ -1,13 +1,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    utility.hpp
-/// @brief   The utilities
+/// @file    read_args.cpp
+/// @brief   The implementation of arguments reader.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 /// @author  Yuhsiang Tsai <<yhmtsai@gmail.com>>
 ///
 
 #include <iostream>
-#include <utility.hpp>
+#include <harmonic.hpp>
 
 using namespace std;
 
@@ -33,7 +33,7 @@ void disp_usage( const char *bin ) {
   cout << "  -w, --weight          0: Simple, 1: Complex" << endl;
 }
 
-void read_args( int argc, char** argv, char *&filename, Method &method ) {
+void read_args( int argc, char** argv, const char *&filename, Method &method ) {
   int c = 0;
   while ( (c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1 ) {
     switch ( c ) {
