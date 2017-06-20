@@ -81,7 +81,7 @@ void reorderVertex( const int nv, const int nb, const int *idx_b, double *V, dou
 ///
 /// @note  The output arrays should be allocated before calling this routine.
 ///
-void constructLaplacian( const Method method, const int nv, const int nf, const double *V, const double *C,
+void constructLaplacian( const Method method, const int nv, const int nf, const double *V,
                          const int *F, double *L );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

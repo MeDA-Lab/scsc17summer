@@ -41,11 +41,9 @@ void constructLaplacian(
     const int nv,
     const int nf,
     const double *V,
-    const double *C,
     const int *F,
     double *L
 ) {
-  std::cout<<"QdddQf\n";
   for (int i=0; i<nv*nv; i++)
   {
     L[i]=0;
