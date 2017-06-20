@@ -21,7 +21,7 @@ int main( int argc, char** argv ) {
 
   int nv, nf, nb, *F = nullptr, *idx_b;
   double *V = nullptr, *C = nullptr, *L, *U;
-
+  
   // Read arguments
   read_args(argc, argv, filename, output, method);
   cout<<"Read\n";
@@ -35,7 +35,7 @@ int main( int argc, char** argv ) {
   reorderVertex(nv, nb, nf, idx_b, V, C, F);
   cout<<"Reorder\n";
   // Construct Laplacian
-  L = new double[nv * nv];
+  L = new double[(int64_t)nv * nv];
   constructLaplacian(method, nv, nf, V, F, L);
   cout<<"Lap\n";
   // Map boundary

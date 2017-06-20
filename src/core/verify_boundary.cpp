@@ -31,7 +31,7 @@ void verifyBoundary(
     int *ptr_nb,
     int **idx_b
 ) {
-  long long int nvl=nv;
+  int64_t nvl=nv;
   int *Gvv = new int [nvl*nvl];
   for (int i=0; i<nvl*nvl; i++){
     Gvv[i] = 0;

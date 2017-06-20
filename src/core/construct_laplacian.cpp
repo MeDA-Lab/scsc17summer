@@ -22,7 +22,7 @@ double CrossNorm(const double *x, const double *y) {
 
 double Sum(const int n, const double *x, const int incx) {
   double sum = 0;
-  for (int i = 0; i < n; ++i)
+  for (int64_t i = 0; i < n; ++i)
   {
     sum += x[i*incx];
   }
@@ -38,7 +38,7 @@ double Dot(const int n, const double *x, const double *y) {
 }
 void constructLaplacian(
     const Method method,
-    const int nv,
+    const int64_t nv,
     const int nf,
     const double *V,
     const int *F,
