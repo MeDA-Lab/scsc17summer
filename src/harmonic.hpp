@@ -18,9 +18,10 @@
 /// @param[in]   argv      The input arguments.
 ///
 /// @param[out]  filename  The filename.
+/// @param[out]  output    The output filename.
 /// @param[out]  method    The method.
 ///
-void read_args( int argc, char** argv, const char *&filename, Method &method );
+void read_args( int argc, char** argv, const char *&filename, const char *&output, Method &method );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reads the object file.
@@ -65,7 +66,7 @@ void verifyBoundary( const int nv, const int nf, const int *F, int *ptr_nb, int 
 ///
 /// @note  the vertices are reordered so that the first nb vertices are the boundary vertices.
 ///
-void reorderVertex( const int nv, const int nb, const int *idx_b, double *V, double *C );
+void reorderVertex( const int nv, const int nb, const int nf, const int *idx_b, double *V, double *C, int *F );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Construct the Laplacian.
@@ -81,7 +82,7 @@ void reorderVertex( const int nv, const int nb, const int *idx_b, double *V, dou
 ///
 /// @note  The output arrays should be allocated before calling this routine.
 ///
-void constructLaplacian( const Method method, const int nv, const int nf, const double *V, const double *C,
+void constructLaplacian( const Method method, const int nv, const int nf, const double *V,
                          const int *F, double *L );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,5 +111,20 @@ void mapBoundary( const int nv, const int nb, const double *V, double *U );
 /// @note  The output arrays should be allocated before calling this routine.
 ///
 void solveHarmonic( const int nv, const int nb, double *L, double *U );
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  write the object file
+///
+/// @param[in]   filename  the path to the object file.
+///
+/// @param[in]   nv  the number of vertices.
+/// @param[in]   nf  the number of faces.
+/// @param[in]   U   the coordinate of vertices on the disk; nv by 2 matrix.
+/// @param[in]   C   the color of vertices. RGB.
+/// @param[in]   F   the faces; nf by 3 matrix.
+///
+///
+void writeObject( const char *filename, const int nv, const int nf, double *U, double *C, int *F );
+
 
 #endif  // SCSC_HARMONIC_HPP

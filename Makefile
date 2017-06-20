@@ -26,8 +26,6 @@ TGTS     = $(TGT) $(MKLTGT) $(MAGMATGT)
 HDRS     = src/harmonic.hpp
 
 INC = -I./src
-LIB = -L.
-LNK = -lcore
 
 OBJ = \
 	read_args.o \
@@ -36,12 +34,27 @@ OBJ = \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
+	write_object.o \
 	solve_harmonic.o \
 
 MKL_OBJ = \
-	solve_harmonic_mkl_potrfi.o \
+	read_args.o \
+	read_object.o \
+	verify_boundary.o \
+	reorder_vertex.o \
+	construct_laplacian.o \
+	map_boundary.o \
+	write_object.o \
+	solve_harmonic_mkl.o \
 
 MAGMA_OBJ = \
+	read_args.o \
+	read_object.o \
+	verify_boundary.o \
+	reorder_vertex.o \
+	construct_laplacian.o \
+	map_boundary.o \
+	write_object.o \
 	solve_harmonic_magma.o \
 
 .PHONY: all run run_mkl run_magma doc clean
@@ -60,18 +73,14 @@ all: main
 %.o: src/magma/%.cpp $(HDRS)
 	$(CXX) $(CXXFLAGS) -c $< $(INC) $(MKLINC) $(MAGMAINC)
 
-libcore.a: $(OBJ)
-	$(ARCHIVE) $@ $(OBJ)
-	-$(RANLIB) $@
+main: main.o $(OBJ)
+	$(CXX) $(CXXFLAGS) $< $(OBJ) -o $@
 
-main: main.o | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK)
+main_mkl: main.o $(MKL_OBJ)
+	$(CXX) $(CXXFLAGS) $< $(MKL_OBJ) -o $@ $(MKLLIB) $(MKLLNK)
 
-main_mkl: main.o $(MKL_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK) $(MKLLIB) $(MKLLNK)
-
-main_magma: main.o $(MAGMA_OBJ) | libcore.a
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIB) $(LNK) $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
+main_magma: main.o $(MAGMA_OBJ)
+	$(CXX) $(CXXFLAGS) $< $(MAGMA_OBJ) -o $@ $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
 
 run: $(TGT)
 	./$(TGT) -f square.txt
