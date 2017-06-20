@@ -31,7 +31,7 @@ int main( int argc, char** argv ) {
   verifyBoundary(nv, nf, F, &nb, &idx_b);
 
   // Reorder vertex
-  reorderVertex(nv, nb, idx_b, V, C);
+  reorderVertex(nv, nb, nf, idx_b, V, C, F);
 
   // Construct Laplacian
   L = new double[nv * nv];

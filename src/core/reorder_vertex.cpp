@@ -15,14 +15,16 @@ using namespace std;
 void reorderVertex(
     const int nv,
     const int nb,
+    const int nf,
     const int *idx_b,
     double *V,
-    double *C
+    double *C,
+    int *F
 ) {
   double *V_cp = new double [nv*3], *C_cp = new double [nv*3];
-  bool *used = new bool [nv];
+  int *used = new int [nv];
   for (int i=0; i<nv; i++){
-    used[i]=false;
+    used[i]=-1;
   }
   copy(V, V+nv*3, V_cp);
   copy(C, C+nv*3, C_cp);
@@ -33,19 +35,23 @@ void reorderVertex(
     C[i]=C_cp[idx_b[i]-1];
     C[nv+i]=C_cp[nv+idx_b[i]-1];
     C[2*nv+i]=C_cp[2*nv+idx_b[i]-1];
-    used[idx_b[i]-1]=true;
+    used[idx_b[i]-1]=i;
   }
   int index=nb;
   for (int i=0; i<nv; i++){
-    if (!used[i]){
+    if (used[i]==-1){
       V[index]=V_cp[i];
       V[nv+index]=V_cp[nv+i];
       V[2*nv+index]=V_cp[2*nv+i];
       C[index]=C_cp[i];
       C[nv+index]=C_cp[nv+i];
       C[2*nv+index]=C_cp[2*nv+i];
+      used[i]=index;
       index++;
     }
+  }
+  for (int i=0; i<nf*3; i++){
+    F[i]=used[F[i]-1]+1;
   }
   if (index!=nv){
     cerr<<"Reorder Error\n";

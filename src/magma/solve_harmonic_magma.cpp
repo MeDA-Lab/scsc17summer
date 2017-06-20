@@ -32,7 +32,6 @@ void solveHarmonic(
   magmablas_dgemm(MagmaNoTrans, MagmaNoTrans, nv-nb, 2, nb, -1, dL+nb, nv, dU, nv, 0, dU+nb, nv, queue);
   //
   int *ipiv=new int [nv-nb], info = 0;
-  cout << nv-nb <<endl;
   magma_dgesv_gpu(nv-nb, 2, dL+nv*nb+nb, nv, ipiv, dU+nb, nv, &info);
   if (info != 0){
     cerr<<info<<" Magma Solve Error\n";
