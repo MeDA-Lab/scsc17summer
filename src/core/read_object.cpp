@@ -29,7 +29,12 @@ void readObject(
   if (fin.peek()=='#'){
     // # nv vertex
     fin>>head>>*ptr_nv>>tail;
-    while (fin.get()!='\n');
+    while (fin.peek()!='\n' && fin.peek()!='\r');
+    if (fin.get()=='\r'){
+      if (fin.peek()=='\n'){
+        fin.get();
+      }
+    }
   }
   int nv=*ptr_nv;
 
@@ -44,7 +49,7 @@ void readObject(
       exit(1);
     }
     fin>>head>>VV[i]>>VV[nv+i]>>VV[2*nv+i];
-    if (fin.peek()!='\n'){
+    if (fin.peek()!='\n' && fin.peek()!='\r'){
       // Obeject has color information
       fin>>CC[i]>>CC[nv+i]>>CC[2*nv+i];
     }
@@ -53,14 +58,23 @@ void readObject(
       CC[nv+i]   = -1;
       CC[2*nv+i] = -1;
     }
-    while (fin.get()!='\n');
+    while (fin.peek()!='\n' && fin.peek()!='\r');
+    if (fin.get()=='\r'){
+      if (fin.peek()=='\n'){
+        fin.get();
+      }
+    }
   }
-
   // Read faces
   if (fin.peek()=='#'){
     // # nf faces
     fin>>head>>*ptr_nf>>tail;
-    while (fin.get()!='\n');
+    while (fin.peek()!='\n' && fin.peek()!='\r');
+    if (fin.get()=='\r'){
+      if (fin.peek()=='\n'){
+        fin.get();
+      }
+    }
   }
   int nf = *ptr_nf;
 
@@ -74,11 +88,12 @@ void readObject(
       exit(1);
     }
     fin>>head>>FF[i]>>FF[nf+i]>>FF[2*nf+i];
-    while (fin.get()!='\n');
-  }
-  while (fin.get()=='\n');
-  if ( fin.eof() != 1) {
-    cerr<<"Notice: something are not load\n";
+    while (fin.peek()!='\n' && fin.peek()!='\r');
+    if (fin.get()=='\r'){
+      if (fin.peek()=='\n'){
+        fin.get();
+      }
+    }
   }
   fin.close();
 }
