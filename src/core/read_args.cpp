@@ -11,12 +11,13 @@
 
 using namespace std;
 
-const char* const short_opt = ":hf:w:";
+const char* const short_opt = ":hf:w:o:";
 
 const struct option long_opt[] = {
   {"help",   0, NULL, 'h'},
   {"file",   1, NULL, 'f'},
   {"weight", 1, NULL, 'w'},
+  {"output", 1, NULL, 'o'},
   {NULL,     0, NULL, 0}
 };
 
@@ -31,9 +32,10 @@ void disp_usage( const char *bin ) {
   cout << "  -h, --help            Display this information" << endl;
   cout << "  -f, --file            The graph file" << endl;
   cout << "  -w, --weight          0: Simple, 1: Complex" << endl;
+  cout << "  -o, --output          The output file" << endl;
 }
 
-void read_args( int argc, char** argv, const char *&filename, Method &method ) {
+void read_args( int argc, char** argv, const char *&filename, const char *&output, Method &method ) {
   int c = 0;
   while ( (c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1 ) {
     switch ( c ) {
@@ -50,6 +52,11 @@ void read_args( int argc, char** argv, const char *&filename, Method &method ) {
       case 'w': {
         method = static_cast<Method>(atoi(optarg));
         assert(method >= Method::SIMPLE && method < Method::COUNT );
+        break;
+      }
+
+      case 'o': {
+        output = optarg;
         break;
       }
 

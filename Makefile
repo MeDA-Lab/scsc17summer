@@ -34,6 +34,7 @@ OBJ = \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
+	write_object.o \
 	solve_harmonic.o \
 
 MKL_OBJ = \
@@ -43,6 +44,7 @@ MKL_OBJ = \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
+	write_object.o \
 	solve_harmonic_mkl.o \
 
 MAGMA_OBJ = \
@@ -52,6 +54,7 @@ MAGMA_OBJ = \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
+	write_object.o \
 	solve_harmonic_magma.o \
 
 .PHONY: all run run_mkl run_magma doc clean

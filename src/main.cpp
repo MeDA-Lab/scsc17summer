@@ -16,13 +16,14 @@ using namespace std;
 int main( int argc, char** argv ) {
 
   const char *filename = "UNSPECIFIED FILE";
+  const char *output = "output.obj";
   Method method  = Method::SIMPLE;
 
   int nv, nf, nb, *F = nullptr, *idx_b;
   double *V = nullptr, *C = nullptr, *L, *U;
 
   // Read arguments
-  read_args(argc, argv, filename, method);
+  read_args(argc, argv, filename, output, method);
 
   // Read object
   readObject(filename, &nv, &nf, &V, &C, &F);
@@ -43,6 +44,10 @@ int main( int argc, char** argv ) {
 
   // Solve harmonic
   solveHarmonic(nv, nb, L, U);
+
+  // write object
+  writeObject(output, nv, nf, U, C, F);
+
   // Free memory
   delete[] V;
   delete[] C;

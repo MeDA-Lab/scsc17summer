@@ -18,9 +18,10 @@
 /// @param[in]   argv      The input arguments.
 ///
 /// @param[out]  filename  The filename.
+/// @param[out]  output    The output filename.
 /// @param[out]  method    The method.
 ///
-void read_args( int argc, char** argv, const char *&filename, Method &method );
+void read_args( int argc, char** argv, const char *&filename, const char *&output, Method &method );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reads the object file.
@@ -123,7 +124,7 @@ void solveHarmonic( const int nv, const int nb, double *L, double *U );
 /// @param[in]   F   the faces; nf by 3 matrix.
 ///
 ///
-void writeObject( const filename, const int nv, const int nf, double *U, double *C, double *F );
+void writeObject( const char *filename, const int nv, const int nf, double *U, double *C, int *F );
 
 
 #endif  // SCSC_HARMONIC_HPP
