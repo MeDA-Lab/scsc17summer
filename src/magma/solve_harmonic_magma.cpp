@@ -29,7 +29,7 @@ void solveHarmonic(
   magma_malloc((void **)&dU, nv*2*sizeof(double));
   magma_setvector(nv*nv, sizeof(double), L, 1, dL, 1, queue);
   magma_setvector(nv*2, sizeof(double), U, 1, dU, 1, queue);
-  magmablas_dgemm(MagmaNoTrans, MagmaNoTrans, nv-nb, 2, nb, 1, dL+nb, nv, dU, nv, 0, dU+nb, nv, queue);
+  magmablas_dgemm(MagmaNoTrans, MagmaNoTrans, nv-nb, 2, nb, -1, dL+nb, nv, dU, nv, 0, dU+nb, nv, queue);
   //
   int *ipiv=new int [nv-nb], info = 0;
   cout << nv-nb <<endl;
