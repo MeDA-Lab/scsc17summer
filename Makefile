@@ -91,13 +91,13 @@ main_magma: main.o $(MAGMA_OBJ)
 	$(CXX) $(CXXFLAGS) $< $(MAGMA_OBJ) -o $@ $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
 
 run: $(TGT)
-	./$(TGT) -f data/Square.obj
+	./$(TGT)
 
 run_mkl: $(MKLTGT)
-	./$(MKLTGT) -f data/Square.obj
+	./$(MKLTGT)
 
 run_magma: $(MAGMATGT)
-	./$(MAGMATGT) -f data/Square.obj
+	./$(MAGMATGT)
 
 doc:
 	$(DOX) doxygen/Doxyfile

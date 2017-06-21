@@ -15,7 +15,7 @@ using namespace std;
 ///
 int main( int argc, char** argv ) {
 
-  const char *filename = "UNSPECIFIED FILE";
+  const char *input  = "input.obj";
   const char *output = "output.obj";
   Method method  = Method::SIMPLE;
 
@@ -24,11 +24,11 @@ int main( int argc, char** argv ) {
 
   // Read arguments
   cout << "Reading arguments ..." << endl;
-  read_args(argc, argv, filename, output, method);
+  read_args(argc, argv, input, output, method);
 
   // Read object
   cout << "Reading objects ..." << endl;
-  readObject(filename, &nv, &nf, &V, &C, &F);
+  readObject(input, &nv, &nf, &V, &C, &F);
 
   // Verify boundary
   cout << "Verifying boundary ..." << endl;
@@ -58,6 +58,7 @@ int main( int argc, char** argv ) {
   writeObject(output, nv, nf, U, C, F);
 
   // Free memory
+  cout << "Done." << endl;
   delete[] V;
   delete[] C;
   delete[] F;

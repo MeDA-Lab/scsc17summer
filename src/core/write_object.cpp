@@ -12,17 +12,17 @@ using namespace std;
 /// @todo  To be implemented!
 ///
 void writeObject(
-    const char *filename,
+    const char *input,
     const int nv,
     const int nf,
     double *U,
     double *C,
-    int *F 
+    int *F
 ) {
-  cout<<"Writing Object "<<filename<<" ...";
-  ofstream fout(filename, ofstream::out);
+  cout << "Write \"" << input << "\"." << endl;
+  ofstream fout(input, ofstream::out);
   if ( fout.good() == 0 ) {
-    cerr<<"Can not write the file "<<filename<<"\n";
+    cerr<<"Can not write the file "<<input<<"\n";
     exit(1);
   }
 
@@ -37,11 +37,10 @@ void writeObject(
       fout<<"v "<<U[i]<<" "<<U[nv+i]<<" 0 "<<C[i]<<" "<<C[nv+i]<<" "<<C[2*nv+i]<<"\n";
     }
   }
-  
+
   fout<<"# "<<nf<<" faces\n";
   for (int i=0; i<nf; i++) {
     fout<<"f "<<F[i]<<" "<<F[nf+i]<<" "<<F[2*nf+i]<<"\n";
   }
   fout.close();
-  cout<<" End\n";
 }

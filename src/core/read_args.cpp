@@ -35,7 +35,7 @@ void disp_usage( const char *bin ) {
   cout << "  -o, --output          The output file" << endl;
 }
 
-void read_args( int argc, char** argv, const char *&filename, const char *&output, Method &method ) {
+void read_args( int argc, char** argv, const char *&input, const char *&output, Method &method ) {
   int c = 0;
   while ( (c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1 ) {
     switch ( c ) {
@@ -45,7 +45,7 @@ void read_args( int argc, char** argv, const char *&filename, const char *&outpu
       }
 
       case 'f': {
-        filename = optarg;
+        input = optarg;
         break;
       }
 

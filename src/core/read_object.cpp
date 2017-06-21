@@ -15,7 +15,7 @@
 using namespace std;
 
 void readObject(
-    const char *filename,
+    const char *input,
     int *ptr_nv,
     int *ptr_nf,
     double **ptr_V,
@@ -30,17 +30,17 @@ void readObject(
   // CR to LF
   {
     stringstream buffer;
-    buffer << "dos2unix " << filename;
+    buffer << "dos2unix " << input;
     int info = system(buffer.str().c_str());
     if ( info ) {
-      cerr << "Unable to convert file \"" << filename << "\"!" << endl;
+      cerr << "Unable to convert file \"" << input << "\"!" << endl;
     }
   }
 
   // Open file
-  ifstream fin(filename);
+  ifstream fin(input);
   if ( fin.fail() ) {
-    cerr << "Unable to open file \"" << filename << "\"!" << endl;
+    cerr << "Unable to open file \"" << input << "\"!" << endl;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,10 +65,10 @@ void readObject(
     // Determine mode
     if ( count == 3 ) {
       mode = 0;
-      cout << "Load \"" << filename << "\" without color." << endl;
+      cout << "Load \"" << input << "\" without color." << endl;
     } else if ( count == 6 ) {
       mode = 1;
-      cout << "Load \"" << filename << "\" with color." << endl;
+      cout << "Load \"" << input << "\" with color." << endl;
     } else {
       cerr << "Unable to load vertex: the number of values must be 3 or 6!" << endl;
       abort();
@@ -86,7 +86,7 @@ void readObject(
     else if ( c == 'f' ) { ++nf; }
     fin.ignore(4096, '\n');
   }
-  cout << "\"" << filename << "\" contains " << nv << " vertices and " << nf << " faces." << endl;
+  cout << "\"" << input << "\" contains " << nv << " vertices and " << nf << " faces." << endl;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Read vertex and faces
