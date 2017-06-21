@@ -31,9 +31,8 @@ void verifyBoundary(
     int *ptr_nb,
     int *idx_b
 ) {
-  int64_t nvl=nv;
-  int *Gvv = new int [nvl*nvl];
-  for (int i=0; i<nvl*nvl; i++){
+  int *Gvv = new int [nv*nv];
+  for (int i=0; i<nv*nv; i++){
     Gvv[i] = 0;
   }
   int p[3];
@@ -41,16 +40,16 @@ void verifyBoundary(
     p[0]=F[i];
     p[1]=F[nf+i];
     p[2]=F[2*nf+i];
-    Gvv[(p[1]-1)*nvl+(p[0]-1)]++; // p0->p1
-    Gvv[(p[2]-1)*nvl+(p[1]-1)]++; // p1->p2
-    Gvv[(p[0]-1)*nvl+(p[2]-1)]++; // p2->p0
+    Gvv[(p[1]-1)*nv+(p[0]-1)]++; // p0->p1
+    Gvv[(p[2]-1)*nv+(p[1]-1)]++; // p1->p2
+    Gvv[(p[0]-1)*nv+(p[2]-1)]++; // p2->p0
   }
   int nb=0, bd_vertex=nv+1, bd_ind=nv+1;
-  int *Bi= new int [nvl], *Bj = new int [nvl];
+  int *Bi= new int [nv], *Bj = new int [nv];
   for (int j=0; j<nv; j++){
     for (int i=0; i<nv; i++){
       // (i,j)
-      if (Gvv[j*nvl+i]-Gvv[i*nvl+j]==1){
+      if (Gvv[j*nv+i]-Gvv[i*nv+j]==1){
         nb++;
         Bi[nb-1]=i+1;
         Bj[nb-1]=j+1;

@@ -12,7 +12,8 @@ DOX      = doxygen
 MKLROOT ?=
 MKLINC   = -isystem $(MKLROOT)/include
 MKLLIB   = -L$(MKLROOT)/lib/intel64
-MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_rt -lpthread -lm -ldl
+MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
+# MKLLNK   = -m64 -DMKL_ILP64 -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_gnu_thread -lmkl_core -lgomp -lpthread -lm -ldl
 
 MAGMAROOT ?= /opt/magma/2.2/
 MAGMAINC   = -isystem $(MAGMAROOT)/include

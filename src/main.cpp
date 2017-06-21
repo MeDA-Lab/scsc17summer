@@ -23,32 +23,38 @@ int main( int argc, char** argv ) {
   double *V = nullptr, *C = nullptr, *L, *U;
 
   // Read arguments
-  cout << "Read" << endl;
+  cout << "Reading arguments ..." << endl;
   read_args(argc, argv, filename, output, method);
 
   // Read object
+  cout << "Reading objects ..." << endl;
   readObject(filename, &nv, &nf, &V, &C, &F);
 
   // Verify boundary
+  cout << "Verifying boundary ..." << endl;
   idx_b = new int[nv];
   verifyBoundary(nv, nf, F, &nb, idx_b);
 
   // Reorder vertex
+  cout << "Reordering vertex ..." << endl;
   reorderVertex(nv, nb, nf, idx_b, V, C, F);
 
   // Construct Laplacian
-  long lnv = nv;
-  L = new double[lnv * lnv];
+  cout << "Constructing Laplacian ..." << endl;
+  L = new double[nv * nv];
   constructLaplacian(method, nv, nf, V, F, L);
 
   // Map boundary
+  cout << "Maping boundary ..." << endl;
   U = new double[2 * nv];
   mapBoundary(nv, nb, V, U);
 
   // Solve harmonic
+  cout << "Solving harmonic ..." << endl;
   solveHarmonic(nv, nb, L, U);
 
-  // write object
+  // Write object
+  cout << "Writing object ..." << endl;
   writeObject(output, nv, nf, U, C, F);
 
   // Free memory
