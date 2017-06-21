@@ -112,10 +112,10 @@ void readObject(
   int *F3 = *ptr_F+2*nf;
 
   while ( !fin.eof() ) {
-    char c = fin.get();
-
+    char c = fin.peek();
     // Read vertex
     if ( c == 'v' ) {
+      fin.get();
       if ( mode == 0 ) {
         fin >> *Vx++ >> *Vy++ >> *Vz++;
       } else {
@@ -125,9 +125,10 @@ void readObject(
 
     // Read face
     if ( c == 'f' ) {
+      fin.get();
       fin >> *F1++ >> *F2++ >> *F3++;
     }
-
+    
     fin.ignore(4096, '\n');
   }
 

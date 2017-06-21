@@ -25,7 +25,7 @@ int main( int argc, char** argv ) {
   // Read arguments
   cout << "Reading arguments ..." << endl;
   read_args(argc, argv, filename, output, method);
-
+  
   // Read object
   cout << "Reading objects ..." << endl;
   readObject(filename, &nv, &nf, &V, &C, &F);
@@ -34,7 +34,9 @@ int main( int argc, char** argv ) {
   cout << "Verifying boundary ..." << endl;
   idx_b = new int[nv];
   verifyBoundary(nv, nf, F, &nb, idx_b);
-
+  // for (int i=0 ; i<nb; i++){
+  //   cout<<idx_b[i]<<"\n";
+  // }
   // Reorder vertex
   cout << "Reordering vertex ..." << endl;
   reorderVertex(nv, nb, nf, idx_b, V, C, F);

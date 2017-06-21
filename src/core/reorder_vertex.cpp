@@ -36,8 +36,12 @@ void reorderVertex(
     C[nv+i]=C_cp[nv+idx_b[i]-1];
     C[2*nv+i]=C_cp[2*nv+idx_b[i]-1];
     used[idx_b[i]-1]=i;
+    // if (idx_b[i]-1>=nv){
+      // cout<<idx_b[i]<<"Q\n";
+    // }
   }
   int index=nb;
+  // cout << nb<<"T\n";
   for (int i=0; i<nv; i++){
     if (used[i]==-1){
       V[index]=V_cp[i];
@@ -54,7 +58,7 @@ void reorderVertex(
     F[i]=used[F[i]-1]+1;
   }
   if (index!=nv){
-    cerr<<"Reorder Error\n";
+    cerr<<index<<" Reorder Error"<<nv<<"\n";
   }
   delete [] V_cp;
   delete [] C_cp;
