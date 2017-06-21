@@ -24,12 +24,13 @@ int main( int argc, char** argv ) {
 
   // Read arguments
   read_args(argc, argv, filename, output, method);
-  
+
   // Read object
   readObject(filename, &nv, &nf, &V, &C, &F);
 
   // Verify boundary
-  verifyBoundary(nv, nf, F, &nb, &idx_b);
+  idx_b = new int[nv];
+  verifyBoundary(nv, nf, F, &nb, idx_b);
 
   // Reorder vertex
   reorderVertex(nv, nb, nf, idx_b, V, C, F);
@@ -37,7 +38,7 @@ int main( int argc, char** argv ) {
   // Construct Laplacian
   L = new double[nv * nv];
   constructLaplacian(method, nv, nf, V, F, L);
-  
+
   // Map boundary
   U = new double[2 * nv];
   mapBoundary(nv, nb, V, U);

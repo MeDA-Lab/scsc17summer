@@ -25,7 +25,11 @@ MAGMATGT = main_magma
 TGTS     = $(TGT) $(MKLTGT) $(MAGMATGT)
 HDRS     = src/harmonic.hpp
 
-INC = -I./src
+INC =\
+	-I src \
+	-I ext
+
+EXTOBJ = \
 
 OBJ = \
 	read_args.o \
@@ -36,6 +40,7 @@ OBJ = \
 	map_boundary.o \
 	write_object.o \
 	solve_harmonic.o \
+	$(EXTOBJ)
 
 MKL_OBJ = \
 	read_args.o \
@@ -46,6 +51,7 @@ MKL_OBJ = \
 	map_boundary.o \
 	write_object.o \
 	solve_harmonic_mkl.o \
+	$(EXTOBJ)
 
 MAGMA_OBJ = \
 	read_args.o \
@@ -56,6 +62,7 @@ MAGMA_OBJ = \
 	map_boundary.o \
 	write_object.o \
 	solve_harmonic_magma.o \
+	$(EXTOBJ)
 
 .PHONY: all run run_mkl run_magma doc clean
 
@@ -83,13 +90,13 @@ main_magma: main.o $(MAGMA_OBJ)
 	$(CXX) $(CXXFLAGS) $< $(MAGMA_OBJ) -o $@ $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
 
 run: $(TGT)
-	./$(TGT) -f square.txt
+	./$(TGT) -f data/Square.obj
 
 run_mkl: $(MKLTGT)
-	./$(MKLTGT) -f square.txt
+	./$(MKLTGT) -f data/Square.obj
 
 run_magma: $(MAGMATGT)
-	./$(MAGMATGT) -f square.txt
+	./$(MAGMATGT) -f data/Square.obj
 
 doc:
 	$(DOX) doxygen/Doxyfile
