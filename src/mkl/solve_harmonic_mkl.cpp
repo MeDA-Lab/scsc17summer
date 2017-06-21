@@ -2,7 +2,7 @@
 /// @file    solve_harmonic_mkl.cpp
 /// @brief   The implementation of harmonic problem solving using MKL.
 ///
-/// @author  Unknown
+/// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <harmonic.hpp>
@@ -14,7 +14,9 @@
 void solveHarmonic(
     const int nv,
     const int nb,
-    double *L,
+    double *L_val,
+    int *L_col,
+    int *L_row,
     double *U
 ) {
   const int ni = nv-nb;

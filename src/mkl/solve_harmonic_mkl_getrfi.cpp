@@ -2,7 +2,7 @@
 /// @file    solve_harmonic_mkl_getrfi.cpp
 /// @brief   The implementation of harmonic problem solving using MKL.
 ///
-/// @author  Unknown
+/// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <harmonic.hpp>

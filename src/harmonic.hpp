@@ -102,22 +102,28 @@ void constructLaplacian( const Method method, const int nv, const int nf, const 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Construct the Laplacian. (sparse version)
 ///
-/// @param[in]   method  the method of Laplacian construction.
-/// @param[in]   nv      the number of vertices.
-/// @param[in]   nf      the number of faces.
-/// @param[in]   V       the coordinate of vertices; nv by 3 matrix.
-/// @param[in]   C       the color of the vertices; nv by 3 matrix; RGB.
-/// @param[in]   F       the faces; nf by 3 matrix.
+/// @param[in]   method       the method of Laplacian construction.
+/// @param[in]   nv           the number of vertices.
+/// @param[in]   nf           the number of faces.
+/// @param[in]   V            the coordinate of vertices; nv by 3 matrix.
+/// @param[in]   C            the color of the vertices; nv by 3 matrix; RGB.
+/// @param[in]   F            the faces; nf by 3 matrix.
 ///
-/// @param[out]  ptr_nnz    the nonzeros in the Laplacian matrix; pointer.
-/// @param[out]  ptr_L_val  the values of the Laplacian matrix.
-/// @param[out]  ptr_L_col  the column indices of the Laplacian matrix.
-/// @param[out]  ptr_L_row  the row indices of the Laplacian matrix.
+/// @param[out]  ptr_Lii_nnz  the nonzeros in the Laplacian matrix (Lii part); pointer.
+/// @param[out]  ptr_Lii_val  the values of the Laplacian matrix (Lii part).
+/// @param[out]  ptr_Lii_col  the column indices of the Laplacian matrix (Lii part).
+/// @param[out]  ptr_Lii_row  the row indices of the Laplacian matrix (Lii part).
+///
+/// @param[out]  ptr_Lib_nnz  the nonzeros in the Laplacian matrix (Lib part); pointer.
+/// @param[out]  ptr_Lib_val  the values of the Laplacian matrix (Lib part).
+/// @param[out]  ptr_Lib_col  the column indices of the Laplacian matrix (Lib part).
+/// @param[out]  ptr_Lib_row  the row indices of the Laplacian matrix (Lib part).
 ///
 /// @note  The arrays are allocated by this routine (using new).
 ///
-void constructLaplacianSparse( const Method method, const int nv, const int nf, const double *V, const int *F, int *ptr_nnz
-                               double **ptr_L_val, double **ptr_L_col, double **ptr_L_row );
+void constructLaplacianSparse( const Method method, const int nv, const int nf, const double *V, const int *F,
+                               int *ptr_Lii_nnz, double **ptr_Lii_val, int **ptr_Lii_col, int **ptr_Lii_row,
+                               int *ptr_Lib_nnz, double **ptr_Lib_val, int **ptr_Lib_col, int **ptr_Lib_row );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Map the boundary vertices.
@@ -149,19 +155,25 @@ void solveHarmonic( const int nv, const int nb, double *L, double *U );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Solve the harmonic problem. (sparse version)
 ///
-/// @param[in]   nv     the number of vertices.
-/// @param[in]   nb     the number of boundary vertices.
-/// @param[in]   nnz    the nonzeros in the Laplacian matrix.
-/// @param[in]   L_val  the values of the Laplacian matrix.
-/// @param[in]   L_col  the column indices of the Laplacian matrix.
-/// @param[in]   L_row  the row indices of the Laplacian matrix.
-/// @param[in]   U      the coordinate of vertices on the disk; nv by 2 matrix. The first nb vertices are given.
+/// @param[in]   nv       the number of vertices.
+/// @param[in]   nb       the number of boundary vertices.
+/// @param[in]   Lii_nnz  the nonzeros in the Laplacian matrix (Lii part).
+/// @param[in]   Lii_val  the values of the Laplacian matrix (Lii part).
+/// @param[in]   Lii_col  the column indices of the Laplacian matrix (Lii part).
+/// @param[in]   Lii_row  the row indices of the Laplacian matrix (Lii part).
+/// @param[in]   Lib_nnz  the nonzeros in the Laplacian matrix (Lib part).
+/// @param[in]   Lib_val  the values of the Laplacian matrix (Lib part).
+/// @param[in]   Lib_col  the column indices of the Laplacian matrix (Lib part).
+/// @param[in]   Lib_row  the row indices of the Laplacian matrix (Lib part).
+/// @param[in]   U        the coordinate of vertices on the disk; nv by 2 matrix. The first nb vertices are given.
 ///
-/// @param[out]  U      the coordinate of vertices on the disk; nv by 2 matrix. The last (nv-nb) vertices are replaced.
+/// @param[out]  U        the coordinate of vertices on the disk; nv by 2 matrix. The last (nv-nb) vertices are replaced.
 ///
 /// @note  The output arrays should be allocated before calling this routine.
 ///
-void solveHarmonicSparse( const int nv, const int nb, const int nnz, double *L_val, double *L_col, double *L_row, double *U );
+void solveHarmonicSparse( const int nv, const int nb,
+                          const int Lii_nnz, double *Lii_val, int *Lii_col, int *Lii_row,
+                          const int Lib_nnz, double *Lib_val, int *Lib_col, int *Lib_row, double *U );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  write the object file

@@ -112,10 +112,11 @@ void readObject(
   int *F3 = *ptr_F+2*nf;
 
   while ( !fin.eof() ) {
-    char c = fin.get();
+    char c = fin.peek();
 
     // Read vertex
     if ( c == 'v' ) {
+      fin.get();
       if ( mode == 0 ) {
         fin >> *Vx++ >> *Vy++ >> *Vz++;
       } else {
@@ -125,6 +126,7 @@ void readObject(
 
     // Read face
     if ( c == 'f' ) {
+      fin.get();
       fin >> *F1++ >> *F2++ >> *F3++;
     }
 
@@ -136,4 +138,9 @@ void readObject(
       (*ptr_C)[i] = -1.0;
     }
   }
+
+  for ( int i = 0; i < nf; ++i ) {
+    cout << (*ptr_F)[i] << '\t' << (*ptr_F)[i+nf] << '\t' << (*ptr_F)[i+nf*2] << endl;
+  }
+  exit(0);
 }
