@@ -31,13 +31,13 @@ void read_args( int argc, char** argv, const char *&filename, const char *&outpu
 ///
 /// @param[out]  ptr_nv    the number of vertices; pointer.
 /// @param[out]  ptr_nf    the number of faces;    pointer.
-/// @param[out]  V         the coordinate of vertices; nv by 3 matrix.      pointer-to-pointer
-/// @param[out]  C         the color of the vertices; nv by 3 matrix; RGB.  pointer-to-pointer
-/// @param[out]  F         the faces; nf by 3 matrix.                       pointer-to-pointer
+/// @param[out]  ptr_V     the coordinate of vertices; nv by 3 matrix.      pointer-to-pointer
+/// @param[out]  ptr_C     the color of the vertices; nv by 3 matrix; RGB.  pointer-to-pointer
+/// @param[out]  ptr_F     the faces; nf by 3 matrix.                       pointer-to-pointer
 ///
 /// @note  The arrays are allocated by this routine (using new).
 ///
-void readObject( const char *filename, int *ptr_nv, int *ptr_nf, double **V, double **C, int **F );
+void readObject( const char *filename, int *ptr_nv, int *ptr_nf, double **ptr_V, double **ptr_C, int **ptr_F );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Verify the boundary vertices.
@@ -49,9 +49,7 @@ void readObject( const char *filename, int *ptr_nv, int *ptr_nf, double **V, dou
 /// @param[out]  ptr_nb  the number of boundary vertices; pointer.
 /// @param[out]  idx_b   the indices of boundary vertices, nb by 1 vector.
 ///
-///
-///
-void verifyBoundary( const int nv, const int nf, const int *F, int *ptr_nb, int **idx_b );
+void verifyBoundary( const int nv, const int nf, const int *F, int *ptr_nb, int *idx_b );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reorder the vertices.

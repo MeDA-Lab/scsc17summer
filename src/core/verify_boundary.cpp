@@ -29,7 +29,7 @@ void verifyBoundary(
     const int nf,
     const int *F,
     int *ptr_nb,
-    int **idx_b
+    int *idx_b
 ) {
   int64_t nvl=nv;
   int *Gvv = new int [nvl*nvl];
@@ -71,9 +71,8 @@ void verifyBoundary(
     }
   }
   *ptr_nb = VB.size();
-  *idx_b = new int [*ptr_nb];
   for (int i=0; i<*ptr_nb; i++){
-    (*idx_b)[i]=VB[i];
+    idx_b[i]=VB[i];
   }
   delete [] Bi;
   delete [] Bj;

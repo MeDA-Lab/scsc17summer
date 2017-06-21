@@ -3,97 +3,137 @@
 /// @brief   The implementation of object reading.
 ///
 /// @author  Yuhisang Mike Tsai
+/// @author  Mu Yang  <<emfomy@gmail.com>>
 ///
+
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
 #include <harmonic.hpp>
 using namespace std;
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @todo  To be implemented!
-///
+
 void readObject(
     const char *filename,
     int *ptr_nv,
     int *ptr_nf,
-    double **V,
-    double **C,
-    int **F
+    double **ptr_V,
+    double **ptr_C,
+    int **ptr_F
 ) {
-  ifstream fin(filename, ifstream::in);
-  if ( fin.good() == 0 ) {
-    cerr << "Open File \"" << filename << "\" Error" << endl;
-    exit(1);
-  }
-  // Read vertex
-  string tail, head;
-  if (fin.peek()=='#'){
-    // # nv vertex
-    fin>>head>>*ptr_nv>>tail;
-    while (fin.peek()!='\n' && fin.peek()!='\r');
-    if (fin.get()=='\r'){
-      if (fin.peek()=='\n'){
-        fin.get();
-      }
-    }
-  }
-  int nv=*ptr_nv;
 
-  *V = new double [nv * 3];
-  *C = new double [nv * 3];
-  double *VV=*V, *CC=*C;
-  // v x y z (R G B)
-  for (int i=0; i<nv; i++){
-    if (fin.peek()!='v'){
-      cerr<<"Read vertex error\n";
-      printf("%c",fin.peek());
-      exit(1);
-    }
-    fin>>head>>VV[i]>>VV[nv+i]>>VV[2*nv+i];
-    if (fin.peek()!='\n' && fin.peek()!='\r'){
-      // Obeject has color information
-      fin>>CC[i]>>CC[nv+i]>>CC[2*nv+i];
-    }
-    else{
-      CC[i]      = -1;
-      CC[nv+i]   = -1;
-      CC[2*nv+i] = -1;
-    }
-    while (fin.peek()!='\n' && fin.peek()!='\r');
-    if (fin.get()=='\r'){
-      if (fin.peek()=='\n'){
-        fin.get();
-      }
-    }
-  }
-  // Read faces
-  if (fin.peek()=='#'){
-    // # nf faces
-    fin>>head>>*ptr_nf>>tail;
-    while (fin.peek()!='\n' && fin.peek()!='\r');
-    if (fin.get()=='\r'){
-      if (fin.peek()=='\n'){
-        fin.get();
-      }
-    }
-  }
-  int nf = *ptr_nf;
+  int &nv = *ptr_nv;
+  int &nf = *ptr_nf;
+  bool mode = 0; // 0: No color; 1: With color
 
-  *F = new int [ nf * 3 ];
-  int *FF=*F;
-  for (int i=0; i<nf; i++){
-    // f p1 p2 p3
-    if (fin.peek()!='f'){
-      cerr<<"Read Face error\n";
-      printf("%c",fin.peek());
-      exit(1);
-    }
-    fin>>head>>FF[i]>>FF[nf+i]>>FF[2*nf+i];
-    while (fin.peek()!='\n' && fin.peek()!='\r');
-    if (fin.get()=='\r'){
-      if (fin.peek()=='\n'){
-        fin.get();
-      }
+  // CR to LF
+  {
+    stringstream buffer;
+    buffer << "dos2unix " << filename;
+    int info = system(buffer.str().c_str());
+    if ( info ) {
+      cerr << "Unable to convert file \"" << filename << "\"!" << endl;
     }
   }
-  fin.close();
+
+  // Open file
+  ifstream fin(filename);
+  if ( fin.fail() ) {
+    cerr << "Unable to open file \"" << filename << "\"!" << endl;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Determine vertex mode
+  {
+    // Skip until first vertex
+    while ( fin.peek() != 'v' ) {
+      fin.ignore(4096, '\n');
+    }
+    fin.get();
+
+    // Read first vertex
+    string str;
+    getline(fin, str);
+    istringstream sin(str);
+    double v;
+    int count = 0;
+    while (sin >> v) {
+      ++count;
+    }
+
+    // Determine mode
+    if ( count == 3 ) {
+      mode = 0;
+      cout << "Load \"" << filename << "\" without color." << endl;
+    } else if ( count == 6 ) {
+      mode = 1;
+      cout << "Load \"" << filename << "\" with color." << endl;
+    } else {
+      cerr << "Unable to load vertex: the number of values must be 3 or 6!" << endl;
+      abort();
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Count vertices and faces
+  fin.clear();
+  fin.seekg(0, ios::beg);
+  nv = 0; nf = 0;
+  while ( !fin.eof() ) {
+    char c = fin.peek();
+    if ( c == 'v' ) { ++nv; }
+    else if ( c == 'f' ) { ++nf; }
+    fin.ignore(4096, '\n');
+  }
+  cout << "\"" << filename << "\" contains " << nv << " vertices and " << nf << " faces." << endl;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Read vertex and faces
+
+  // Return to top of file
+  fin.clear();
+  fin.seekg(0, ios::beg);
+
+  *ptr_V = new double[3*nv];
+  *ptr_C = new double[3*nv];
+  *ptr_F = new int[3*nf];
+
+  double *Vx = *ptr_V;
+  double *Vy = *ptr_V+nv;
+  double *Vz = *ptr_V+2*nv;
+
+  double *Cx = *ptr_C;
+  double *Cy = *ptr_C+nv;
+  double *Cz = *ptr_C+2*nv;
+
+  int *F1 = *ptr_F;
+  int *F2 = *ptr_F+nf;
+  int *F3 = *ptr_F+2*nf;
+
+  while ( !fin.eof() ) {
+    char c = fin.get();
+
+    // Read vertex
+    if ( c == 'v' ) {
+      if ( mode == 0 ) {
+        fin >> *Vx++ >> *Vy++ >> *Vz++;
+      } else {
+        fin >> *Vx++ >> *Vy++ >> *Vz++ >> *Cx++ >> *Cy++ >> *Cz++;
+      }
+    }
+
+    // Read face
+    if ( c == 'f' ) {
+      fin >> *F1++ >> *F2++ >> *F3++;
+    }
+
+    fin.ignore(4096, '\n');
+  }
+
+  if ( mode == 0 ) {
+    for ( int i = 0; i < 3*nv; ++i ) {
+      (*ptr_C)[i] = -1.0;
+    }
+  }
 }
