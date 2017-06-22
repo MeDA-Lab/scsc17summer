@@ -93,7 +93,7 @@ void constructLaplacianSparse(
         }
       }
     }
-    if (index_Lib!=Lib_nnz || index_Lii+nv-nb != Lii_nnz) {
+    if (index_Lib!=Lib_nnz || index_Lii != Lii_nnz) {
       cerr<<"SIMPLE: nnz, index  Error\n";
       exit(1);
     }
