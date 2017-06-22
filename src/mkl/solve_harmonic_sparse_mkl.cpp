@@ -24,15 +24,16 @@ void solveHarmonicSparse(
   char matdescra[6]={'G', 'L', 'N', 'C', ' ',' '};
   double *b=new double [ni*2], *x=new double [ni*2];
   cout<<"@@\n";
-  cin.get();
-  for (int i=0; i<ni; i++){
-    for (int j=Lib_row[i]; j<Lib_row[i+1]; j++){
-      cout<<i<<" "<<Lib_col[j]<<" "<<Lib_val[j]<<"\n";
-    }
-  }
+//   for (int i=0; i<ni; i++){
+//     for (int j=Lib_row[i]; j<Lib_row[i+1]; j++){
+//       cout<<i<<" "<<Lib_col[j]<<" "<<Lib_val[j]<<"\n";
+//     }
+//   }
   cout<<"nv"<<nv<<"nb"<<nb<<"\n";
 //   mkl_dcsrmm(&trans , &ni ,  &ncols , &nb , &alpha , matdescra , Lib_val , Lib_col , Lib_row, Lib_row+1, 
-//              U , &nv , &beta , b , &ncols );
+//              U , &nv , &beta , b , &ni);
+mkl_dcsrgemv (&trans , &ni , Lib_val , Lib_row , Lib_col , U , b );
+mkl_dcsrgemv (&trans , &ni , Lib_val , Lib_row , Lib_col , U+nv , b+ni );
   cout<<"Q\n";
   // pardiso x needs to be different from x;
   int iparm[64], mtype = 11;
