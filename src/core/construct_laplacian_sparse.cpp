@@ -8,6 +8,7 @@
 #include <harmonic.hpp>
 #include <iostream>
 #include <cmath>
+#include <tuple>
 using namespace std;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @todo  To be implemented!
@@ -36,6 +37,9 @@ double Dot(const int n, const double *x, const double *y) {
   }
   return ans;
 }
+
+// void coo2csr(const int )
+
 void constructLaplacianSparse( 
   const Method method, const int nv, const int nb, const int nf, const double *V, const int *F,
   double **ptr_Lii_val, int **ptr_Lii_row, int **ptr_Lii_col, int *ptr_Lii_nnz,
@@ -56,20 +60,25 @@ void constructLaplacianSparse(
     if (method==Method::COMPLEX && F_y < nb && F_z >= nb) Lib_nnz++;
     if (method==Method::COMPLEX && F_z < nb && F_x >= nb) Lib_nnz++;
   }
-  *ptr_Lii_nnz=Lii_nnz;
-  *ptr_Lib_nnz=Lib_nnz;
-  *ptr_Lii_val = new double [Lii_nnz];
-  *ptr_Lii_row = new int [Lii_nnz];
-  *ptr_Lii_col = new int [Lii_nnz];
-  *ptr_Lib_val = new double [Lib_nnz];
-  *ptr_Lib_row = new int [Lib_nnz];
-  *ptr_Lib_col = new int [Lib_nnz];
-  int *Lib_row=*ptr_Lib_row, *Lib_col=*ptr_Lib_col, *Lii_row=*ptr_Lii_row, *Lii_col=*ptr_Lii_col;
-  double *Lib_val=*ptr_Lib_val, *Lii_val=*ptr_Lii_val;
+  // *ptr_Lii_nnz=Lii_nnz;
+  // *ptr_Lib_nnz=Lib_nnz;
+  // *ptr_Lii_val = new double [Lii_nnz];
+  // *ptr_Lii_row = new int [Lii_nnz];
+  // *ptr_Lii_col = new int [Lii_nnz];
+  // *ptr_Lib_val = new double [Lib_nnz];
+  // *ptr_Lib_row = new int [Lib_nnz];
+  // *ptr_Lib_col = new int [Lib_nnz];
+  // int *Lib_row=*ptr_Lib_row, *Lib_col=*ptr_Lib_col, *Lii_row=*ptr_Lii_row, *Lii_col=*ptr_Lii_col;
+  // double *Lib_val=*ptr_Lib_val, *Lii_val=*ptr_Lii_val;
+  // int *Lib_row = new int [Lib_nnz], *Lib_col = new int [Lib_nnz];
+  // int *Lii_row = new int [Lii_nnz], *Lii_col = new int [Lii_nnz];
+  // double *Lib_val = new double [Lib_nnz], *Lii_val = new double [Lii_nnz];
+  tuple<int, int, double> *Lib= new tuple<int, int , double> [Lib_nnz];
+  tuple<int, int, double> *Lii= new tuple<int, int , double> [Lii_nnz];
   for (int i=0; i<nv-nb; i++) {
-    Lii_val[i]=0;
-    Lii_col[i]=i+nb;
-    Lii_row[i]=i+nb;
+    get<2>(Lii[i])=0;
+    get<1>(Lii[i])=i+nb;
+    get<0>(Lii[i])=i+nb;
   }
   int index_Lii=nv-nb, index_Lib=0;
   int row=0, col=0;
@@ -81,17 +90,17 @@ void constructLaplacianSparse(
         row =F[k*nf+i]-1;
         col =F[((k+1)%3)*nf+i]-1;
         if (row >= nb && col>= nb) {
-          Lii_val[index_Lii]=-1;
-          Lii_col[index_Lii]=col;
-          Lii_row[index_Lii]=row;
-          Lii_val[row-nb]++;
+          get<2>(Lii[index_Lii])=-1;
+          get<1>(Lii[index_Lii])=col;
+          get<0>(Lii[index_Lii])=row;
+          get<2>(Lii[row-nb])++;
           index_Lii++;
         }
         else if (row>=nb && col< nb) {
-          Lib_val[index_Lib]=-1;
-          Lib_col[index_Lib]=col;
-          Lib_row[index_Lib]=row;
-          Lii_val[row-nb]++;
+          get<2>(Lib[index_Lib])=-1;
+          get<1>(Lib[index_Lib])=col;
+          get<0>(Lib[index_Lib])=row;
+          get<2>(Lii[row-nb])++;
           index_Lib++;
         }
       }
@@ -103,15 +112,13 @@ void constructLaplacianSparse(
     
   }else if (method == Method::COMPLEX) // Cotengent Laplacian Matrix
   {
-    double *v_ki = new double [3];
-    double *v_kj = new double [3];
-    double *v_ij = new double [3];
+
     index_Lib=0;
     index_Lii=nv-nb;
     for (int i = 0; i < nf; ++i)
     {
       for (int k=0; k<3; k++){
-        int F_val[3]={F[i]-1, F[nf+i]-1, F[2*nf+i]-1};
+        
         int row=F[k*nf+i]-1;
         int col=F[(k+1)%3*nf+i]-1;
         int mid=F[(k+2)%3*nf+i]-1;
@@ -120,26 +127,26 @@ void constructLaplacianSparse(
         double b[3]={V[col]-V[mid], V[nv+col]-V[nv+mid], V[2*nv+col]-V[2*nv+mid]};
         if (row >= nb && col >= nb) {
           // Lii
-          Lii_row[index_Lii]=row;
-          Lii_col[index_Lii]=col;
-          Lii_val[index_Lii]=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          Lii_val[row-nb]+=Lii_val[index_Lii];
+          get<0>(Lii[index_Lii])=row;
+          get<1>(Lii[index_Lii])=col;
+          get<2>(Lii[index_Lii])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
+          get<2>(Lii[row-nb])+=get<2>(Lii[index_Lii]);
           index_Lii++;
         }
         else if (row >= nb && col < nb) {
           // Lib
-          Lib_row[index_Lib]=row;
-          Lib_col[index_Lib]=col;
-          Lib_val[index_Lib]=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          Lii_val[row-nb]+=Lib_val[index_Lib];
+          get<0>(Lib[index_Lib])=row;
+          get<1>(Lib[index_Lib])=col;
+          get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
+          get<2>(Lii[row-nb])+=get<2>(Lib[index_Lib]);
           index_Lib++;
         }
         else if (row < nb && col >= nb) {
-          // Lib
-          Lib_row[index_Lib]=col;
-          Lib_col[index_Lib]=row;
-          Lib_val[index_Lib]=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          Lii_val[col-nb]+=Lib_val[index_Lib];
+          // Lbi swap col, row 
+          get<0>(Lib[index_Lib])=col;
+          get<1>(Lib[index_Lib])=row;
+          get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
+          get<2>(Lii[col-nb])+=get<2>(Lib[index_Lib]);
           index_Lib++;
         }
       }
@@ -150,4 +157,5 @@ void constructLaplacianSparse(
       exit(1);
     }
   }
+  
 }
