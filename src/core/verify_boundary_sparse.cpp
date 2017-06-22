@@ -67,19 +67,16 @@ void verifyBoundarySparse(
   }
   
   qsort(key, 3*nf, sizeof(int64_t), compare);
-  for (int i=0; i<nf; i++){
-    cout<<key[3*i]<<" "<<key[3*i+1]<<" "<<key[3*i+2]<<"\n";
-  }
   int nb=0, bd_vertex=nv+1, bd_ind=nv+1;
   int *Bi= new int [2*nv], *Bj = new int [2*nv];
-  for (int i=0; i<3*nf; i) {
+  int i=0;
+  while (i<3*nf) {
     int temp_step=0;
     int64_t pinned=key[i];
     while (i<3*nf && key[i]==pinned){
       i++;
       temp_step++;
     }
-    cout<<"p"<<pinned<<"\n";
     if (temp_step==1){
       nb++;
       Bi[nb-1]=pinned/nv+1;
@@ -88,7 +85,6 @@ void verifyBoundarySparse(
         bd_vertex = Bi[nb-1];
         bd_ind=nb-1;
       }
-      cout<<Bi[nb-1]<<" "<<Bj[nb-1]<<"\n";
       nb++;
       Bi[nb-1]=pinned%nv+1;
       Bj[nb-1]=pinned/nv+1;
@@ -96,7 +92,6 @@ void verifyBoundarySparse(
         bd_vertex = Bi[nb-1];
         bd_ind=nb-1;
       }
-      cout<<Bi[nb-1]<<" "<<Bj[nb-1]<<"\n";
     }
   }
   
