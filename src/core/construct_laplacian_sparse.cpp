@@ -52,6 +52,9 @@ void constructLaplacianSparse(
     if (F_x >= nb && F_y < nb)  Lib_nnz++;
     if (F_y >= nb && F_z < nb)  Lib_nnz++;
     if (F_z >= nb && F_x < nb)  Lib_nnz++;
+    if (method==Method::COMPLEX && F_x < nb && F_y >= nb) Lib_nnz++;
+    if (method==Method::COMPLEX && F_y < nb && F_z >= nb) Lib_nnz++;
+    if (method==Method::COMPLEX && F_z < nb && F_x >= nb) Lib_nnz++;
   }
   *ptr_Lii_nnz=Lii_nnz;
   *ptr_Lib_nnz=Lib_nnz;
@@ -100,33 +103,51 @@ void constructLaplacianSparse(
     
   }else if (method == Method::COMPLEX) // Cotengent Laplacian Matrix
   {
-    // double *v_ki = new double [3];
-    // double *v_kj = new double [3];
-    // double *v_ij = new double [3];
-    // for (int i = 0; i < nf; ++i)
-    // {
-    //   int F_x = F[i]-1;
-    //   int F_y = F[nf+i]-1;
-    //   int F_z = F[2*nf+i]-1;
-
-    //   v_ki[0] = V[F_x] - V[F_z];
-    //   v_ki[1] = V[nv+F_x] - V[nv+F_z];
-    //   v_ki[2] = V[2*nv+F_x] - V[2*nv+F_z];
-    //   v_kj[0] = V[F_y] - V[F_z];
-    //   v_kj[1] = V[nv+F_y] - V[nv+F_z];
-    //   v_kj[2] = V[2*nv+F_y] - V[2*nv+F_z];
-    //   v_ij[0] = V[F_y] - V[F_x];
-    //   v_ij[1] = V[nv+F_y] - V[nv+F_x];
-    //   v_ij[2] = V[2*nv+F_y] - V[2*nv+F_x];
-    //   L[F_x*nv+F_y] += -0.5*Dot(3, v_ki, v_kj)/CrossNorm(v_ki, v_kj);
-    //   L[F_y*nv+F_x] = L[F_x*nv+F_y];
-    //   L[F_y*nv+F_z] += 0.5*Dot(3, v_ij, v_ki)/CrossNorm(v_ij, v_ki);
-    //   L[F_z*nv+F_y] = L[F_y*nv+F_z];
-    //   L[F_z*nv+F_x] += -0.5*Dot(3, v_kj, v_ij)/CrossNorm(v_kj, v_ij);
-    //   L[F_x*nv+F_z] = L[F_z*nv+F_x];
-    // }
-    // for (int i = 0; i<nv; i++){
-    //   L[i*nv+i]=-1*Sum(nv, L+i*nv, 1);
-    // }
+    double *v_ki = new double [3];
+    double *v_kj = new double [3];
+    double *v_ij = new double [3];
+    index_Lib=0;
+    index_Lii=nv-nb;
+    for (int i = 0; i < nf; ++i)
+    {
+      for (int k=0; k<3; k++){
+        int F_val[3]={F[i]-1, F[nf+i]-1, F[2*nf+i]-1};
+        int row=F[k*nf+i]-1;
+        int col=F[(k+1)%3*nf+i]-1;
+        int mid=F[(k+2)%3*nf+i]-1;
+        // double v[3]={V[F]-V[col], V[nv+row]-V[nv+col], V[2*nv+row]-V[2*nv+col]};
+        double v[3]={V[row]-V[mid], V[nv+row]-V[nv+mid], V[2*nv+row]-V[2*nv+mid]};
+        double b[3]={V[col]-V[mid], V[nv+col]-V[nv+mid], V[2*nv+col]-V[2*nv+mid]};
+        if (row >= nb && col >= nb) {
+          // Lii
+          Lii_row[index_Lii]=row;
+          Lii_col[index_Lii]=col;
+          Lii_val[index_Lii]=-0.5*Dot(3, v, b)/CrossNorm(v, b);
+          Lii_val[row-nb]+=Lii_val[index_Lii];
+          index_Lii++;
+        }
+        else if (row >= nb && col < nb) {
+          // Lib
+          Lib_row[index_Lib]=row;
+          Lib_col[index_Lib]=col;
+          Lib_val[index_Lib]=-0.5*Dot(3, v, b)/CrossNorm(v, b);
+          Lii_val[row-nb]+=Lib_val[index_Lib];
+          index_Lib++;
+        }
+        else if (row < nb && col >= nb) {
+          // Lib
+          Lib_row[index_Lib]=col;
+          Lib_col[index_Lib]=row;
+          Lib_val[index_Lib]=-0.5*Dot(3, v, b)/CrossNorm(v, b);
+          Lii_val[col-nb]+=Lib_val[index_Lib];
+          index_Lib++;
+        }
+      }
+    }
+    if (index_Lib != Lib_nnz || index_Lii != Lii_nnz) {
+      cerr<<"Complex: index, nnz Error\n";
+      cerr<<index_Lib<<" "<<Lib_nnz<<"\n";
+      exit(1);
+    }
   }
 }
