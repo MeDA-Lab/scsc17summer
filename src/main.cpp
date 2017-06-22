@@ -16,7 +16,7 @@ using namespace std;
 ///
 int main( int argc, char** argv ) {
 
-  const char *input  = "input.obj";
+  const char *input  = "data/Square.obj";
   const char *output = "output.obj";
   Method method  = Method::SIMPLE;
 
@@ -35,7 +35,11 @@ int main( int argc, char** argv ) {
   idx_b = new int[nv];
   cout << "Verifying boundary .....................";
   tic(&timer);
-  verifyBoundary(nv, nf, F, &nb, idx_b); cout << " Done.  ";
+  verifyBoundarySparse(nv, nf, F, &nb, idx_b); cout << " Done.  ";
+  for (int i=0; i<nb; i++) {
+    cout<<idx_b[i]<<" ";
+  }
+  cout<<"\n";
   toc(&timer);
 
   // Reorder vertices

@@ -41,17 +41,11 @@ int64_t construct_key (int i, int j, int nv){
   }
 }
 
-// int comparePair(const void *a, const void *b) {
-//   pair<int,int> pair_a = (pair<int,int>) *a;
-//   pair<int,int> pair_b = (pair<int,int>) *b;
-//   if (pair_a.first()>pair_b.first) {
-//     return 1;
-//   }
-//   if (pair_a.first()<pair_b.first)) {
-//     return -1;
-//   }
-//   return 0;
-// }
+int compare(const void *a, const void *b) {
+  // pair<int,int> pair_a = (pair<int,int>) *a;
+  // pair<int,int> pair_b = (pair<int,int>) *b;
+  return ( *(int64_t*)a - *(int64_t*)b );
+}
 void verifyBoundarySparse(
     const int nv,
     const int nf,
@@ -63,37 +57,46 @@ void verifyBoundarySparse(
   int p[3];
   for (int i=0; i<nf; i++){
     // cout<<i<<endl;
-    p[0]=F[i];
-    p[1]=F[nf+i];
-    p[2]=F[2*nf+i];
+    p[0]=F[i]-1;
+    p[1]=F[nf+i]-1;
+    p[2]=F[2*nf+i]-1;
     key[3*i]=construct_key(p[0],p[1],nv);
     key[3*i+1]=construct_key(p[1],p[2],nv);
     key[3*i+2]=construct_key(p[2],p[0],nv);
+    
   }
-  qsort(key, 3*nf, sizeof(int64_t));
+  
+  qsort(key, 3*nf, sizeof(int64_t), compare);
+  for (int i=0; i<nf; i++){
+    cout<<key[3*i]<<" "<<key[3*i+1]<<" "<<key[3*i+2]<<"\n";
+  }
   int nb=0, bd_vertex=nv+1, bd_ind=nv+1;
   int *Bi= new int [2*nv], *Bj = new int [2*nv];
-  for (int i=0; i<3*nf; i++) {
+  for (int i=0; i<3*nf; i) {
     int temp_step=0;
     int64_t pinned=key[i];
     while (i<3*nf && key[i]==pinned){
       i++;
+      temp_step++;
     }
+    cout<<"p"<<pinned<<"\n";
     if (temp_step==1){
       nb++;
-      Bi[nb-1]=pinned/nv;
-      Bj[nb-1]=pinned%nv;
+      Bi[nb-1]=pinned/nv+1;
+      Bj[nb-1]=pinned%nv+1;
       if (Bi[nb-1]<bd_vertex){
         bd_vertex = Bi[nb-1];
         bd_ind=nb-1;
       }
+      cout<<Bi[nb-1]<<" "<<Bj[nb-1]<<"\n";
       nb++;
-      Bi[nb-1]=pinned%nv;
-      Bj[nb-1]=pinned/nv;
+      Bi[nb-1]=pinned%nv+1;
+      Bj[nb-1]=pinned/nv+1;
       if (Bi[nb-1]<bd_vertex){
         bd_vertex = Bi[nb-1];
         bd_ind=nb-1;
       }
+      cout<<Bi[nb-1]<<" "<<Bj[nb-1]<<"\n";
     }
   }
   
@@ -120,6 +123,5 @@ void verifyBoundarySparse(
   
   delete [] Bi;
   delete [] Bj;
-  delete [] Gvv;
   return;
 }
