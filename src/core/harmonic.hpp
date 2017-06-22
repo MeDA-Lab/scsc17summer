@@ -115,7 +115,6 @@ void constructLaplacian( const Method method, const int nv, const int nf, const 
 ///
 /// @param[in]   method       the method of Laplacian construction.
 /// @param[in]   nv           the number of vertices.
-/// @param[in]   nb           the number of boundary.
 /// @param[in]   nf           the number of faces.
 /// @param[in]   V            the coordinate of vertices; nv by 3 matrix.
 /// @param[in]   C            the color of the vertices; nv by 3 matrix; RGB.
@@ -133,7 +132,7 @@ void constructLaplacian( const Method method, const int nv, const int nf, const 
 ///
 /// @note  The arrays are allocated by this routine (using new).
 ///
-void constructLaplacianSparse( const Method method, const int nv, const int nb, const int nf, const double *V, const int *F,
+void constructLaplacianSparse( const Method method, const int nv, const int nf, const double *V, const int *F,
                                double **ptr_Lii_val, int **ptr_Lii_row, int **ptr_Lii_col, int *ptr_Lii_nnz,
                                double **ptr_Lib_val, int **ptr_Lib_row, int **ptr_Lib_col, int *ptr_Lib_nnz);
 
