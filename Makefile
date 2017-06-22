@@ -78,7 +78,7 @@ MKLSPOBJ = \
 	construct_laplacian_sparse.o \
 	map_boundary.o \
 	write_object.o \
-	solve_harmonic_mkl.o \
+	solve_harmonic_sparse_mkl.o \
 	$(EXTOBJ)
 
 MAGMASPOBJ = \
