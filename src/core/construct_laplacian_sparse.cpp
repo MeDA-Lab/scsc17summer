@@ -71,16 +71,20 @@ void coo2csr(
     }
   }
   *nnz=temp_nnz;
-
+  cout<<"temp:"<<temp_nnz<<"\n";
   *csr_a = new double [temp_nnz];
   *csr_col = new int [temp_nnz];
   double *A=*csr_a;
   int *row=*csr_row, *col=*csr_col;
+  for (int i=0; i<csr_row_num+1; i++){
+    row[i]=0;
+  }
   int index=0;
   for (int i=0; i<coo_num; i++){
     if (i==0){
       A[index]=get<2>(coo[i]);
       col[index]=get<1>(coo[i]);
+      cout<<col[0]<<"\n";
       index++;
     }
     else if (get<0>(coo[i])==get<0>(coo[i-1]) && get<1>(coo[i])==get<1>(coo[i-1])){
@@ -100,7 +104,16 @@ void coo2csr(
       index++;
     }
   }
-  row[csr_row_num]=index;
+  for (int i=get<0>(coo[coo_num-1])+1; i<=csr_row_num; i++ ){
+    row[i]=index;
+  }
+  // for (int i=0; i<csr_row_num; i++){
+  //   cout<<row[i]<<"->"<<row[i+1]<<"\n";
+  //   for (int j=row[i]; j<row[i+1]; j++){
+      
+  //     cout<<i<<" "<<col[j]<<" "<<A[j]<<"\n";
+  //   }
+  // }
   if (index!=temp_nnz){
     cerr<<"coo2csr Error\n";
     exit(1);
