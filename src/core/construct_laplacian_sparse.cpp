@@ -61,63 +61,51 @@ int compareTuple(const void *a, const void *b){
 void coo2csr(
   const int coo_num, tuple<int, int, double> *coo,
   const int csr_row_num, double ** csr_a, int **csr_row, int **csr_col, int *nnz){
-    // for (int i=0; i<coo_num; i++){
-    //   cout<<get<0>(coo[i])<<" "<<get<1>(coo[i])<<" "<<get<2>(coo[i])<<endl;
-    // }
-    // cout<<"\n\n";
-    qsort(coo, coo_num, sizeof(tuple<int,int,double>), compareTuple);
-    for (int i=0; i<coo_num; i++){
-      cout<<get<0>(coo[i])<<" "<<get<1>(coo[i])<<" "<<get<2>(coo[i])<<endl;
+
+  qsort(coo, coo_num, sizeof(tuple<int,int,double>), compareTuple);
+  *csr_row = new int [csr_row_num+1];
+  int temp_nnz=1;
+  for (int i=1; i<coo_num; i++) {
+    if (get<0>(coo[i])!=get<0>(coo[i-1]) || get<1>(coo[i])!=get<1>(coo[i-1])){
+      temp_nnz++;
     }
-    cout<<"\n\n";
-    *csr_row = new int [csr_row_num+1];
-    int temp_nnz=1;
-    for (int i=1; i<coo_num; i++) {
-      if (get<0>(coo[i])!=get<0>(coo[i-1]) || get<1>(coo[i])!=get<1>(coo[i-1])){
-        temp_nnz++;
-      }
-    }
-    *nnz=temp_nnz;
-    cout<< coo_num<<" ~ "<<temp_nnz<<" "<<csr_row_num<<"\n";
-    *csr_a = new double [temp_nnz];
-    *csr_col = new int [temp_nnz];
-    // csr_row[0]=0;
-    double *A=*csr_a;
-    int *row=*csr_row, *col=*csr_col;
-    int index=0;
-    for (int i=0; i<coo_num; i++){
-      if (i==0){
-        A[index]=get<2>(coo[i]);
-        col[index]=get<1>(coo[i]);
-        index++;
-        cout<<"?\n";
-      }
-      else if (get<0>(coo[i])==get<0>(coo[i-1]) && get<1>(coo[i])==get<1>(coo[i-1])){
-        A[index-1]+=get<2>(coo[i]);
-      }
-      else if (get<0>(coo[i])!=get<0>(coo[i-1])){
-        for (int j=get<0>(coo[i-1]); j<get<0>(coo[i]); j++){
-          row[j+1]=index;
-        }
-        A[index]=get<2>(coo[i]);
-        col[index]=get<1>(coo[i]);
-        index++;
-      }
-      else {
-        A[index]=get<2>(coo[i]);
-        col[index]=get<1>(coo[i]);
-        index++;
-      }
-    }
-    row[csr_row_num]=index;
-    for (int i=0; i<csr_row_num; i++){
-      cout<<"r"<<row[i]<<" "<<row[i+1]<<"\n";
-      for (int j=row[i]; j<row[i+1]; j++){
-        cout<<i<<" "<<col[j]<<" "<<A[j]<<"\n";
-      }
-    }
-    cout<<"====\n";
   }
+  *nnz=temp_nnz;
+
+  *csr_a = new double [temp_nnz];
+  *csr_col = new int [temp_nnz];
+  double *A=*csr_a;
+  int *row=*csr_row, *col=*csr_col;
+  int index=0;
+  for (int i=0; i<coo_num; i++){
+    if (i==0){
+      A[index]=get<2>(coo[i]);
+      col[index]=get<1>(coo[i]);
+      index++;
+    }
+    else if (get<0>(coo[i])==get<0>(coo[i-1]) && get<1>(coo[i])==get<1>(coo[i-1])){
+      A[index-1]+=get<2>(coo[i]);
+    }
+    else if (get<0>(coo[i])!=get<0>(coo[i-1])){
+      for (int j=get<0>(coo[i-1]); j<get<0>(coo[i]); j++){
+        row[j+1]=index;
+      }
+      A[index]=get<2>(coo[i]);
+      col[index]=get<1>(coo[i]);
+      index++;
+    }
+    else {
+      A[index]=get<2>(coo[i]);
+      col[index]=get<1>(coo[i]);
+      index++;
+    }
+  }
+  row[csr_row_num]=index;
+  if (index!=temp_nnz){
+    cerr<<"coo2csr Error\n";
+    exit(1);
+  }
+}
 
 void constructLaplacianSparse( 
   const Method method, const int nv, const int nb, const int nf, const double *V, const int *F,
@@ -139,19 +127,6 @@ void constructLaplacianSparse(
     if (method==Method::COMPLEX && F_y < nb && F_z >= nb) Lib_nnz++;
     if (method==Method::COMPLEX && F_z < nb && F_x >= nb) Lib_nnz++;
   }
-  // *ptr_Lii_nnz=Lii_nnz;
-  // *ptr_Lib_nnz=Lib_nnz;
-  // *ptr_Lii_val = new double [Lii_nnz];
-  // *ptr_Lii_row = new int [Lii_nnz];
-  // *ptr_Lii_col = new int [Lii_nnz];
-  // *ptr_Lib_val = new double [Lib_nnz];
-  // *ptr_Lib_row = new int [Lib_nnz];
-  // *ptr_Lib_col = new int [Lib_nnz];
-  // int *Lib_row=*ptr_Lib_row, *Lib_col=*ptr_Lib_col, *Lii_row=*ptr_Lii_row, *Lii_col=*ptr_Lii_col;
-  // double *Lib_val=*ptr_Lib_val, *Lii_val=*ptr_Lii_val;
-  // int *Lib_row = new int [Lib_nnz], *Lib_col = new int [Lib_nnz];
-  // int *Lii_row = new int [Lii_nnz], *Lii_col = new int [Lii_nnz];
-  // double *Lib_val = new double [Lib_nnz], *Lii_val = new double [Lii_nnz];
   tuple<int, int, double> *Lib= new tuple<int, int , double> [Lib_nnz];
   tuple<int, int, double> *Lii= new tuple<int, int , double> [Lii_nnz];
   for (int i=0; i<nv-nb; i++) {
@@ -239,4 +214,6 @@ void constructLaplacianSparse(
   }
   coo2csr(Lib_nnz, Lib, nv-nb, ptr_Lib_val, ptr_Lib_row, ptr_Lib_col, ptr_Lib_nnz);
   coo2csr(Lii_nnz, Lii, nv-nb, ptr_Lii_val, ptr_Lii_row, ptr_Lii_col, ptr_Lii_nnz);
+  delete [] Lii;
+  delete [] Lib;
 }

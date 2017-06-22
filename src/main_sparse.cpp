@@ -20,7 +20,7 @@ int main( int argc, char** argv ) {
   const char *output = "output.obj";
   Method method  = Method::SIMPLE;
 
-  int nv, nf, nb, nnz, *F = nullptr, *idx_b=NULL;
+  int nv, nf, nb, *F = nullptr, *idx_b=NULL;
   int *Lii_row=NULL, *Lii_col=NULL, *Lib_row=NULL, *Lib_col=NULL;
   int Lii_nnz=0, Lib_nnz=0;
   double *Lii_val=NULL, *Lib_val=NULL;
@@ -49,13 +49,6 @@ int main( int argc, char** argv ) {
   constructLaplacianSparse( method, nv, nb, nf, V, F,
                             &Lii_val, &Lii_row, &Lii_col, &Lii_nnz,
                             &Lib_val, &Lib_row, &Lib_col, &Lib_nnz);
-  for (int i=0; i<nv-nb; i++){
-      for (int j=Lii_row[i]; j<Lii_row[i+1]; j++){
-        cout<<i<<" "<<Lii_col[j]<<" "<<Lii_val[j]<<"\n";
-      }
-    }
-    cout<<"====\n";
-  
   // Map boundary
   cout << "Maping boundary ..." << endl;
   U = new double[2 * nv];
