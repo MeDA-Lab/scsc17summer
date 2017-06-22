@@ -19,7 +19,7 @@ int main( int argc, char** argv ) {
   const char *output = "output.obj";
   Method method  = Method::SIMPLE;
 
-  int nv, nf, nb, nnz, *F = nullptr, *idx_b, *L_col, *L_row;
+  int nv, nf, nb, nnz, *F = nullptr, *idx_b, *L_row, *L_col;
   double *V = nullptr, *C = nullptr, *U, *L_val;
 
   // Read arguments
@@ -41,7 +41,7 @@ int main( int argc, char** argv ) {
 
   // Construct Laplacian
   cout << "Constructing Laplacian ..." << endl;
-  constructLaplacianSparse(method, nv, nf, V, F, &nnz, &L_val, &L_col, &L_row);
+  constructLaplacianSparse(method, nv, nf, V, F, &nnz, &L_val, &L_row, &L_col);
 
   // Map boundary
   cout << "Maping boundary ..." << endl;
@@ -50,7 +50,7 @@ int main( int argc, char** argv ) {
 
   // Solve harmonic
   cout << "Solving harmonic ..." << endl;
-  solveHarmonicSparse(nv, nb, nnz, L_val, L_col, L_row, U);
+  solveHarmonicSparse(nv, nb, nnz, L_val, L_row, L_col, U);
 
   // Write object
   cout << "Writing object ..." << endl;
@@ -62,8 +62,8 @@ int main( int argc, char** argv ) {
   delete[] C;
   delete[] F;
   delete[] L_val;
-  delete[] L_col;
   delete[] L_row;
+  delete[] L_col;
   delete[] U;
   delete[] idx_b;
 

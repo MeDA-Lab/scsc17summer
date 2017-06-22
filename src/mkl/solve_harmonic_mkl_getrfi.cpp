@@ -27,9 +27,9 @@ void solveHarmonic(
   int *ipiv = new int[ni];
 
   // ====================================================================================================================== //
-  // Solve Lii Ui = Lib Ub
+  // Solve Lii Ui = - Lib Ub
 
-  // Tmp [in Ui] := Lib * Ub
+  // Tmp [in Ui] := - Lib * Ub
   cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, ni, 2, nb, 1.0, Lib, nv, Ub, nv, 0.0, Ui, nv);
 
   // Solve Lii Ui = Tmp [in Ui]
