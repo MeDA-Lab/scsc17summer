@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <harmonic.hpp>
+#include <timer.hpp>
 
 using namespace std;
 
@@ -20,71 +21,55 @@ int main( int argc, char** argv ) {
   Method method  = Method::SIMPLE;
 
   int nv, nf, nb, *F = nullptr, *idx_b;
-  double *V = nullptr, *C = nullptr, *L, *U;
-
-  double time0, time1;
+  double timer, *V = nullptr, *C = nullptr, *L, *U;
 
   // Read arguments
-  cout << endl << "========== Reading Arguments ===========" << endl << endl;
-  time0 = getTime();
   readArgs(argc, argv, input, output, method);
-  time1 = getTime();
-  cout << "Used " << time1-time0 << " seconds." << endl;
 
   // Read object
-  cout << endl << "=========== Reading Objects ============" << endl << endl;
-  time0 = getTime();
   readObject(input, &nv, &nf, &V, &C, &F);
-  time1 = getTime();
-  cout << "Used " << time1-time0 << " seconds." << endl;
+
+  cout << endl;
 
   // Verify boundary
-  cout << endl << "========== Verifying Boundary ==========" << endl << endl;
-  time0 = getTime();
   idx_b = new int[nv];
-  verifyBoundary(nv, nf, F, &nb, idx_b);
-  time1 = getTime();
-  cout << "Used " << time1-time0 << " seconds." << endl;
+  cout << "Verifying boundary .....................";
+  tic(&timer);
+  verifyBoundary(nv, nf, F, &nb, idx_b); cout << " Done.  ";
+  toc(&timer);
 
   // Reorder vertices
-  cout << endl << "========= Reordering Vertices ==========" << endl << endl;
-  time0 = getTime();
-  reorderVertex(nv, nb, nf, idx_b, V, C, F);
-  time1 = getTime();
-  cout << "Used " << time1-time0 << " seconds." << endl;
+  cout << "Reordering vertices ....................";
+  tic(&timer);
+  reorderVertex(nv, nb, nf, idx_b, V, C, F); cout << " Done.  ";
+  toc(&timer);
 
   // Construct Laplacian
-  cout << endl << "======== Constructing Laplacian ========" << endl << endl;
   L = new double[nv * nv];
-  time0 = getTime();
-  constructLaplacian(method, nv, nf, V, F, L);
-  time1 = getTime();
-  cout << "Used " << time1-time0 << " seconds." << endl;
+  cout << "Constructing Laplacian .................";
+  tic(&timer);
+  constructLaplacian(method, nv, nf, V, F, L); cout << " Done.  ";
+  toc(&timer);
 
   // Map boundary
-  cout << endl << "=========== Mapping Boundary ===========" << endl << endl;
   U = new double[2 * nv];
-  time0 = getTime();
-  mapBoundary(nv, nb, V, U);
-  time1 = getTime();
-  cout << "Used " << time1-time0 << " seconds." << endl;
+  cout << "Mapping Boundary .......................";
+  tic(&timer);
+  mapBoundary(nv, nb, V, U); cout << " Done.  ";
+  toc(&timer);
 
   // Solve harmonic
-  cout << endl << "=========== Solving Harmonic ===========" << endl << endl;
-  time0 = getTime();
-  solveHarmonic(nv, nb, L, U);
-  time1 = getTime();
-  cout << "Used " << time1-time0 << " seconds." << endl;
+  cout << "Solving Harmonic .......................";
+  tic(&timer);
+  solveHarmonic(nv, nb, L, U); cout << " Done.  ";
+  toc(&timer);
+
+  cout << endl;
 
   // Write object
-  cout << endl << "============ Writing Object ============" << endl << endl;
-  time0 = getTime();
   writeObject(output, nv, nf, U, C, F);
-  time1 = getTime();
-  cout << "Used " << time1-time0 << " seconds." << endl;
 
   // Free memory
-  cout << endl << "================= Done =================" << endl << endl;
   delete[] V;
   delete[] C;
   delete[] F;

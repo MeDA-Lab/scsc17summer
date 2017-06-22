@@ -8,21 +8,20 @@
 #ifndef SCSC_HARMONIC_HPP
 #define SCSC_HARMONIC_HPP
 
-#include <sys/time.h>
-#include <getopt.h>
-#include <def.hpp>
+#include <cassert>
 #include <iostream>
+#include <getopt.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @brief  Gets current time.
+/// @brief  The enumeration of Laplacian construction methods.
 ///
-/// @return  current time.
+/// @todo   Finish the enumeration.
 ///
-inline double getTime() {
-  timeval tv;
-  gettimeofday(&tv, NULL);
-  return double(tv.tv_sec) + double(tv.tv_usec) * 1e-6;
-}
+enum class Method {
+  SIMPLE = 0,   ///< Simple  method.
+  COMPLEX = 1,  ///< Complex method.
+  COUNT,        ///< Used for counting number of methods.
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reads the arguments.

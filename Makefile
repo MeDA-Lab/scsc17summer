@@ -12,8 +12,8 @@ DOX      = doxygen
 MKLROOT ?=
 MKLINC   = -isystem $(MKLROOT)/include
 MKLLIB   = -L$(MKLROOT)/lib/intel64
-MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
-# MKLLNK   = -m64 -DMKL_ILP64 -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_gnu_thread -lmkl_core -lgomp -lpthread -lm -ldl
+# MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
+MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lgomp -lpthread -lm -ldl
 
 MAGMAROOT ?= /opt/magma/2.2/
 MAGMAINC   = -isystem $(MAGMAROOT)/include
@@ -26,7 +26,10 @@ MAGMATGT   = main_magma
 MKLSPTGT   = main_mkl_sp
 MAGMASPTGT = main_magma_sp
 TGTS       = $(TGT) $(MKLTGT) $(MAGMATGT) # $(MKLSPTGT) $(MAGMASPTGT)
-HDRS       = src/harmonic.hpp
+
+HDRS       = \
+	src/harmonic.hpp \
+	src/time.hpp
 
 INC =\
 	-I src \
