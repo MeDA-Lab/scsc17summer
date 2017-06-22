@@ -14,9 +14,7 @@
 void solveHarmonic(
     const int nv,
     const int nb,
-    double *L_val,
-    int *L_row,
-    int *L_col,
+    double *L,
     double *U
 ) {
   const int ni = nv-nb;

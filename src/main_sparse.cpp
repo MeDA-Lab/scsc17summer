@@ -24,7 +24,7 @@ int main( int argc, char** argv ) {
 
   // Read arguments
   cout << "Reading arguments ..." << endl;
-  read_args(argc, argv, input, output, method);
+  readArgs(argc, argv, input, output, method);
 
   // Read object
   cout << "Reading objects ..." << endl;

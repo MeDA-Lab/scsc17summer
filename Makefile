@@ -25,7 +25,7 @@ MKLTGT     = main_mkl
 MAGMATGT   = main_magma
 MKLSPTGT   = main_mkl_sp
 MAGMASPTGT = main_magma_sp
-TGTS       = $(TGT) $(MKLTGT) $(MAGMATGT)
+TGTS       = $(TGT) $(MKLTGT) $(MAGMATGT) # $(MKLSPTGT) $(MAGMASPTGT)
 HDRS       = src/harmonic.hpp
 
 INC =\
@@ -91,7 +91,7 @@ MAGMASPOBJ = \
 
 .PHONY: all run run_mkl run_magma doc clean
 
-all: main
+all: $(TGTS)
 
 %.o: src/%.cpp $(HDRS)
 	$(CXX) $(CXXFLAGS) -c $< $(INC)

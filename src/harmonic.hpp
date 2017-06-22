@@ -8,9 +8,21 @@
 #ifndef SCSC_HARMONIC_HPP
 #define SCSC_HARMONIC_HPP
 
+#include <sys/time.h>
 #include <getopt.h>
 #include <def.hpp>
 #include <iostream>
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  Gets current time.
+///
+/// @return  current time.
+///
+inline double getTime() {
+  timeval tv;
+  gettimeofday(&tv, NULL);
+  return double(tv.tv_sec) + double(tv.tv_usec) * 1e-6;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reads the arguments.
@@ -22,7 +34,7 @@
 /// @param[out]  output  The output file.
 /// @param[out]  method  The method.
 ///
-void read_args( int argc, char** argv, const char *&input, const char *&output, Method &method );
+void readArgs( int argc, char** argv, const char *&input, const char *&output, Method &method );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Reads the object file.

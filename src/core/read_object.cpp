@@ -41,6 +41,7 @@ void readObject(
   ifstream fin(input);
   if ( fin.fail() ) {
     cerr << "Unable to open file \"" << input << "\"!" << endl;
+    abort();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,10 +66,10 @@ void readObject(
     // Determine mode
     if ( count == 3 ) {
       mode = 0;
-      cout << "Load \"" << input << "\" without color." << endl;
+      cout << "Loads from \"" << input << "\" without color." << endl;
     } else if ( count == 6 ) {
       mode = 1;
-      cout << "Load \"" << input << "\" with color." << endl;
+      cout << "Loads from \"" << input << "\" with color." << endl;
     } else {
       cerr << "Unable to load vertex: the number of values must be 3 or 6!" << endl;
       abort();
@@ -138,5 +139,4 @@ void readObject(
       (*ptr_C)[i] = -1.0;
     }
   }
-  exit(0);
 }

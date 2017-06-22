@@ -19,7 +19,7 @@ void writeObject(
     double *C,
     int *F
 ) {
-  cout << "Write \"" << input << "\"." << endl;
+  cout << "Stores in \"" << input << "\"." << endl;
   ofstream fout(input, ofstream::out);
   if ( fout.good() == 0 ) {
     cerr<<"Can not write the file "<<input<<"\n";

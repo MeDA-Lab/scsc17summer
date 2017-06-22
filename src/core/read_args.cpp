@@ -26,7 +26,7 @@ const struct option long_opt[] = {
 ///
 /// @param  bin  the name of binary file.
 ///
-void disp_usage( const char *bin ) {
+void dispUsage( const char *bin ) {
   cout << "Usage: " << bin << " [OPTIONS]" << endl;
   cout << "Options:" << endl;
   cout << "  -h, --help            Display this information" << endl;
@@ -35,12 +35,12 @@ void disp_usage( const char *bin ) {
   cout << "  -o, --output          The output file" << endl;
 }
 
-void read_args( int argc, char** argv, const char *&input, const char *&output, Method &method ) {
+void readArgs( int argc, char** argv, const char *&input, const char *&output, Method &method ) {
   int c = 0;
   while ( (c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1 ) {
     switch ( c ) {
       case 'h': {
-        disp_usage(argv[0]);
+        dispUsage(argv[0]);
         exit(0);
       }
 
