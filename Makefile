@@ -29,7 +29,7 @@ TGTS       = $(TGT) $(MKLTGT) $(MAGMATGT) # $(MKLSPTGT) $(MAGMASPTGT)
 
 HDRS       = \
 	src/harmonic.hpp \
-	src/time.hpp
+	src/timer.hpp
 
 INC =\
 	-I src \
@@ -40,7 +40,7 @@ EXTOBJ = \
 OBJ = \
 	read_args.o \
 	read_object.o \
-	verify_boundary.o \
+	verify_boundary_sparse.o \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
@@ -51,7 +51,7 @@ OBJ = \
 MKLOBJ = \
 	read_args.o \
 	read_object.o \
-	verify_boundary.o \
+	verify_boundary_sparse.o \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
@@ -62,7 +62,7 @@ MKLOBJ = \
 MAGMAOBJ = \
 	read_args.o \
 	read_object.o \
-	verify_boundary.o \
+	verify_boundary_sparse.o \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
