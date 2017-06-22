@@ -49,13 +49,13 @@ int main( int argc, char** argv ) {
   constructLaplacianSparse( method, nv, nb, nf, V, F,
                             &Lii_val, &Lii_row, &Lii_col, &Lii_nnz,
                             &Lib_val, &Lib_row, &Lib_col, &Lib_nnz);
-  for (int i=0; i<Lii_nnz; i++) {
-    cout<<Lii_row[i]<<" "<<Lii_col[i]<<" "<<Lii_val[i]<<"\n";
-  }
-  cout<<"\n\n";
-  for (int i=0; i<Lib_nnz; i++){
-    cout<<Lib_row[i]<<" "<<Lib_col[i]<<" "<<Lib_val[i]<<"\n";
-  }
+  // for (int i=0; i<Lii_nnz; i++) {
+  //   cout<<Lii_row[i]<<" "<<Lii_col[i]<<" "<<Lii_val[i]<<"\n";
+  // }
+  // cout<<"\n\n";
+  // for (int i=0; i<Lib_nnz; i++){
+  //   cout<<Lib_row[i]<<" "<<Lib_col[i]<<" "<<Lib_val[i]<<"\n";
+  // }
   
   // Map boundary
   cout << "Maping boundary ..." << endl;

@@ -37,8 +37,87 @@ double Dot(const int n, const double *x, const double *y) {
   }
   return ans;
 }
-
-// void coo2csr(const int )
+int compareTuple(const void *a, const void *b){
+  tuple<int, int, double> *A=(tuple<int, int, double>*) a;
+  tuple<int, int, double> *B=(tuple<int, int, double>*) b;
+  if ( get<0>(*A) < get<0>(*B) ) {
+    return -1;
+  }
+  else if ( get<0>(*A) > get<0>(*B) ) {
+    return 1;
+  }
+  else {
+    if ( get<1>(*A) < get<1>(*B) ){
+      return -1;
+    }
+    else if ( get<1>(*A) == get<1>(*B) ){
+      return 0;
+    }
+    else {
+      return 1;
+    }
+  }
+}
+void coo2csr(
+  const int coo_num, tuple<int, int, double> *coo,
+  const int csr_row_num, double ** csr_a, int **csr_row, int **csr_col, int *nnz){
+    // for (int i=0; i<coo_num; i++){
+    //   cout<<get<0>(coo[i])<<" "<<get<1>(coo[i])<<" "<<get<2>(coo[i])<<endl;
+    // }
+    // cout<<"\n\n";
+    qsort(coo, coo_num, sizeof(tuple<int,int,double>), compareTuple);
+    for (int i=0; i<coo_num; i++){
+      cout<<get<0>(coo[i])<<" "<<get<1>(coo[i])<<" "<<get<2>(coo[i])<<endl;
+    }
+    cout<<"\n\n";
+    *csr_row = new int [csr_row_num+1];
+    int temp_nnz=1;
+    for (int i=1; i<coo_num; i++) {
+      if (get<0>(coo[i])!=get<0>(coo[i-1]) || get<1>(coo[i])!=get<1>(coo[i-1])){
+        temp_nnz++;
+      }
+    }
+    *nnz=temp_nnz;
+    cout<< coo_num<<" ~ "<<temp_nnz<<" "<<csr_row_num<<"\n";
+    *csr_a = new double [temp_nnz];
+    *csr_col = new int [temp_nnz];
+    // csr_row[0]=0;
+    double *A=*csr_a;
+    int *row=*csr_row, *col=*csr_col;
+    int index=0;
+    for (int i=0; i<coo_num; i++){
+      if (i==0){
+        A[index]=get<2>(coo[i]);
+        col[index]=get<1>(coo[i]);
+        index++;
+        cout<<"?\n";
+      }
+      else if (get<0>(coo[i])==get<0>(coo[i-1]) && get<1>(coo[i])==get<1>(coo[i-1])){
+        A[index-1]+=get<2>(coo[i]);
+      }
+      else if (get<0>(coo[i])!=get<0>(coo[i-1])){
+        for (int j=get<0>(coo[i-1]); j<get<0>(coo[i]); j++){
+          row[j+1]=index;
+        }
+        A[index]=get<2>(coo[i]);
+        col[index]=get<1>(coo[i]);
+        index++;
+      }
+      else {
+        A[index]=get<2>(coo[i]);
+        col[index]=get<1>(coo[i]);
+        index++;
+      }
+    }
+    row[csr_row_num]=index;
+    for (int i=0; i<csr_row_num; i++){
+      cout<<"r"<<row[i]<<" "<<row[i+1]<<"\n";
+      for (int j=row[i]; j<row[i+1]; j++){
+        cout<<i<<" "<<col[j]<<" "<<A[j]<<"\n";
+      }
+    }
+    cout<<"====\n";
+  }
 
 void constructLaplacianSparse( 
   const Method method, const int nv, const int nb, const int nf, const double *V, const int *F,
@@ -77,8 +156,8 @@ void constructLaplacianSparse(
   tuple<int, int, double> *Lii= new tuple<int, int , double> [Lii_nnz];
   for (int i=0; i<nv-nb; i++) {
     get<2>(Lii[i])=0;
-    get<1>(Lii[i])=i+nb;
-    get<0>(Lii[i])=i+nb;
+    get<1>(Lii[i])=i;
+    get<0>(Lii[i])=i;
   }
   int index_Lii=nv-nb, index_Lib=0;
   int row=0, col=0;
@@ -91,15 +170,15 @@ void constructLaplacianSparse(
         col =F[((k+1)%3)*nf+i]-1;
         if (row >= nb && col>= nb) {
           get<2>(Lii[index_Lii])=-1;
-          get<1>(Lii[index_Lii])=col;
-          get<0>(Lii[index_Lii])=row;
+          get<1>(Lii[index_Lii])=col-nb;
+          get<0>(Lii[index_Lii])=row-nb;
           get<2>(Lii[row-nb])++;
           index_Lii++;
         }
         else if (row>=nb && col< nb) {
           get<2>(Lib[index_Lib])=-1;
           get<1>(Lib[index_Lib])=col;
-          get<0>(Lib[index_Lib])=row;
+          get<0>(Lib[index_Lib])=row-nb;
           get<2>(Lii[row-nb])++;
           index_Lib++;
         }
@@ -127,15 +206,15 @@ void constructLaplacianSparse(
         double b[3]={V[col]-V[mid], V[nv+col]-V[nv+mid], V[2*nv+col]-V[2*nv+mid]};
         if (row >= nb && col >= nb) {
           // Lii
-          get<0>(Lii[index_Lii])=row;
-          get<1>(Lii[index_Lii])=col;
+          get<0>(Lii[index_Lii])=row-nb;
+          get<1>(Lii[index_Lii])=col-nb;
           get<2>(Lii[index_Lii])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
           get<2>(Lii[row-nb])+=get<2>(Lii[index_Lii]);
           index_Lii++;
         }
         else if (row >= nb && col < nb) {
           // Lib
-          get<0>(Lib[index_Lib])=row;
+          get<0>(Lib[index_Lib])=row-nb;
           get<1>(Lib[index_Lib])=col;
           get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
           get<2>(Lii[row-nb])+=get<2>(Lib[index_Lib]);
@@ -143,7 +222,7 @@ void constructLaplacianSparse(
         }
         else if (row < nb && col >= nb) {
           // Lbi swap col, row 
-          get<0>(Lib[index_Lib])=col;
+          get<0>(Lib[index_Lib])=col-nb;
           get<1>(Lib[index_Lib])=row;
           get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
           get<2>(Lii[col-nb])+=get<2>(Lib[index_Lib]);
@@ -156,6 +235,8 @@ void constructLaplacianSparse(
       cerr<<index_Lib<<" "<<Lib_nnz<<"\n";
       exit(1);
     }
+    
   }
-  
+  coo2csr(Lib_nnz, Lib, nv-nb, ptr_Lib_val, ptr_Lib_row, ptr_Lib_col, ptr_Lib_nnz);
+  coo2csr(Lii_nnz, Lii, nv-nb, ptr_Lii_val, ptr_Lii_row, ptr_Lii_col, ptr_Lii_nnz);
 }
