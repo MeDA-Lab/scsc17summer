@@ -73,9 +73,9 @@ MAGMAOBJ = \
 MKLSPOBJ = \
 	read_args.o \
 	read_object.o \
-	verify_boundary.o \
+	verify_boundary_sparse.o \
 	reorder_vertex.o \
-	construct_laplacian.o \
+	construct_laplacian_sparse.o \
 	map_boundary.o \
 	write_object.o \
 	solve_harmonic_mkl.o \
@@ -84,9 +84,9 @@ MKLSPOBJ = \
 MAGMASPOBJ = \
 	read_args.o \
 	read_object.o \
-	verify_boundary.o \
+	verify_boundary_sparse.o \
 	reorder_vertex.o \
-	construct_laplacian.o \
+	construct_laplacian_sparse.o \
 	map_boundary.o \
 	write_object.o \
 	solve_harmonic_magma.o \

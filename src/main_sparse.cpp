@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <harmonic.hpp>
-#include <time.hpp>
+#include <timer.hpp>
 
 using namespace std;
 
@@ -20,8 +20,11 @@ int main( int argc, char** argv ) {
   const char *output = "output.obj";
   Method method  = Method::SIMPLE;
 
-  int nv, nf, nb, nnz, *F = nullptr, *idx_b, *L_row, *L_col;
-  double *V = nullptr, *C = nullptr, *U, *L_val;
+  int nv, nf, nb, *F = nullptr, *idx_b=NULL;
+  int *Lii_row=NULL, *Lii_col=NULL, *Lib_row=NULL, *Lib_col=NULL;
+  int Lii_nnz=0, Lib_nnz=0;
+  double *Lii_val=NULL, *Lib_val=NULL;
+  double *V = nullptr, *C = nullptr, *U;
 
   // Read arguments
   cout << "Reading arguments ..." << endl;
@@ -42,8 +45,10 @@ int main( int argc, char** argv ) {
 
   // Construct Laplacian
   cout << "Constructing Laplacian ..." << endl;
-  constructLaplacianSparse(method, nv, nf, V, F, &nnz, &L_val, &L_row, &L_col);
-
+  // constructLaplacianSparse(method, nv, nf, V, F, &nnz, &L_val, &L_row, &L_col);
+  constructLaplacianSparse( method, nv, nb, nf, V, F,
+                            &Lii_val, &Lii_row, &Lii_col, &Lii_nnz,
+                            &Lib_val, &Lib_row, &Lib_col, &Lib_nnz);
   // Map boundary
   cout << "Maping boundary ..." << endl;
   U = new double[2 * nv];
@@ -51,20 +56,20 @@ int main( int argc, char** argv ) {
 
   // Solve harmonic
   cout << "Solving harmonic ..." << endl;
-  solveHarmonicSparse(nv, nb, nnz, L_val, L_row, L_col, U);
+  // solveHarmonicSparse(nv, nb, nnz, L_val, L_row, L_col, U);
 
   // Write object
   cout << "Writing object ..." << endl;
-  writeObject(output, nv, nf, U, C, F);
+  // writeObject(output, nv, nf, U, C, F);
 
   // Free memory
   cout << "Done." << endl;
   delete[] V;
   delete[] C;
   delete[] F;
-  delete[] L_val;
-  delete[] L_row;
-  delete[] L_col;
+  // delete[] L_val;
+  // delete[] L_row;
+  // delete[] L_col;
   delete[] U;
   delete[] idx_b;
 
