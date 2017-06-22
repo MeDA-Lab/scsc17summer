@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    main.hpp
-/// @brief   The main function.
+/// @file    main_sparse.hpp
+/// @brief   The main function. (sparse version)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
@@ -19,8 +19,8 @@ int main( int argc, char** argv ) {
   const char *output = "output.obj";
   Method method  = Method::SIMPLE;
 
-  int nv, nf, nb, *F = nullptr, *idx_b;
-  double *V = nullptr, *C = nullptr, *L, *U;
+  int nv, nf, nb, nnz, *F = nullptr, *idx_b, *L_row, *L_col;
+  double *V = nullptr, *C = nullptr, *U, *L_val;
 
   // Read arguments
   cout << "Reading arguments ..." << endl;
@@ -33,7 +33,7 @@ int main( int argc, char** argv ) {
   // Verify boundary
   cout << "Verifying boundary ..." << endl;
   idx_b = new int[nv];
-  verifyBoundary(nv, nf, F, &nb, idx_b);
+  verifyBoundarySparse(nv, nf, F, &nb, idx_b);
 
   // Reorder vertex
   cout << "Reordering vertex ..." << endl;
@@ -41,8 +41,7 @@ int main( int argc, char** argv ) {
 
   // Construct Laplacian
   cout << "Constructing Laplacian ..." << endl;
-  L = new double[nv * nv];
-  constructLaplacian(method, nv, nf, V, F, L);
+  constructLaplacianSparse(method, nv, nf, V, F, &nnz, &L_val, &L_row, &L_col);
 
   // Map boundary
   cout << "Maping boundary ..." << endl;
@@ -51,7 +50,7 @@ int main( int argc, char** argv ) {
 
   // Solve harmonic
   cout << "Solving harmonic ..." << endl;
-  solveHarmonic(nv, nb, L, U);
+  solveHarmonicSparse(nv, nb, nnz, L_val, L_row, L_col, U);
 
   // Write object
   cout << "Writing object ..." << endl;
@@ -62,7 +61,9 @@ int main( int argc, char** argv ) {
   delete[] V;
   delete[] C;
   delete[] F;
-  delete[] L;
+  delete[] L_val;
+  delete[] L_row;
+  delete[] L_col;
   delete[] U;
   delete[] idx_b;
 

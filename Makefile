@@ -20,11 +20,13 @@ MAGMAINC   = -isystem $(MAGMAROOT)/include
 MAGMALIB   = -L$(MAGMAROOT)/lib
 MAGMALNK   = -lmagma -lcusparse -lcublas -lcudart
 
-TGT      = main
-MKLTGT   = main_mkl
-MAGMATGT = main_magma
-TGTS     = $(TGT) $(MKLTGT) $(MAGMATGT)
-HDRS     = src/harmonic.hpp
+TGT        = main
+MKLTGT     = main_mkl
+MAGMATGT   = main_magma
+MKLSPTGT   = main_mkl_sp
+MAGMASPTGT = main_magma_sp
+TGTS       = $(TGT) $(MKLTGT) $(MAGMATGT)
+HDRS       = src/harmonic.hpp
 
 INC =\
 	-I src \
@@ -43,7 +45,7 @@ OBJ = \
 	solve_harmonic.o \
 	$(EXTOBJ)
 
-MKL_OBJ = \
+MKLOBJ = \
 	read_args.o \
 	read_object.o \
 	verify_boundary.o \
@@ -54,7 +56,29 @@ MKL_OBJ = \
 	solve_harmonic_mkl.o \
 	$(EXTOBJ)
 
-MAGMA_OBJ = \
+MAGMAOBJ = \
+	read_args.o \
+	read_object.o \
+	verify_boundary.o \
+	reorder_vertex.o \
+	construct_laplacian.o \
+	map_boundary.o \
+	write_object.o \
+	solve_harmonic_magma.o \
+	$(EXTOBJ)
+
+MKLSPOBJ = \
+	read_args.o \
+	read_object.o \
+	verify_boundary.o \
+	reorder_vertex.o \
+	construct_laplacian.o \
+	map_boundary.o \
+	write_object.o \
+	solve_harmonic_mkl.o \
+	$(EXTOBJ)
+
+MAGMASPOBJ = \
 	read_args.o \
 	read_object.o \
 	verify_boundary.o \
@@ -84,20 +108,32 @@ all: main
 main: main.o $(OBJ)
 	$(CXX) $(CXXFLAGS) $< $(OBJ) -o $@
 
-main_mkl: main.o $(MKL_OBJ)
-	$(CXX) $(CXXFLAGS) $< $(MKL_OBJ) -o $@ $(MKLLIB) $(MKLLNK)
+main_mkl: main.o $(MKLOBJ)
+	$(CXX) $(CXXFLAGS) $< $(MKLOBJ) -o $@ $(MKLLIB) $(MKLLNK)
 
-main_magma: main.o $(MAGMA_OBJ)
-	$(CXX) $(CXXFLAGS) $< $(MAGMA_OBJ) -o $@ $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
+main_magma: main.o $(MAGMAOBJ)
+	$(CXX) $(CXXFLAGS) $< $(MAGMAOBJ) -o $@ $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
+
+main_mkl_sp: main_sparse.o $(MKLSPOBJ)
+	$(CXX) $(CXXFLAGS) $< $(MKLSPOBJ) -o $@ $(MKLLIB) $(MKLLNK)
+
+main_magma_sp: main_sparse.o $(MAGMASPOBJ)
+	$(CXX) $(CXXFLAGS) $< $(MAGMASPOBJ) -o $@ $(MKLLIB) $(MAGMALIB) $(MKLLNK) $(MAGMALNK)
 
 run: $(TGT)
-	./$(TGT) -f data/Square.obj
+	./$(TGT)
 
 run_mkl: $(MKLTGT)
-	./$(MKLTGT) -f data/Square.obj
+	./$(MKLTGT)
 
 run_magma: $(MAGMATGT)
-	./$(MAGMATGT) -f data/Square.obj
+	./$(MAGMATGT)
+
+run_mkl_sp: $(MKLSPTGT)
+	./$(MKLSPTGT)
+
+run_magma_sp: $(MAGMASPTGT)
+	./$(MAGMASPTGT)
 
 doc:
 	$(DOX) doxygen/Doxyfile

@@ -2,7 +2,7 @@
 /// @file    solve_harmonic_mkl.cpp
 /// @brief   The implementation of harmonic problem solving using MKL.
 ///
-/// @author  Unknown
+/// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <harmonic.hpp>
@@ -14,7 +14,9 @@
 void solveHarmonic(
     const int nv,
     const int nb,
-    double *L,
+    double *L_val,
+    int *L_row,
+    int *L_col,
     double *U
 ) {
   const int ni = nv-nb;
@@ -27,9 +29,9 @@ void solveHarmonic(
   int *ipiv = new int[ni];
 
   // ====================================================================================================================== //
-  // Solve Lii Ui = Lib Ub
+  // Solve Lii Ui = - Lib Ub
 
-  // Tmp [in Ui] := Lib * Ub
+  // Tmp [in Ui] := - Lib * Ub
   cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, ni, 2, nb, -1.0, Lib, nv, Ub, nv, 0.0, Ui, nv);
 
   // Solve Lii Ui = Tmp [in Ui]
