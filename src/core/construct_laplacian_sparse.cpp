@@ -136,9 +136,15 @@ void constructLaplacianSparse(
     if (F_x >= nb && F_y < nb)  Lib_nnz++;
     if (F_y >= nb && F_z < nb)  Lib_nnz++;
     if (F_z >= nb && F_x < nb)  Lib_nnz++;
-    if (method==Method::COMPLEX && F_x < nb && F_y >= nb) Lib_nnz++;
-    if (method==Method::COMPLEX && F_y < nb && F_z >= nb) Lib_nnz++;
-    if (method==Method::COMPLEX && F_z < nb && F_x >= nb) Lib_nnz++;
+    if (method==Method::COMPLEX) {
+      if (F_x >= nb && F_y >= nb) Lii_nnz++;
+      if (F_y >= nb && F_z >= nb) Lii_nnz++;
+      if (F_z >= nb && F_x >= nb) Lii_nnz++;
+      if (F_x < nb && F_y >= nb) Lib_nnz++;
+      if (F_y < nb && F_z >= nb) Lib_nnz++;
+      if (F_z < nb && F_x >= nb) Lib_nnz++;
+    }
+    
   }
   tuple<int, int, double> *Lib= new tuple<int, int , double> [Lib_nnz];
   tuple<int, int, double> *Lii= new tuple<int, int , double> [Lii_nnz];
@@ -197,7 +203,13 @@ void constructLaplacianSparse(
           get<0>(Lii[index_Lii])=row-nb;
           get<1>(Lii[index_Lii])=col-nb;
           get<2>(Lii[index_Lii])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          get<2>(Lii[row-nb])+=get<2>(Lii[index_Lii]);
+          get<2>(Lii[row-nb])-=get<2>(Lii[index_Lii]);
+          index_Lii++;
+          //swap
+          get<0>(Lii[index_Lii])=col-nb;
+          get<1>(Lii[index_Lii])=row-nb;
+          get<2>(Lii[index_Lii])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
+          get<2>(Lii[col-nb])-=get<2>(Lii[index_Lii]);
           index_Lii++;
         }
         else if (row >= nb && col < nb) {
@@ -205,7 +217,7 @@ void constructLaplacianSparse(
           get<0>(Lib[index_Lib])=row-nb;
           get<1>(Lib[index_Lib])=col;
           get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          get<2>(Lii[row-nb])+=get<2>(Lib[index_Lib]);
+          get<2>(Lii[row-nb])-=get<2>(Lib[index_Lib]);
           index_Lib++;
         }
         else if (row < nb && col >= nb) {
@@ -213,7 +225,7 @@ void constructLaplacianSparse(
           get<0>(Lib[index_Lib])=col-nb;
           get<1>(Lib[index_Lib])=row;
           get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          get<2>(Lii[col-nb])+=get<2>(Lib[index_Lib]);
+          get<2>(Lii[col-nb])-=get<2>(Lib[index_Lib]);
           index_Lib++;
         }
       }
