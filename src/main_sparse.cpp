@@ -49,25 +49,7 @@ int main( int argc, char** argv ) {
   constructLaplacianSparse( method, nv, nb, nf, V, F,
                             &Lii_val, &Lii_row, &Lii_col, &Lii_nnz,
                             &Lib_val, &Lib_row, &Lib_col, &Lib_nnz);
-  ofstream fout("Lib.txt", ofstream::out);
-  cout<<"?\n";
-  // for (int i=0; i<=nv-nb; i++){
-  //   cout<<"M"<<i<<" "<<Lib_row[i]<<"\n";
-  // }
-  for (int i=0; i<nv-nb; i++){
-    for (int j=Lib_row[i]; j<Lib_row[i+1]; j++){
-      fout<<i<<" "<<Lib_col[j]<<" "<<Lib_val[j]<<"\n";
-    }
-  }
-  fout.close();
-  fout.open("Lii.txt",ofstream::out);
-  for (int i=0; i<nv-nb; i++){
-    for (int j=Lii_row[i]; j<Lii_row[i+1]; j++){
-      fout<<i<<" "<<Lii_col[j]<<" "<<Lii_val[j]<<"\n";
-    }
-  }
-  fout.close();
-  // cout<<"nv"<<nv<<"nb"<<nb<<"\n";
+
   // Map boundary
   cout << "Maping boundary ..." << endl;
   U = new double[2 * nv];

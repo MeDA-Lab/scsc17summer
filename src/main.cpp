@@ -50,15 +50,6 @@ int main( int argc, char** argv ) {
   tic(&timer);
   constructLaplacian(method, nv, nf, V, F, L); cout << " Done.  ";
   toc(&timer);
-
-  ofstream fout("L.txt", ofstream::out);
-  for (int i=0; i<nv; i++){
-    for (int j=0; j<nv; j++){
-      if (L[i+j*nv]!=0)
-        fout<<i<<" "<<j<<" "<<L[i+j*nv]<<"\n";
-    }
-  }
-  fout.close();
   
   // Map boundary
   U = new double[2 * nv];
