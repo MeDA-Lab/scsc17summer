@@ -8,7 +8,7 @@
 #include <iostream>
 #include <harmonic.hpp>
 #include <timer.hpp>
-
+#include <fstream>
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,18 +49,22 @@ int main( int argc, char** argv ) {
   constructLaplacianSparse( method, nv, nb, nf, V, F,
                             &Lii_val, &Lii_row, &Lii_col, &Lii_nnz,
                             &Lib_val, &Lib_row, &Lib_col, &Lib_nnz);
+
   // Map boundary
   cout << "Maping boundary ..." << endl;
   U = new double[2 * nv];
   mapBoundary(nv, nb, V, U);
 
+  
   // Solve harmonic
   cout << "Solving harmonic ..." << endl;
-  // solveHarmonicSparse(nv, nb, nnz, L_val, L_row, L_col, U);
-
+  solveHarmonicSparse(nv, nb,
+                      Lii_val, Lii_row, Lii_col, 
+                      Lib_val, Lib_row, Lib_col, 
+                      U );
   // Write object
   cout << "Writing object ..." << endl;
-  // writeObject(output, nv, nf, U, C, F);
+  writeObject(output, nv, nf, U, C, F);
 
   // Free memory
   cout << "Done." << endl;

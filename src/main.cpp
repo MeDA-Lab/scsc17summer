@@ -8,7 +8,7 @@
 #include <iostream>
 #include <harmonic.hpp>
 #include <timer.hpp>
-
+#include <fstream>
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ int main( int argc, char** argv ) {
   tic(&timer);
   constructLaplacian(method, nv, nf, V, F, L); cout << " Done.  ";
   toc(&timer);
-
+  
   // Map boundary
   U = new double[2 * nv];
   cout << "Mapping Boundary .......................";

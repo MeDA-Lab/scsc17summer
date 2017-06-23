@@ -184,8 +184,9 @@ void solveHarmonic( const int nv, const int nb, double *L, double *U );
 /// @note  The output arrays should be allocated before calling this routine.
 ///
 void solveHarmonicSparse( const int nv, const int nb,
-                          double *Lii_val, int *Lii_row, int *Lii_col, const int Lii_nnz,
-                          double *Lib_val, int *Lib_row, int *Lib_col, const int Lib_nnz, double *U );
+                          const double *Lii_val, const int *Lii_row, const int *Lii_col, 
+                          const double *Lib_val, const int *Lib_row, const int *Lib_col,
+                          double *U );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  write the object file

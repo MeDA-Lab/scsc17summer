@@ -71,11 +71,13 @@ void coo2csr(
     }
   }
   *nnz=temp_nnz;
-
   *csr_a = new double [temp_nnz];
   *csr_col = new int [temp_nnz];
   double *A=*csr_a;
   int *row=*csr_row, *col=*csr_col;
+  for (int i=0; i<csr_row_num+1; i++){
+    row[i]=0;
+  }
   int index=0;
   for (int i=0; i<coo_num; i++){
     if (i==0){
@@ -100,7 +102,9 @@ void coo2csr(
       index++;
     }
   }
-  row[csr_row_num]=index;
+  for (int i=get<0>(coo[coo_num-1])+1; i<=csr_row_num; i++ ){
+    row[i]=index;
+  }
   if (index!=temp_nnz){
     cerr<<"coo2csr Error\n";
     exit(1);
@@ -123,9 +127,15 @@ void constructLaplacianSparse(
     if (F_x >= nb && F_y < nb)  Lib_nnz++;
     if (F_y >= nb && F_z < nb)  Lib_nnz++;
     if (F_z >= nb && F_x < nb)  Lib_nnz++;
-    if (method==Method::COMPLEX && F_x < nb && F_y >= nb) Lib_nnz++;
-    if (method==Method::COMPLEX && F_y < nb && F_z >= nb) Lib_nnz++;
-    if (method==Method::COMPLEX && F_z < nb && F_x >= nb) Lib_nnz++;
+    if (method==Method::COMPLEX) {
+      if (F_x >= nb && F_y >= nb) Lii_nnz++;
+      if (F_y >= nb && F_z >= nb) Lii_nnz++;
+      if (F_z >= nb && F_x >= nb) Lii_nnz++;
+      if (F_x < nb && F_y >= nb) Lib_nnz++;
+      if (F_y < nb && F_z >= nb) Lib_nnz++;
+      if (F_z < nb && F_x >= nb) Lib_nnz++;
+    }
+    
   }
   tuple<int, int, double> *Lib= new tuple<int, int , double> [Lib_nnz];
   tuple<int, int, double> *Lii= new tuple<int, int , double> [Lii_nnz];
@@ -184,7 +194,13 @@ void constructLaplacianSparse(
           get<0>(Lii[index_Lii])=row-nb;
           get<1>(Lii[index_Lii])=col-nb;
           get<2>(Lii[index_Lii])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          get<2>(Lii[row-nb])+=get<2>(Lii[index_Lii]);
+          get<2>(Lii[row-nb])-=get<2>(Lii[index_Lii]);
+          index_Lii++;
+          //swap
+          get<0>(Lii[index_Lii])=col-nb;
+          get<1>(Lii[index_Lii])=row-nb;
+          get<2>(Lii[index_Lii])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
+          get<2>(Lii[col-nb])-=get<2>(Lii[index_Lii]);
           index_Lii++;
         }
         else if (row >= nb && col < nb) {
@@ -192,7 +208,7 @@ void constructLaplacianSparse(
           get<0>(Lib[index_Lib])=row-nb;
           get<1>(Lib[index_Lib])=col;
           get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          get<2>(Lii[row-nb])+=get<2>(Lib[index_Lib]);
+          get<2>(Lii[row-nb])-=get<2>(Lib[index_Lib]);
           index_Lib++;
         }
         else if (row < nb && col >= nb) {
@@ -200,7 +216,7 @@ void constructLaplacianSparse(
           get<0>(Lib[index_Lib])=col-nb;
           get<1>(Lib[index_Lib])=row;
           get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
-          get<2>(Lii[col-nb])+=get<2>(Lib[index_Lib]);
+          get<2>(Lii[col-nb])-=get<2>(Lib[index_Lib]);
           index_Lib++;
         }
       }
