@@ -24,8 +24,9 @@ void spmv(const int num_row, const double *val, const int *row, const int *col, 
 }
 void solveHarmonicSparse( 
   const int nv, const int nb,
-  const double *Lii_val, const int *Lii_row, const int *Lii_col, const int Lii_nnz,
-  const double *Lib_val, const int *Lib_row, const int *Lib_col, const int Lib_nnz, double *U 
+  const double *Lii_val, const int *Lii_row, const int *Lii_col,
+  const double *Lib_val, const int *Lib_row, const int *Lib_col, 
+  double *U 
 ) {
   int ni=nv-nb;
   char trans='N';

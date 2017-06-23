@@ -59,8 +59,9 @@ int main( int argc, char** argv ) {
   // Solve harmonic
   cout << "Solving harmonic ..." << endl;
   solveHarmonicSparse(nv, nb,
-                      Lii_val, Lii_row, Lii_col, Lii_nnz,
-                      Lib_val, Lib_row, Lib_col, Lib_nnz, U );
+                      Lii_val, Lii_row, Lii_col, 
+                      Lib_val, Lib_row, Lib_col, 
+                      U );
   // Write object
   cout << "Writing object ..." << endl;
   writeObject(output, nv, nf, U, C, F);
