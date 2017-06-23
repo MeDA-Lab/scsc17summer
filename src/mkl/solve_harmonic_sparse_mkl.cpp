@@ -13,6 +13,15 @@ using namespace std;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @todo  To be implemented!
 ///
+void spmv(const int num_row, const double *val, const int *row, const int *col, double *b, double* x){
+  // A*b=x
+  for (int i=0; i<num_row; i++){
+    x[i]=0;
+    for (int j=row[i]; j<row[i+1]; j++) {
+      x[i]+=val[j]*b[col[j]];
+    }
+  }
+}
 void solveHarmonicSparse( 
   const int nv, const int nb,
   const double *Lii_val, const int *Lii_row, const int *Lii_col, const int Lii_nnz,
@@ -41,16 +50,21 @@ void solveHarmonicSparse(
   double       *Ui  = U+nb;
   cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, ni, 2, nb, -1.0, Lib, ni, Ub, nv, 0.0, Ui, nv);
 
-  
+  ofstream fout("U1.txt", ofstream::out);
+  for (int i=0; i<nv; i++){
+    fout<<U[i]<<" "<<U[nv+i]<<"\n";
+  }
+  fout.close();
 //   int ncols=2;
 //   double alpha=1.0, beta=0.0;
   char trans='N';
 //   char matdescra[6]={'G', 'L', 'N', 'C', ' ',' '};
   double *b=new double[ni*2], *x=new double [ni*2];
-  for (int i=0; i<ni; i++){
-    b[i]=U[nb+i];
-    b[ni+i]=U[nv+nb+i];
-  }
+  // for (int i=0; i<ni; i++){
+  //   b[i]=U[nb+i];
+  //   b[ni+i]=U[nv+nb+i];
+  // }
+  // for (int i=0; i)
 //   cout<<"@@\n";
 // //   for (int i=0; i<ni; i++){
 // //     for (int j=Lib_row[i]; j<Lib_row[i+1]; j++){
@@ -65,12 +79,19 @@ void solveHarmonicSparse(
 //     fout<<U[i]<<" "<<U[nv+i]<<"\n";
 //   }
 //   // fout.close();
-  // mkl_cspblas_dcsrgemv (&trans , &ni , Lib_val , Lib_row , Lib_col , U , b );
-  // mkl_cspblas_dcsrgemv (&trans , &ni , Lib_val , Lib_row , Lib_col , U+nv , b+ni );
-  // for (int i=0; i<ni; i++) {
-    // U[nb+i]=b[i];
-    // U[nv+nb+i]=b[/ni+i];
-  // }
+  mkl_cspblas_dcsrgemv (&trans , &ni , Lib_val , Lib_row , Lib_col , U , U+nb );
+  mkl_cspblas_dcsrgemv (&trans , &ni , Lib_val , Lib_row , Lib_col , U+nv , U+nv+nb );
+  // spmv(ni, Lib_val, Lib_row, Lib_col, U, U+nb);
+  // spmv(ni, Lib_val, Lib_row, Lib_col, U+nv, U+nv+nb);
+  fout.open("U2.txt", ofstream::out);
+  for (int i=0; i<nv; i++){
+    fout<<U[i]<<" "<<U[nv+i]<<"\n";
+  }
+  fout.close();
+  for (int i=0; i<ni; i++) {
+    b[i]=-U[nb+i];
+    b[ni+i]=-U[nv+nb+i];
+  }
 //   // fout.open("b.txt", ofstream::out);
 //   for (int i=0; i<ni; i++) {
 //     fout<<b[i]<<" "<<b[ni+i]<<"\n";
