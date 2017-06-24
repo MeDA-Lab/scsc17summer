@@ -31,7 +31,7 @@ void dispUsage( const char *bin ) {
   cout << "Options:" << endl;
   cout << "  -h, --help            Display this information" << endl;
   cout << "  -f, --file            The graph file" << endl;
-  cout << "  -w, --weight          0: Simple, 1: Complex" << endl;
+  cout << "  -w, --weight          0: KIRCHHOFF, 1: COTANGENT" << endl;
   cout << "  -o, --output          The output file" << endl;
 }
 
@@ -51,7 +51,7 @@ void readArgs( int argc, char** argv, const char *&input, const char *&output, M
 
       case 'w': {
         method = static_cast<Method>(atoi(optarg));
-        assert(method >= Method::SIMPLE && method < Method::COUNT );
+        assert(method >= Method::KIRCHHOFF && method < Method::COUNT );
         break;
       }
 

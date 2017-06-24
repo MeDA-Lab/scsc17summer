@@ -19,7 +19,7 @@
 ///
 enum class Method {
   SIMPLE = 0,   ///< Simple  method.
-  COMPLEX = 1,  ///< Complex method.
+  COTANGENT = 1,  ///< Complex method.
   COUNT,        ///< Used for counting number of methods.
 };
 

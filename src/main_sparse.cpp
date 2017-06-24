@@ -18,12 +18,11 @@ int main( int argc, char** argv ) {
 
   const char *input  = "input.obj";
   const char *output = "output.obj";
-  Method method  = Method::SIMPLE;
+  Method method = Method::KIRCHHOFF;
 
-  int nv, nf, nb, *F = nullptr, *idx_b=NULL;
-  int *Lii_row=NULL, *Lii_col=NULL, *Lib_row=NULL, *Lib_col=NULL;
-  int Lii_nnz=0, Lib_nnz=0;
-  double *Lii_val=NULL, *Lib_val=NULL;
+  int nv, nf, nb, *F = nullptr, *idx_b = nullptr;
+  int Lii_nnz = 0, Lib_nnz = 0, *Lii_row = nullptr, *Lii_col = nullptr, *Lib_row = nullptr, *Lib_col = nullptr;
+  double *Lii_val = nullptr, *Lib_val = nullptr;
   double *V = nullptr, *C = nullptr, *U;
 
   // Read arguments
@@ -45,23 +44,19 @@ int main( int argc, char** argv ) {
 
   // Construct Laplacian
   cout << "Constructing Laplacian ..." << endl;
-  // constructLaplacianSparse(method, nv, nf, V, F, &nnz, &L_val, &L_row, &L_col);
-  constructLaplacianSparse( method, nv, nb, nf, V, F,
-                            &Lii_val, &Lii_row, &Lii_col, &Lii_nnz,
-                            &Lib_val, &Lib_row, &Lib_col, &Lib_nnz);
+  constructLaplacianSparse(method, nv, nb, nf, V, F,
+                           &Lii_val, &Lii_row, &Lii_col, &Lii_nnz,
+                           &Lib_val, &Lib_row, &Lib_col, &Lib_nnz);
 
   // Map boundary
   cout << "Maping boundary ..." << endl;
   U = new double[2 * nv];
   mapBoundary(nv, nb, V, U);
 
-  
+
   // Solve harmonic
   cout << "Solving harmonic ..." << endl;
-  solveHarmonicSparse(nv, nb,
-                      Lii_val, Lii_row, Lii_col, 
-                      Lib_val, Lib_row, Lib_col, 
-                      U );
+  solveHarmonicSparse(nv, nb, Lii_val, Lii_row, Lii_col, Lib_val, Lib_row, Lib_col, U);
   // Write object
   cout << "Writing object ..." << endl;
   writeObject(output, nv, nf, U, C, F);
@@ -71,9 +66,12 @@ int main( int argc, char** argv ) {
   delete[] V;
   delete[] C;
   delete[] F;
-  // delete[] L_val;
-  // delete[] L_row;
-  // delete[] L_col;
+  delete[] Lii_val;
+  delete[] Lii_row;
+  delete[] Lii_col;
+  delete[] Lib_val;
+  delete[] Lib_row;
+  delete[] Lib_col;
   delete[] U;
   delete[] idx_b;
 
