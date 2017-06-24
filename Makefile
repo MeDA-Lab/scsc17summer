@@ -18,7 +18,7 @@ MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core 
 MAGMAROOT ?= /opt/magma/2.2/
 MAGMAINC   = -isystem $(MAGMAROOT)/include
 MAGMALIB   = -L$(MAGMAROOT)/lib
-MAGMALNK   = -lmagma -lcusparse -lcublas -lcudart
+MAGMALNK   = -lmagma_sparse -lmagma -lcusparse -lcublas -lcudart
 
 TGT        = main
 MKLTGT     = main_mkl
@@ -88,7 +88,7 @@ MAGMASPOBJ = \
 	reorder_vertex.o \
 	construct_laplacian_sparse.o \
 	map_boundary.o \
-	solve_harmonic_magma.o \
+	solve_harmonic_sparse_magma.o \
 	write_object.o \
 	$(EXTOBJ)
 
