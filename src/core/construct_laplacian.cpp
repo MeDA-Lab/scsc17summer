@@ -65,7 +65,7 @@ void constructLaplacian(
     for (int i = 0; i<nv; i++){
       L[i*nv+i]=-1*Sum(nv, L+i*nv, 1);
     }
-  }else if (method == Method::COMPLEX) // Cotengent Laplacian Matrix
+  }else if (method == Method::COMPLEX) // Cotangent Laplacian Matrix
   {
     double *v_ki = new double [3];
     double *v_kj = new double [3];
