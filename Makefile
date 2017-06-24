@@ -44,8 +44,8 @@ OBJ = \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
-	write_object.o \
 	solve_harmonic.o \
+	write_object.o \
 	$(EXTOBJ)
 
 MKLOBJ = \
@@ -53,10 +53,10 @@ MKLOBJ = \
 	read_object.o \
 	verify_boundary_sparse.o \
 	reorder_vertex.o \
-	construct_laplacian.o \
-	map_boundary.o \
-	write_object.o \
+	construct_laplacian_mkl.o \
+	map_boundary_mkl.o \
 	solve_harmonic_mkl.o \
+	write_object.o \
 	$(EXTOBJ)
 
 MAGMAOBJ = \
@@ -66,8 +66,8 @@ MAGMAOBJ = \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
-	write_object.o \
 	solve_harmonic_magma.o \
+	write_object.o \
 	$(EXTOBJ)
 
 MKLSPOBJ = \
@@ -77,8 +77,8 @@ MKLSPOBJ = \
 	reorder_vertex.o \
 	construct_laplacian_sparse.o \
 	map_boundary.o \
-	write_object.o \
 	solve_harmonic_sparse_mkl.o \
+	write_object.o \
 	$(EXTOBJ)
 
 MAGMASPOBJ = \
@@ -88,8 +88,8 @@ MAGMASPOBJ = \
 	reorder_vertex.o \
 	construct_laplacian_sparse.o \
 	map_boundary.o \
-	write_object.o \
 	solve_harmonic_magma.o \
+	write_object.o \
 	$(EXTOBJ)
 
 .PHONY: all run run_mkl run_magma doc clean

@@ -16,9 +16,9 @@ using namespace std;
 ///
 int main( int argc, char** argv ) {
 
-  const char *input  = "data/Square.obj";
+  const char *input  = "input.obj";
   const char *output = "output.obj";
-  Method method  = Method::SIMPLE;
+  Method method  = Method::KIRCHHOFF;
 
   int nv, nf, nb, *F = nullptr, *idx_b;
   double timer, *V = nullptr, *C = nullptr, *L, *U;
@@ -33,33 +33,33 @@ int main( int argc, char** argv ) {
 
   // Verify boundary
   idx_b = new int[nv];
-  cout << "Verifying boundary .....................";
+  cout << "Verifying boundary ....................." << flush;
   tic(&timer);
   verifyBoundarySparse(nv, nf, F, &nb, idx_b); cout << " Done.  ";
   toc(&timer);
 
   // Reorder vertices
-  cout << "Reordering vertices ....................";
+  cout << "Reordering vertices ...................." << flush;
   tic(&timer);
   reorderVertex(nv, nb, nf, idx_b, V, C, F); cout << " Done.  ";
   toc(&timer);
 
   // Construct Laplacian
   L = new double[nv * nv];
-  cout << "Constructing Laplacian .................";
+  cout << "Constructing Laplacian ................." << flush;
   tic(&timer);
   constructLaplacian(method, nv, nf, V, F, L); cout << " Done.  ";
   toc(&timer);
-  
+
   // Map boundary
   U = new double[2 * nv];
-  cout << "Mapping Boundary .......................";
+  cout << "Mapping Boundary ......................." << flush;
   tic(&timer);
   mapBoundary(nv, nb, V, U); cout << " Done.  ";
   toc(&timer);
 
   // Solve harmonic
-  cout << "Solving Harmonic .......................";
+  cout << "Solving Harmonic ......................." << flush;
   tic(&timer);
   solveHarmonic(nv, nb, L, U); cout << " Done.  ";
   toc(&timer);

@@ -111,7 +111,7 @@ void coo2csr(
   }
 }
 
-void constructLaplacianSparse( 
+void constructLaplacianSparse(
   const Method method, const int nv, const int nb, const int nf, const double *V, const int *F,
   double **ptr_Lii_val, int **ptr_Lii_row, int **ptr_Lii_col, int *ptr_Lii_nnz,
   double **ptr_Lib_val, int **ptr_Lib_row, int **ptr_Lib_col, int *ptr_Lib_nnz
@@ -127,7 +127,7 @@ void constructLaplacianSparse(
     if (F_x >= nb && F_y < nb)  Lib_nnz++;
     if (F_y >= nb && F_z < nb)  Lib_nnz++;
     if (F_z >= nb && F_x < nb)  Lib_nnz++;
-    if (method==Method::COMPLEX) {
+    if (method==Method::COTANGENT) {
       if (F_x >= nb && F_y >= nb) Lii_nnz++;
       if (F_y >= nb && F_z >= nb) Lii_nnz++;
       if (F_z >= nb && F_x >= nb) Lii_nnz++;
@@ -135,7 +135,7 @@ void constructLaplacianSparse(
       if (F_y < nb && F_z >= nb) Lib_nnz++;
       if (F_z < nb && F_x >= nb) Lib_nnz++;
     }
-    
+
   }
   tuple<int, int, double> *Lib= new tuple<int, int , double> [Lib_nnz];
   tuple<int, int, double> *Lii= new tuple<int, int , double> [Lii_nnz];
@@ -146,7 +146,7 @@ void constructLaplacianSparse(
   }
   int index_Lii=nv-nb, index_Lib=0;
   int row=0, col=0;
-  if (method == Method::SIMPLE) //Simple Laplacian Matrix
+  if (method == Method::KIRCHHOFF) //Kirchhoff Laplacian Matrix
   {
     for (int i = 0; i < nf; ++i)
     {
@@ -173,8 +173,8 @@ void constructLaplacianSparse(
       cerr<<"SIMPLE: nnz, index  Error\n";
       exit(1);
     }
-    
-  }else if (method == Method::COMPLEX) // Cotengent Laplacian Matrix
+
+  }else if (method == Method::COTANGENT) // Cotangent Laplacian Matrix
   {
 
     index_Lib=0;
@@ -182,7 +182,7 @@ void constructLaplacianSparse(
     for (int i = 0; i < nf; ++i)
     {
       for (int k=0; k<3; k++){
-        
+
         int row=F[k*nf+i]-1;
         int col=F[(k+1)%3*nf+i]-1;
         int mid=F[(k+2)%3*nf+i]-1;
@@ -212,7 +212,7 @@ void constructLaplacianSparse(
           index_Lib++;
         }
         else if (row < nb && col >= nb) {
-          // Lbi swap col, row 
+          // Lbi swap col, row
           get<0>(Lib[index_Lib])=col-nb;
           get<1>(Lib[index_Lib])=row;
           get<2>(Lib[index_Lib])=-0.5*Dot(3, v, b)/CrossNorm(v, b);
@@ -226,7 +226,7 @@ void constructLaplacianSparse(
       cerr<<index_Lib<<" "<<Lib_nnz<<"\n";
       exit(1);
     }
-    
+
   }
   coo2csr(Lib_nnz, Lib, nv-nb, ptr_Lib_val, ptr_Lib_row, ptr_Lib_col, ptr_Lib_nnz);
   coo2csr(Lii_nnz, Lii, nv-nb, ptr_Lii_val, ptr_Lii_row, ptr_Lii_col, ptr_Lii_nnz);

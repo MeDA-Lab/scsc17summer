@@ -48,7 +48,7 @@ void constructLaplacian(
   {
     L[i]=0;
   }
-  if (method == Method::SIMPLE) //Simple Laplacian Matrix
+  if (method == Method::KIRCHHOFF) //Kirchhoff Laplacian Matrix
   {
     for (int i = 0; i < nf; ++i)
     {
@@ -65,7 +65,7 @@ void constructLaplacian(
     for (int i = 0; i<nv; i++){
       L[i*nv+i]=-1*Sum(nv, L+i*nv, 1);
     }
-  }else if (method == Method::COMPLEX) // Cotangent Laplacian Matrix
+  }else if (method == Method::COTANGENT) // Cotangent Laplacian Matrix
   {
     double *v_ki = new double [3];
     double *v_kj = new double [3];

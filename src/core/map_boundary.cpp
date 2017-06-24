@@ -4,12 +4,11 @@
 ///
 /// @author  Yuhsiang Mike Tsai
 ///
+
 #define _USE_MATH_DEFINES
-#include <harmonic.hpp>
 #include <cmath>
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @todo  To be implemented!
-///
+#include <harmonic.hpp>
+
 double diffnorm(const double *x, const double *y, int n, int inc){
   double ans=0;
   double temp=0;

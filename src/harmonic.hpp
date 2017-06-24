@@ -18,9 +18,9 @@
 /// @todo   Finish the enumeration.
 ///
 enum class Method {
-  SIMPLE = 0,   ///< Simple  method.
-  COMPLEX = 1,  ///< Complex method.
-  COUNT,        ///< Used for counting number of methods.
+  KIRCHHOFF = 0,  ///< Kirchhoff Laplacian matrix.
+  COTANGENT = 1,  ///< Cotangent Laplacian matrix.
+  COUNT,          ///< Used for counting number of methods.
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,7 +184,7 @@ void solveHarmonic( const int nv, const int nb, double *L, double *U );
 /// @note  The output arrays should be allocated before calling this routine.
 ///
 void solveHarmonicSparse( const int nv, const int nb,
-                          const double *Lii_val, const int *Lii_row, const int *Lii_col, 
+                          const double *Lii_val, const int *Lii_row, const int *Lii_col,
                           const double *Lib_val, const int *Lib_row, const int *Lib_col,
                           double *U );
 
