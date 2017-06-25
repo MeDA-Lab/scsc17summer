@@ -5,6 +5,7 @@
 /// @author  Yuhsiang Mike Tsai
 ///
 
+#include <iostream>
 #include <harmonic.hpp>
 #include <mkl.h>
 using namespace std;
@@ -20,9 +21,14 @@ using namespace std;
 // }
 
 void solveHarmonicSparse(
-  const int nv, const int nb,
-  const double *Lii_val, const int *Lii_row, const int *Lii_col,
-  const double *Lib_val, const int *Lib_row, const int *Lib_col,
+  const int nv,
+  const int nb,
+  const double *Lii_val,
+  const int *Lii_row,
+  const int *Lii_col,
+  const double *Lib_val,
+  const int *Lib_row,
+  const int *Lib_col,
   double *U
 ) {
   int ni=nv-nb;

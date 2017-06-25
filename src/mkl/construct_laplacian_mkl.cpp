@@ -7,6 +7,7 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
+#include <iostream>
 #include <harmonic.hpp>
 #include <mkl.h>
 

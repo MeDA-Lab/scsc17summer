@@ -2,7 +2,8 @@
 /// @file    construct_laplacian.cpp
 /// @brief   The implementation of Laplacian construction.
 ///
-/// @author  Yen Chen Chen, Yuhsiang Mike Tsai
+/// @author  Yen Chen Chen
+/// @author  Yuhsiang Mike Tsai
 ///
 
 #include <harmonic.hpp>
