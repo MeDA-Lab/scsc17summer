@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @file    solve_harmonic_sparse_magma.cpp
-/// @brief   The implementation of harmonic problem solving using MKL.
+/// @brief   The implementation of harmonic problem solving using MAGMA.
 ///
 /// @author  Yuhsiang Mike Tsai
 ///
