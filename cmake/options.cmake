@@ -7,14 +7,14 @@ endif()
 option(SCSC_BUILD_BIN "Build binaries."      "ON")
 option(SCSC_BUILD_DOC "Build documentation." "ON")
 
-set(SCSC_USE_OMP "OFF" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP] (Require 'SCSC_USE_BLAS = MKL')")
+option(SCSC_USE_MKL "Enable MKL support." "ON")
+option(SCSC_USE_GPU "Enable GPU support." "ON")
+
+set(SCSC_USE_OMP "OFF" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP] (Require 'SCSC_USE_MKL')")
 set_property(CACHE SCSC_USE_OMP PROPERTY STRINGS "OFF;GOMP;IOMP")
 if(NOT SCSC_USE_OMP STREQUAL "OFF" AND NOT SCSC_USE_OMP STREQUAL "GOMP" AND NOT SCSC_USE_OMP STREQUAL "IOMP" )
   message(FATAL_ERROR "SCSC_USE_OMP must be either OFF, GOMP, or IOMP")
 endif()
-
-option(SCSC_USE_MKL "Enable MKL support." "ON")
-option(SCSC_USE_GPU "Enable GPU support." "ON")
 
 # Set variables
 set(MKL_OMP ${SCSC_USE_OMP})

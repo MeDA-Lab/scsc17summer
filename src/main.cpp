@@ -5,10 +5,11 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
+#include <cmath>
+#include <climits>
 #include <iostream>
 #include <harmonic.hpp>
 #include <timer.hpp>
-#include <fstream>
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,6 +29,11 @@ int main( int argc, char** argv ) {
 
   // Read object
   readObject(input, &nv, &nf, &V, &C, &F);
+  if ( nv > sqrt(INT_MAX) ) {
+    cerr << "The size of the Laplacian matrix (" << nv << " x " << nv << " = " << long(nv) * long(nv)
+         << ") exceed the maximum value of integer (" << INT_MAX << ")" << endl;
+    abort();
+  }
 
   cout << endl;
 
