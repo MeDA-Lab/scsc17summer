@@ -47,7 +47,7 @@ void constructLaplacian(
   {
     L[i]=0;
   }
-  if (method == Method::KIRCHHOFF) //Kirchhoff Laplacian Matrix
+  if (method == Method::KIRCHHOFF) // Kirchhoff Laplacian Matrix
   {
     for (int i = 0; i < nf; ++i)
     {
