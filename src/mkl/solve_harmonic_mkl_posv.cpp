@@ -22,12 +22,12 @@ void solveHarmonic(
   double       *Ui  = U+nb;
 
   // ====================================================================================================================== //
-  // Solve Lii Ui = - Lib Ub
+  // Solve Lii * Ui = - Lib Ub
 
   // Tmp [in Ui] := - Lib * Ub
   cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, ni, 2, nb, 1.0, Lib, nv, Ub, nv, 0.0, Ui, nv);
 
-  // Solve Lii Ui = Tmp [in Ui]
+  // Solve Lii * Ui = Tmp [in Ui]
   int info = LAPACKE_dposv(LAPACK_COL_MAJOR, 'U', ni, 2, Lii, nv, Ui, nv);
   assert(info == 0);
 }
