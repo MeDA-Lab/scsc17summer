@@ -41,7 +41,7 @@ int main( int argc, char** argv ) {
   // Reorder vertices
   cout << "Reordering vertices ...................." << flush;
   tic(&timer);
-  reorderVertex(nv, nb, nf, idx_b, V, C, F); cout << " Done.  ";
+  reorderVertex(nv, nb, nf, V, C, F, idx_b); cout << " Done.  ";
   toc(&timer);
 
   // Construct Laplacian
