@@ -15,9 +15,10 @@ MKLLIB   = -L$(MKLROOT)/lib/intel64
 # MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
 MKLLNK   = -m64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lgomp -lpthread -lm -ldl
 
-MAGMAROOT ?= /opt/magma/2.2/
-MAGMAINC   = -isystem $(MAGMAROOT)/include
-MAGMALIB   = -L$(MAGMAROOT)/lib
+MAGMAROOT ?= /opt/magma/2.2
+CUDAROOT  ?= /usr/local/cuda
+MAGMAINC   = -isystem $(MAGMAROOT)/include -isystem $(CUDAROOT)/include
+MAGMALIB   = -L$(MAGMAROOT)/lib -L$(CUDAROOT)/lib64
 MAGMALNK   = -lmagma_sparse -lmagma -lcusparse -lcublas -lcudart
 
 TGT        = main
