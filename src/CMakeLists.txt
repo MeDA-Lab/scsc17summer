@@ -72,3 +72,11 @@ list(APPEND sparse_files
 )
 add_executable(main_sp main_sparse.cpp ${sparse_files} ${SCSC_SRC_SP_CONSTRUCT_LAPLACIAN} ${SCSC_SRC_SP_MAP_BOUNDARY} ${SCSC_SRC_SP_SOLVE_HARMONIC})
 set_target(main_sp "_sp")
+
+# Test target
+list(APPEND test_files
+  core/read_args.cpp
+  core/read_object.cpp
+)
+add_executable(scsc_test test.cpp ${test_files} ${SCSC_SRC_CONSTRUCT_LAPLACIAN})
+set_target(scsc_test "_test")
