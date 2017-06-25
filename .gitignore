@@ -32,5 +32,4 @@
 *.json
 docs
 main
-+data
-
+!data
