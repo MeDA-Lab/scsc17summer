@@ -35,7 +35,7 @@ int main( int argc, char** argv ) {
   idx_b = new int[nv];
   cout << "Verifying boundary ....................." << flush;
   tic(&timer);
-  verifyBoundarySparse(nv, nf, F, &nb, idx_b); cout << " Done.  ";
+  verifyBoundary(nv, nf, F, &nb, idx_b); cout << " Done.  ";
   toc(&timer);
 
   // Reorder vertices

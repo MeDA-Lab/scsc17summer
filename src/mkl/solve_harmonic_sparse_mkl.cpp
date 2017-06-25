@@ -11,15 +11,15 @@
 #include <fstream>
 using namespace std;
 
-void spmv(const int num_row, const double *val, const int *row, const int *col, double *b, double* x){
-  // A*b=x
-  for (int i=0; i<num_row; i++){
-    x[i]=0;
-    for (int j=row[i]; j<row[i+1]; j++) {
-      x[i]+=val[j]*b[col[j]];
-    }
-  }
-}
+// void spmv(const int num_row, const double *val, const int *row, const int *col, double *b, double* x){
+//   // A*b=x
+//   for (int i=0; i<num_row; i++){
+//     x[i]=0;
+//     for (int j=row[i]; j<row[i+1]; j++) {
+//       x[i]+=val[j]*b[col[j]];
+//     }
+//   }
+// }
 
 void solveHarmonicSparse(
   const int nv, const int nb,

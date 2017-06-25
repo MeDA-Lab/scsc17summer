@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <harmonic.hpp>
+#include <getopt.h>
 
 using namespace std;
 
@@ -16,7 +17,7 @@ const char* const short_opt = ":hf:w:o:";
 const struct option long_opt[] = {
   {"help",   0, NULL, 'h'},
   {"file",   1, NULL, 'f'},
-  {"weight", 1, NULL, 'w'},
+  {"type",   1, NULL, 't'},
   {"output", 1, NULL, 'o'},
   {NULL,     0, NULL, 0}
 };
@@ -29,10 +30,10 @@ const struct option long_opt[] = {
 void dispUsage( const char *bin ) {
   cout << "Usage: " << bin << " [OPTIONS]" << endl;
   cout << "Options:" << endl;
-  cout << "  -h, --help            Display this information" << endl;
-  cout << "  -f, --file            The graph file" << endl;
-  cout << "  -w, --weight          0: KIRCHHOFF, 1: COTANGENT" << endl;
-  cout << "  -o, --output          The output file" << endl;
+  cout << "  -h,       --help           Display this information" << endl;
+  cout << "  -f<file>, --file <file>    The graph file" << endl;
+  cout << "  -t<num>,  --type <num>     0: KIRCHHOFF(default), 1: COTANGENT" << endl;
+  cout << "  -o<file>, --output <file>  The output file" << endl;
 }
 
 void readArgs( int argc, char** argv, const char *&input, const char *&output, Method &method ) {
@@ -49,7 +50,7 @@ void readArgs( int argc, char** argv, const char *&input, const char *&output, M
         break;
       }
 
-      case 'w': {
+      case 't': {
         method = static_cast<Method>(atoi(optarg));
         assert(method >= Method::KIRCHHOFF && method < Method::COUNT );
         break;

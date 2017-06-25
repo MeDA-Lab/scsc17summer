@@ -42,4 +42,3 @@ void mapBoundary(
     U[nv+i]=sin(2*M_PI*temp);
   }
 }
-
