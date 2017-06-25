@@ -28,19 +28,17 @@ MAGMASPTGT = main_magma_sp
 TGTS       = $(TGT) $(MKLTGT) $(MAGMATGT) # $(MKLSPTGT) $(MAGMASPTGT)
 
 HDRS       = \
-	src/harmonic.hpp \
-	src/timer.hpp
+	include/harmonic.hpp \
+	include/timer.hpp
 
-INC =\
-	-I src \
-	-I ext
+INC = -I include
 
 EXTOBJ = \
 
 OBJ = \
 	read_args.o \
 	read_object.o \
-	verify_boundary_sparse.o \
+	verify_boundary.o \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
@@ -51,7 +49,7 @@ OBJ = \
 MKLOBJ = \
 	read_args.o \
 	read_object.o \
-	verify_boundary_sparse.o \
+	verify_boundary.o \
 	reorder_vertex.o \
 	construct_laplacian_mkl.o \
 	map_boundary_mkl.o \
@@ -62,7 +60,7 @@ MKLOBJ = \
 MAGMAOBJ = \
 	read_args.o \
 	read_object.o \
-	verify_boundary_sparse.o \
+	verify_boundary.o \
 	reorder_vertex.o \
 	construct_laplacian.o \
 	map_boundary.o \
@@ -100,6 +98,9 @@ all: $(TGTS)
 	$(CXX) $(CXXFLAGS) -c $< $(INC)
 
 %.o: src/core/%.cpp $(HDRS)
+	$(CXX) $(CXXFLAGS) -c $< $(INC)
+
+%.o: src/sparse/%.cpp $(HDRS)
 	$(CXX) $(CXXFLAGS) -c $< $(INC)
 
 %.o: src/mkl/%.cpp $(HDRS)

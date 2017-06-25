@@ -7,8 +7,6 @@
 
 #include <harmonic.hpp>
 #include <mkl.h>
-#include <iostream>
-#include <fstream>
 using namespace std;
 
 // void spmv(const int num_row, const double *val, const int *row, const int *col, double *b, double* x){

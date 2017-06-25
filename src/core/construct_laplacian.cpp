@@ -9,9 +9,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @todo  To be implemented!
-///
+
 double CrossNorm(const double *x, const double *y) {
   double z[3];
   z[0] = x[1]*y[2] - x[2]*y[1];

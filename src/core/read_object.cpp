@@ -2,8 +2,8 @@
 /// @file    read_object.cpp
 /// @brief   The implementation of object reading.
 ///
-/// @author  Yuhisang Mike Tsai
 /// @author  Mu Yang  <<emfomy@gmail.com>>
+/// @author  Yuhisang Mike Tsai
 ///
 
 #include <cstdlib>

@@ -2,7 +2,7 @@
 /// @file    solve_harmonic.cpp
 /// @brief   The implementation of harmonic problem solving.
 ///
-/// @author  Unknown
+/// @author  Nil
 ///
 
 #include <harmonic.hpp>

@@ -22,7 +22,7 @@ magma_dcsrset_gpu(
     magmaDouble_ptr val,
     magma_d_matrix *A,
     magma_queue_t queue )
-{   
+{
     A->num_rows = m;
     A->num_cols = n;
     magma_index_t nnz;
@@ -39,9 +39,14 @@ magma_dcsrset_gpu(
 
 
 void solveHarmonicSparse(
-  const int nv, const int nb,
-  const double *Lii_val, const int *Lii_row, const int *Lii_col,
-  const double *Lib_val, const int *Lib_row, const int *Lib_col,
+  const int nv,
+  const int nb,
+  const double *Lii_val,
+  const int *Lii_row,
+  const int *Lii_col,
+  const double *Lib_val,
+  const int *Lib_row,
+  const int *Lib_col,
   double *U
 ) {
   magma_init();
@@ -71,7 +76,7 @@ void solveHarmonicSparse(
 //   magma_malloc((void **)&dX, ni*2*sizeof(double)))
 //   magma_malloc((void **)&dU, nv*2*sizeof(double));
 //   magma_setvector(nv*2, sizeof(double), U, 1, dU.dval, 1, queue);
-  
+
   magma_dcsrset_gpu(ni, nb, dLib_row, dLib_col, dLib_val, &dLib, queue);
   magma_dcsrset_gpu(ni, ni, dLii_row, dLii_col, dLii_val, &dLii, queue);
 //   magma_d_mtransfer(Lii, &dLii, Magma_CPU, Magma_DEV, queue);

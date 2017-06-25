@@ -9,10 +9,6 @@
 #include <vector>
 #include <iostream>
 using namespace std;
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @todo  To be implemented!
-///
-
 
 pair<int, int> find_index(int *A, int n, int value){
   pair<int, int> ind;
@@ -63,9 +59,9 @@ void verifyBoundarySparse(
     key[3*i]=construct_key(p[0],p[1],nv);
     key[3*i+1]=construct_key(p[1],p[2],nv);
     key[3*i+2]=construct_key(p[2],p[0],nv);
-    
+
   }
-  
+
   qsort(key, 3*nf, sizeof(int64_t), compare);
   int nb=0, bd_vertex=nv+1, bd_ind=nv+1;
   int *Bi= new int [2*nv], *Bj = new int [2*nv];
@@ -94,7 +90,7 @@ void verifyBoundarySparse(
       }
     }
   }
-  
+
   vector<int> VB;
   pair<int, int> ind;
   for (int i=0; i<nb; i++){
@@ -115,7 +111,7 @@ void verifyBoundarySparse(
   for (int i=0; i<*ptr_nb; i++){
     idx_b[i]=VB[i];
   }
-  
+
   delete [] Bi;
   delete [] Bj;
   return;
