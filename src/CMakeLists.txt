@@ -78,5 +78,5 @@ list(APPEND test_files
   core/read_args.cpp
   core/read_object.cpp
 )
-add_executable(scsc_test test.cpp ${test_files} ${SCSC_SRC_CONSTRUCT_LAPLACIAN})
-set_target(scsc_test "_test")
+add_executable(test_laplacian test.cpp ${test_files} ${SCSC_SRC_CONSTRUCT_LAPLACIAN})
+set_target(test_laplacian "_test")
