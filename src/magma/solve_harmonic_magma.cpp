@@ -6,6 +6,7 @@
 ///
 
 #include <harmonic.hpp>
+#include <iostream>
 #include "magma_v2.h"
 #include "magmasparse.h"
 #include "magma_lapack.h"
