@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @file    verify_boundary_sparse.cpp
-/// @brief   The implementation of boundary verification.
+/// @brief   The implementation of boundary verification. (sparse version)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 /// @author  Yuhsiang Mike Tsai
@@ -9,7 +9,6 @@
 #include <harmonic.hpp>
 #include <map>
 #include <utility>
-#include <iostream>
 using namespace std;
 
 using Pair = pair<int, int>;
@@ -29,9 +28,9 @@ void verifyBoundarySparse(
   // Generate graph
   map<Pair, int> Gb;
   for ( int i = 0; i < nf; ++i ) {
-    p[0] = F[i] - 1;
-    p[1] = F[nf+i] - 1;
-    p[2] = F[2*nf+i] - 1;
+    p[0] = F[i];
+    p[1] = F[nf+i];
+    p[2] = F[2*nf+i];
 
     Gb[Pair(p[1], p[0])]++;
     Gb[Pair(p[2], p[1])]++;
