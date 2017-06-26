@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    solve_harmonic_mkl.cpp
+/// @file    solve_harmonic_mkl_gesv.cpp
 /// @brief   The implementation of harmonic problem solving using MKL.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
