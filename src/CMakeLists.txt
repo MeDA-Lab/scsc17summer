@@ -15,7 +15,7 @@ macro(SET_TARGET target suffix)
 
   add_custom_target(
     run${suffix}
-    COMMAND $<TARGET_FILE:${target}> "-f${CMAKE_SOURCE_DIR}/${SCSC_OBJ_INPUT}" "-o${CMAKE_SOURCE_DIR}/${SCSC_OBJ_OUTPUT}"
+    COMMAND $<TARGET_FILE:${target}> "-f${CMAKE_SOURCE_DIR}/${SCSC_OBJ_INPUT}" "-o${CMAKE_SOURCE_DIR}/${SCSC_OBJ_OUTPUT}"  "-t${SCSC_METHOD}"
     DEPENDS ${target}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Running ${target}"

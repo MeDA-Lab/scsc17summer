@@ -8,6 +8,9 @@ set_property(CACHE SCSC_OBJ_INPUT PROPERTY STRINGS "${objfiles}")
 
 set(SCSC_OBJ_OUTPUT "output.obj" CACHE STRING "The output object.")
 
+set(SCSC_METHOD "0" CACHE STRING "The method.")
+set_property(CACHE SCSC_METHOD PROPERTY STRINGS "0;1")
+
 # Create symbolic links
 foreach(objfile ${objfiles})
   string(REGEX REPLACE "\\.[^.]*$" "" file ${objfile})

@@ -17,7 +17,7 @@ int main( int argc, char** argv ) {
   const char *output = "output.obj";
   Method method = Method::KIRCHHOFF;
 
-  int nv, nf, nb, *F = nullptr, *idx_b;
+  int nv, nf, *F = nullptr;
   double *V = nullptr, *C = nullptr, *L;
 
   // Read arguments
@@ -38,7 +38,7 @@ int main( int argc, char** argv ) {
   // Print out result
   for (int i = 0; i < nv; ++i) {
     for (int j = 0; j < nv; ++j) {
-      cout << L[i+j*nv] << " ";
+      cout << L[i+j*nv] << '\t';
     }
     cout << endl;
   }
