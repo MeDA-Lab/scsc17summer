@@ -17,7 +17,7 @@ Scientific Computing on Supercomputer
 ## Requirements
 * [CMake](https://cmake.org) 2.8+.
 * C++ compiler with C++11 support.
-* [Intel&reg; Math Kernel Library](https://software.intel.com/en-us/intel-mkl) (**Recommended** for better performance, used for BLAS & LAPACK).
+* [Intel&reg; Math Kernel Library](https://software.intel.com/en-us/intel-mkl) (Used for BLAS & LAPACK).
 * [MAGMA](http://icl.cs.utk.edu/magma/) 2+ (Used for BLAS & LAPACK with GPU support).
 * [DOxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation).
 * [OpenMP](http://openmp.org) Library.

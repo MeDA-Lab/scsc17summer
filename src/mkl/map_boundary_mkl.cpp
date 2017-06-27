@@ -42,10 +42,10 @@ void mapBoundary(
     Ux[i] = prefix_sum;
   }
 
-  double head = Ux[0], total = Ux[nb-1] - Ux[0];
+  double total = Ux[nb-1];
 
   // Uy := 2pi * (Ux-head) / total
-  vdLinearFrac(nb, Ux, Ux, 2*M_PI, -2*M_PI*head, 0.0, total, Uy);
+  vdLinearFrac(nb, Ux, Ux, 2*M_PI, 0.0, 0.0, total, Uy);
 
   // Ux := cos(Uy)
   vdCos(nv, Uy, Ux);

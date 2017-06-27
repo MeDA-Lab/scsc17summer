@@ -35,9 +35,9 @@ void mapBoundary(
     prefix_sum+=temp;
     U[i]=prefix_sum;
   }
-  double head=U[0], total=U[nb-1]-U[0];
+  double total=U[nb-1];
   for (int i=0; i<nb; i++){
-    temp=(U[i]-head)/total;
+    temp=U[i]/total;
     U[i]=cos(2*M_PI*temp);
     U[nv+i]=sin(2*M_PI*temp);
   }
