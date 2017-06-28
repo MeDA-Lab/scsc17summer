@@ -31,7 +31,7 @@ function(SET_CODE prefix text)
   )
   file(
     GLOB_RECURSE spfiles
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*/${prefix}_sparse*.cpp"
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*/${prefix}*sparse*.cpp"
   )
   if(spfiles)
     list(REMOVE_ITEM files ${spfiles})

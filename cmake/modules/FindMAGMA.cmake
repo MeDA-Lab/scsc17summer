@@ -11,6 +11,8 @@ if(NOT MAGMA_ROOT AND NOT $ENV{MAGMA_ROOT} STREQUAL "")
   set(MAGMA_ROOT "$ENV{MAGMA_ROOT}")
 endif()
 
+set(MAGMA_ROOT "${MAGMA_ROOT}" CACHE PATH "The root path of MAGMA." FORCE)
+
 ################################################################################
 
 find_path(
