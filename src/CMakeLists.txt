@@ -6,7 +6,7 @@ if(NOT SCSC_BUILD_BIN)
 endif()
 
 # Function
-macro(SET_TARGET target suffix)
+macro(SET_TARGET target suffix files)
   target_include_directories(${target} SYSTEM PUBLIC "${INCS}")
   target_link_libraries(${target} "${LIBS}")
   target_compile_definitions(${target} PUBLIC "${DEFS}")
@@ -18,7 +18,7 @@ macro(SET_TARGET target suffix)
     COMMAND $<TARGET_FILE:${target}> "-f${CMAKE_SOURCE_DIR}/${SCSC_OBJ_INPUT}" "-o${CMAKE_SOURCE_DIR}/${SCSC_OBJ_OUTPUT}"  "-t${SCSC_METHOD}"
     DEPENDS ${target}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Running ${target}"
+    COMMENT "Running ${target} with ${files}"
   )
 endmacro()
 
@@ -60,7 +60,7 @@ list(APPEND core_files
   core/write_object.cpp
 )
 add_executable(main main.cpp ${core_files} ${SCSC_SRC_CONSTRUCT_LAPLACIAN} ${SCSC_SRC_MAP_BOUNDARY} ${SCSC_SRC_SOLVE_HARMONIC})
-set_target(main "")
+set_target(main "" "${SCSC_SRC_CONSTRUCT_LAPLACIAN} ${SCSC_SRC_MAP_BOUNDARY} ${SCSC_SRC_SOLVE_HARMONIC}")
 
 # Sparse target
 list(APPEND sparse_files
@@ -71,7 +71,7 @@ list(APPEND sparse_files
   core/write_object.cpp
 )
 add_executable(main_sp main_sparse.cpp ${sparse_files} ${SCSC_SRC_SP_CONSTRUCT_LAPLACIAN} ${SCSC_SRC_SP_MAP_BOUNDARY} ${SCSC_SRC_SP_SOLVE_HARMONIC})
-set_target(main_sp "_sp")
+set_target(main_sp "_sp" "${SCSC_SRC_SP_CONSTRUCT_LAPLACIAN} ${SCSC_SRC_SP_MAP_BOUNDARY} ${SCSC_SRC_SP_SOLVE_HARMONIC}")
 
 # Test target
 list(APPEND test_files
@@ -79,4 +79,4 @@ list(APPEND test_files
   core/read_object.cpp
 )
 add_executable(test_laplacian test.cpp ${test_files} ${SCSC_SRC_CONSTRUCT_LAPLACIAN})
-set_target(test_laplacian "_test")
+set_target(test_laplacian "_test" "${SCSC_SRC_CONSTRUCT_LAPLACIAN}")
