@@ -29,4 +29,7 @@
 *.app
 
 # Others
-build
+*.json
+docs
+main
+!data
