@@ -23,26 +23,15 @@ int readGraph(char *input, double *E){
 
     // skip first line
     pfile.ignore(4096, '\n');
-    pfile >> tmp;
-    std::cout << "tmp = " << tmp << std::endl;
-    pfile >> tmp;
-    std::cout << "tmp = " << tmp << std::endl;
-    pfile >> tmp;
-    std::cout << "tmp = " << tmp << std::endl;
-    pfile >> tmp;
-    std::cout << "tmp = " << tmp << std::endl;
-    pfile >> tmp;
-    std::cout << "tmp = " << tmp << std::endl;
-    pfile >> tmp;
-    std::cout << "tmp = " << tmp << std::endl;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Count size
-/*    while( !pfile.eof() ) {
+    while( !pfile.eof() ) {
     	++count;
+    	fin.ignore(4096, '\n');
     	std::cout << count << std::endl;
-    }*/
-    std::cout << "Size of data is " << count/2 << "x" << 2 << std::endl;
+    }
+    std::cout << "Size of data is " << count << "x" << 2 << std::endl;
 
     // Return to top of file
 
