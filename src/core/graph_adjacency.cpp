@@ -11,6 +11,8 @@
 #include <cassert>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
+#include <vector>
 #include <mkl.h>
 
 using namespace std;
