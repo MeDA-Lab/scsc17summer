@@ -20,12 +20,17 @@ int readGraph(char *input, double *E){
 	pfile.open(input,std::ios::in);
     assert( pfile );
 
-    pfile.ignore ( std::numeric_limits<std::streamsize>::max(), '\n' );
+    // skip first line
+    pfile.ignore(4096, '\n');
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Count size
     while( !pfile.eof() ) {
     	++count;
     }
     std::cout << "Size of data is " << count/2 << "x" << 2 << std::endl;
+
+    // Return to top of file
 
     return 0;
 }
