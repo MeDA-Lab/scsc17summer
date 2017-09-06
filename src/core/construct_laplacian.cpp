@@ -9,6 +9,7 @@
 #include <harmonic.hpp>
 #include <iostream>
 #include <cmath>
+#include <cassert>
 #include <numeric>
 #include <mkl_spblas.h>
 using namespace std;
@@ -106,6 +107,7 @@ void GraphLaplacian(int nnz, int *csrRowPtrA,
   sparse_matrix_t A, D;
   sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
   sparse_operation_t op = SPARSE_OPERATION_NON_TRANSPOSE;
+  sparse_status_t stat;
 
   sumInd = new int[n];
   sum    = new double[n];
@@ -120,7 +122,10 @@ void GraphLaplacian(int nnz, int *csrRowPtrA,
     sumInd[i] = i;
   }
 
-  mkl_sparse_d_create_csr(&A, indexing, n, n, csrRowPtrA, csrRowPtrA+1, csrColIndA, csrValA);
-  mkl_sparse_d_create_coo(&D, indexing, n, n, n, sumInd, sumInd, sum);
-  mkl_sparse_d_add(op, A, -1.0, D, &A);
+  stat = mkl_sparse_d_create_csr(&A, indexing, n, n, csrRowPtrA, csrRowPtrA+1, csrColIndA, csrValA);
+  assert( stat == SPARSE_STATUS_SUCCESS );
+  stat = mkl_sparse_d_create_coo(&D, indexing, n, n, n, sumInd, sumInd, sum);
+  assert( stat == SPARSE_STATUS_SUCCESS );
+  stat = mkl_sparse_d_add(op, A, -1.0, D, &A);
+  assert( stat == SPARSE_STATUS_SUCCESS );
 }
