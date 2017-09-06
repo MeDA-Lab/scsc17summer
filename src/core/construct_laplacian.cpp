@@ -104,7 +104,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   int *cooColIndA, double *cooValA, int n){
   double *rowsum, tmp=0;
   int *sumInd, k=0;
-  sparse_matrix_t A, D;
+  sparse_matrix_t A, D, tmp_A;
   sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
   sparse_operation_t op = SPARSE_OPERATION_NON_TRANSPOSE;
   sparse_status_t stat;
@@ -143,7 +143,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   assert( stat == SPARSE_STATUS_SUCCESS );
   stat = mkl_sparse_d_create_coo(&D, indexing, n, n, n, sumInd, sumInd, rowsum);
   assert( stat == SPARSE_STATUS_SUCCESS );
-  stat = mkl_sparse_d_add(op, A, -1.0, D, &A);
+  stat = mkl_sparse_d_add(op, A, -1.0, D, &tmp_A);
   assert( stat == SPARSE_STATUS_SUCCESS );
 
   delete rowsum;
