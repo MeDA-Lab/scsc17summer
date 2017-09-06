@@ -99,7 +99,7 @@ void constructLaplacian(
   }
 }
 
-void GraphLaplacian(int *nnz, int *csrRowPtrA,
+void GraphLaplacian(int nnz, int *csrRowPtrA,
   int *csrColIndA, double *csrValA, int n){
   double *sum;
   int *sumInd;

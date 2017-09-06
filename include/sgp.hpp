@@ -58,6 +58,6 @@ int GraphAdjacency(int *E, int E_size,
 ///
 /// @note  The output arrays are allocated by this routine (using new).
 ///
-void GraphLaplacian(int *nnz, int *csrRowPtrA,
+void GraphLaplacian(int nnz, int *csrRowPtrA,
   int *csrColIndA, double *csrValA, int n);
 #endif  // SCSC_SGP_HPP
