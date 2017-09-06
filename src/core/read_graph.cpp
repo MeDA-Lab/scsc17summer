@@ -20,6 +20,8 @@ int readGraph(char *input, double *E){
 	pfile.open(input,std::ios::in);
     assert( pfile );
 
+    pfile.ignore ( std::numeric_limits<std::streamsize>::max(), '\n' );
+
     while( !pfile.eof() ) {
     	++count;
     }
