@@ -14,7 +14,7 @@
 
 int readGraph(char *input, double *E){
 	std::fstream pfile;
-	int count = 0;
+	int count = -1;
 	double *a, *b;
 	int tmp;
 
@@ -22,7 +22,7 @@ int readGraph(char *input, double *E){
     assert( pfile );
 
     // skip first line
-    //pfile.ignore(4096, '\n');
+    pfile.ignore(4096, '\n');
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Count size
