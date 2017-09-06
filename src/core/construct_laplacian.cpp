@@ -101,10 +101,10 @@ void constructLaplacian(
 }
 
 void GraphLaplacian(int nnz, int *cooRowIndA,
-  int *cooColIndA, double *cooValA, int n){
-  double *rowsum, *acsr, *dcsr, *ccsr, tmp=0, beta=-1.0;
+  int *cooColIndA, double *cooValA, int n, int *csrRowIndA,
+  int *csrColIndA, double *csrValA){
+  double *rowsum, *acsr, *dcsr, tmp=0, beta=-1.0;
   int *sumInd, *ja, *ia, *jd, *id, info, k=0;
-  int *jc, *ic;
   int *job;
   char trans = 'N';
   int request = 1;
@@ -153,23 +153,21 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, &k, cooValA, cooRowIndA, cooColIndA, &info);
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &k, rowsum, sumInd, sumInd, &info);
-  ic = new int[n+1];
-  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
+  *csrRowIndA = new int[n+1];
+  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, *csrRowIndA, &nzmax, &info);
   assert( info == 0 );
   request = 2;
-  jc   = new int[ic[n]-1];
-  ccsr = new double[ic[n]-1];
-  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
+  *csrColIndA   = new int[ic[n]-1];
+  *csrValA      = new double[ic[n]-1];
+  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, *csrRowIndA, &nzmax, &info);
   assert( info == 0 );
   job[0]=0;
   job[4]=nnz;
   job[5]=3;
   for (int i = 0; i < ic[n]-1; i++)
   {
-    cout << "ccsr[" << i << "] = " << ccsr[i] << endl;
+    (*csrColIndA)[i] = (*csrColIndA)[i] - 1;
   }
-  mkl_dcsrcoo(job, &n, ccsr, jc, ic, &k, cooValA, cooRowIndA, cooColIndA, &info);
-  assert( info == 0 );
 
   delete rowsum;
   delete sumInd;
