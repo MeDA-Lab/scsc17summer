@@ -49,12 +49,7 @@ int readGraph(char *input, double **E){
     	pfile.ignore(4096, '\n');
     }
     std::copy(a, a+count, *E);
-    std::cout << "test point 1" << std::endl;
     std::copy(b, b+count, *E+count);
-    for (int i = 0; i < count; i++)
-    {
-    	std::cout << *E[i] << "\t" << *E[i+count] << std::endl;
-    }
 
     return 0;
 }
