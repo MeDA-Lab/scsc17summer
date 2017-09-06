@@ -22,7 +22,7 @@ int GraphAdjacency(int *E, int E_size,
 	int **csrColIndA, double **csrValA, int *n){
 	int pos1, pos2, *cooRowIndA;
 	double *tmp_array;
-	vector<double> v1 (E_size , 1.0);
+	vector<double> v1 (2*E_size , 1.0);
 
 	tmp_array = new double[2*E_size];
 	copy(E, E+2*E_size, tmp_array);
@@ -32,14 +32,16 @@ int GraphAdjacency(int *E, int E_size,
 	*n    = max(E[pos1] , E[pos2+E_size]);
 	cout << "n = " << *n << endl;
 
-	cooRowIndA  = new int[E_size];
-	*csrColIndA = new int[E_size];
-	*csrValA    = new double[E_size];
+	cooRowIndA  = new int[2*E_size];
+	*csrColIndA = new int[2*E_size];
+	*csrValA    = new double[2*E_size];
 	*csrRowPtrA = new int[(*n)+1];
 
 	*nnz = *n;
 	copy(E , E+E_size , cooRowIndA);
 	copy(E+E_size, E+2*E_size, *csrColIndA);
+	copy(E+E_size, E+2*E_size, cooRowIndA);
+	copy(E , E+E_size, *csrColIndA);
 	copy(v1.begin(),v1.end(),*csrValA);
 
 	return 0;
