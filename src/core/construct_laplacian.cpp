@@ -139,7 +139,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   }
 
   //L = D - A
-  stat = mkl_sparse_d_create_coo(&A, indexing, n, n, nnz, cooRowIndA, csrColIndA, cooValA);
+  stat = mkl_sparse_d_create_coo(&A, indexing, n, n, nnz, cooRowIndA, cooColIndA, cooValA);
   assert( stat == SPARSE_STATUS_SUCCESS );
   stat = mkl_sparse_d_create_coo(&D, indexing, n, n, n, sumInd, sumInd, rowsum);
   assert( stat == SPARSE_STATUS_SUCCESS );
