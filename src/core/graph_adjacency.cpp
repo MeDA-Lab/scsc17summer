@@ -13,6 +13,8 @@
 #include <fstream>
 #include <algorithm>
 #include <vector>
+#include <cuda_runtime.h>
+#include "cusparse.h"
 #include <mkl.h>
 
 using namespace std;
@@ -23,6 +25,12 @@ int GraphAdjacency(int *E, int E_size,
 	int pos1, pos2, *cooRowIndA;
 	double *tmp_array;
 	vector<double> v1 (2*E_size , 1.0);
+	cusparseHandle_t handle;
+	cusparseIndexBase_t idxBase = CUSPARSE_INDEX_BASE_ZERO;
+	cusparseStatus_t stat;
+
+	stat = cusparseCreate(&handle);
+	assert( stat == CUSPARSE_STATUS_SUCCESS );
 
 	tmp_array = new double[2*E_size];
 	copy(E, E+2*E_size, tmp_array);
@@ -43,6 +51,11 @@ int GraphAdjacency(int *E, int E_size,
 	copy(E+E_size, E+2*E_size, cooRowIndA+E_size);
 	copy(E , E+E_size, *csrColIndA+E_size);
 	copy(v1.begin(),v1.end(),*csrValA);
+	stat = cusparseXcoo2csr(handle, cooRowIndA, *nnz, *n, *csrRowPtrA, idxBase);
+	assert( stat == CUSPARSE_STATUS_SUCCESS );
+
+	stat = cusparseDestroy(handle);
+	assert( stat == CUSPARSE_STATUS_SUCCESS );
 
 	return 0;
 }
