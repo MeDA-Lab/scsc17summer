@@ -39,7 +39,7 @@ CUDA_LD_LIB	    = -L$(CUDA_LIB_PATH) $(CUDA_LD_FLAGS)
 
 #==============================================================
 
-obj = read_graph.o graph_adjacency.o
+obj = read_graph.o graph_adjacency.o construct_laplacian.o
 
 INCS = -I include
 TARGETS_O	:= $(TARGETS_SRC:.cpp=.o)

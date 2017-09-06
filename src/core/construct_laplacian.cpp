@@ -9,6 +9,7 @@
 #include <harmonic.hpp>
 #include <iostream>
 #include <cmath>
+#include <mkl_spblas.h>
 using namespace std;
 
 double CrossNorm(const double *x, const double *y) {
@@ -95,4 +96,30 @@ void constructLaplacian(
       L[i*nv+i]=-1*Sum(nv, L+i*nv, 1);
     }
   }
+}
+
+void GraphLaplacian(int *nnz, int *csrRowPtrA,
+  int *csrColIndA, double *csrValA, int n){
+  double *sum;
+  int *sumInd;
+  sparse_matrix_t A, D;
+  sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
+  sparse_operation_t op = SPARSE_OPERATION_NON_TRANSPOSE;
+
+  sumInd = new int[n];
+  sum    = new double[n];
+
+  for (int i = 0; i < n; ++i)
+  {
+    sum[i] = accumulate(csrValA+csrRowPtrA[i], csrValA+csrRowPtrA[i+1],0);
+  }
+
+  for (int i = 0; i < n; ++i)
+  {
+    sumInd[i] = i;
+  }
+
+  mkl_sparse_d_create_csr(&A, indexing, n, n, csrRowPtrA, csrRowPtrA+1, csrColIndA, csrValA);
+  mkl_sparse_d_create_coo(&D, indexing, n, n, n, sumInd, sumInd, sum);
+  mkl_sparse_d_add(op, A, -1.0, D, &A);
 }

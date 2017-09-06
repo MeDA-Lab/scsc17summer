@@ -38,5 +38,7 @@ int main( int argc, char** argv ){
     err_test = GraphAdjacency(E, E_size, &nnz, &csrRowPtrA, &csrColIndA, &csrValA, &n);
     assert( err_test == 0 );
 
+    // Construct Laplacian
+
     return 0;
 }
