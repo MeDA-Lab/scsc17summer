@@ -9,6 +9,7 @@
 #include <harmonic.hpp>
 #include <iostream>
 #include <cmath>
+#include <numeric>
 #include <mkl_spblas.h>
 using namespace std;
 
