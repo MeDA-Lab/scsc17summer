@@ -121,7 +121,7 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
 
   for (int i = 0; i < nnz; i++)
   {
-    if (cooRowPtrA[i]!=cooRowPtrA[i-1])
+    if (i>0 && cooRowPtrA[i]!=cooRowPtrA[i-1])
     {
       rowsum[k] = tmp;
       tmp = 0;
