@@ -157,17 +157,14 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, *csrRowIndA, &nzmax, &info);
   assert( info == 0 );
   request = 2;
-  *csrColIndA   = new int[ic[n]-1];
-  *csrValA      = new double[ic[n]-1];
+  k = *csrRowIndA[n]-1;
+  *csrColIndA   = new int[k];
+  *csrValA      = new double[k];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, *csrRowIndA, &nzmax, &info);
   assert( info == 0 );
   job[0]=0;
   job[4]=nnz;
   job[5]=3;
-  for (int i = 0; i < ic[n]-1; i++)
-  {
-    (*csrColIndA)[i] = (*csrColIndA)[i] - 1;
-  }
 
   delete rowsum;
   delete sumInd;
