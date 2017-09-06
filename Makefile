@@ -51,3 +51,7 @@ MakeExe:sgp_main.out
 
 sgp_main.out: sgp_main.o $(obj)
 	$(LOADER) $< -o $@ $(obj) $(CCFLAGS) $(MKLLNKS)
+
+clean:
+	-rm *.o -f
+	-rm *.out -f
