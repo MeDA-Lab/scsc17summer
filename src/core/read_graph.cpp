@@ -13,11 +13,11 @@
 #include <fstream>
 
 int readGraph(char *input, double *E){
-	fstream pfile;
+	std::fstream pfile;
 	int count = 0;
 	double *a, *b;
 
-	pfile.open(input,ios::in);
+	pfile.open(input,std::ios::in);
     assert( pfile );
 
     while( !pfile.eof() ) {
