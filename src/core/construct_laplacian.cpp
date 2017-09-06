@@ -130,11 +130,11 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
   {
     sumInd[i] = i;
   }
-
-  stat = mkl_sparse_d_create_csr(&A, indexing, n, n, csrRowPtrA, csrRowPtrA+1, csrColIndA, csrValA);
+/*
+  stat = mkl_sparse_d_create_coo(&A, indexing, n, n, cooRowPtrA, cooRowPtrA+1, csrColIndA, csrValA);
   assert( stat == SPARSE_STATUS_SUCCESS );
   stat = mkl_sparse_d_create_coo(&D, indexing, n, n, n, sumInd, sumInd, sum);
   assert( stat == SPARSE_STATUS_SUCCESS );
   stat = mkl_sparse_d_add(op, A, -1.0, D, &A);
-  assert( stat == SPARSE_STATUS_SUCCESS );
+  assert( stat == SPARSE_STATUS_SUCCESS );*/
 }
