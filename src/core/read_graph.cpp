@@ -49,6 +49,7 @@ int readGraph(char *input, double **E){
     	std::cout << "b[" << n << "] = " << b[n] << std::endl;
     	pfile.ignore(4096, '\n');
     }
+    std::cout << "a[" << count << "] = " << a[count] << std::endl;
 
     return 0;
 }
