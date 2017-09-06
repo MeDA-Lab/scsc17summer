@@ -102,15 +102,20 @@ void constructLaplacian(
 
 void GraphLaplacian(int nnz, int *cooRowIndA,
   int *cooColIndA, double *cooValA, int n){
-  double *rowsum, *acsr, tmp=0;
-  int *sumInd, *ja, *ia, info, k=0;
+  double *rowsum, *acsr, *dcsr, *ccsr, tmp=0, beta=-1.0;
+  int *sumInd, *ja, *ia, *jd, *id, info, k=0;
+  int *jc, *ic;
   int job[6];
+  char trans = 'N';
+  int request = 0;
+  int sort, nzmax=n*n;
 
   sumInd = new int[n];
   rowsum = new double[n];
   acsr   = new double[nnz];
   ja     = new int[nnz];
   ia     = new int[n+1];
+  dcsr   = new double[n];
 
   // Compute sum of each row of A
   for (int i = 0; i < n; i++)
@@ -144,6 +149,10 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   job[2] = 0;
   job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
+  assert( info == 0 );
+  mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
+  assert( info == 0 );
+  mkldcsradd(trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
   assert( info == 0 );
 
   delete rowsum;
