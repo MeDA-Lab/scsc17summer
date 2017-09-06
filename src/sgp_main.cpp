@@ -28,7 +28,7 @@ int main( int argc, char** argv ){
     // read file
     double *E;
     cout << "read file..." << endl;
-    err_test = readGraph(argv[1], E);
+    err_test = readGraph(argv[1], &E);
 
     return 0;
 }
