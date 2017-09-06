@@ -161,6 +161,11 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   ccsr = new double[ic[n]-1];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
   assert( info == 0 );
+  job[0]=0;
+  job[4]=nnz;
+  job[5]=3;
+  mkl_dcsrcoo(job, &n, ccsr, jc, ic, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
+  assert( info == 0 );
 
   delete rowsum;
   delete sumInd;
