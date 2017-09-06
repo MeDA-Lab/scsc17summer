@@ -52,5 +52,7 @@ int readGraph(char *input, int **E, int *E_size){
     std::copy(b, b+count, *E+count);
     *E_size = count;
 
+    pfile.close();
+
     return 0;
 }
