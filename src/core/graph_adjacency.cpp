@@ -61,9 +61,9 @@ int GraphAdjacency(int *E, int E_size,
 	cudaMalloc( &d_val, 2*E_size*sizeof(double) );
 	cudaMalloc( &d_val_sorted, 2*E_size*sizeof(double) );
 
-	cudaMemcpy(d_cooColIndA, cooColIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_cooRowIndA, cooRowIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_val, cooValA, 2*E_size*sizeof(double), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_cooColIndA, *cooColIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_cooRowIndA, *cooRowIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_val, *cooValA, 2*E_size*sizeof(double), cudaMemcpyHostToDevice);
 
 	cusparseXcoosort_bufferSizeExt(handle, *n, *n, *nnz, d_cooRowIndA, d_cooColIndA, &pBufferSizeInBytes);
 	cudaMalloc( &pBuffer, sizeof(char)* pBufferSizeInBytes);
@@ -75,9 +75,9 @@ int GraphAdjacency(int *E, int E_size,
 
 	cusparseDgthr(handle, *nnz, d_val, d_val_sorted, P, CUSPARSE_INDEX_BASE_ZERO);
 
-	cudaMemcpy(cooRowIndA, d_cooRowIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
-	cudaMemcpy(cooColIndA, d_cooColIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
-	cudaMemcpy(cooValA, d_val_sorted, 2*E_size*sizeof(double),  cudaMemcpyDeviceToHost);
+	cudaMemcpy(*cooRowIndA, d_cooRowIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
+	cudaMemcpy(*cooColIndA, d_cooColIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
+	cudaMemcpy(*cooValA, d_val_sorted, 2*E_size*sizeof(double),  cudaMemcpyDeviceToHost);
 
 	cudaFree(d_cooRowIndA);
 	cudaFree(d_cooColIndA);
