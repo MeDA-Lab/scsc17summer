@@ -150,9 +150,9 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   job[1] = 0;
   job[2] = 0;
   job[5] = 0;
-  mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
+  mkl_dcsrcoo(&job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
   assert( info == 0 );
-  mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
+  mkl_dcsrcoo(&job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
   assert( info == 0 );
   ic = new int[n+1];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
