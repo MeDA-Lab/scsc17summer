@@ -27,9 +27,8 @@ int readGraph(char *input, double *E){
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Count size
     while( !pfile.eof() ) {
-    	++count;
+    	count++;
     	pfile.ignore(4096, '\n');
-    	std::cout << count << std::endl;
     }
     std::cout << "Size of data is " << count << "x" << 2 << std::endl;
 
