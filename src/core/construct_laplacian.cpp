@@ -112,10 +112,14 @@ void GraphLaplacian(int nnz, int *csrRowPtrA,
   sumInd = new int[n];
   sum    = new double[n];
 
+  cout << "test point 1" << endl;
+
   for (int i = 0; i < n; ++i)
   {
     sum[i] = accumulate(csrValA+csrRowPtrA[i], csrValA+csrRowPtrA[i+1],0);
   }
+
+  cout << "test point 2" << endl;
 
   for (int i = 0; i < n; ++i)
   {
