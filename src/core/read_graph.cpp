@@ -29,6 +29,12 @@ int readGraph(char *input, double *E){
     std::cout << "tmp = " << tmp << std::endl;
     pfile >> tmp;
     std::cout << "tmp = " << tmp << std::endl;
+    pfile >> tmp;
+    std::cout << "tmp = " << tmp << std::endl;
+    pfile >> tmp;
+    std::cout << "tmp = " << tmp << std::endl;
+    pfile >> tmp;
+    std::cout << "tmp = " << tmp << std::endl;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Count size
