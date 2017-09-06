@@ -35,7 +35,7 @@ int GraphAdjacency(int *E, int E_size,
 	cooRowIndA  = new int[E_size];
 	*csrColIndA = new int[E_size];
 	*csrValA    = new double[E_size];
-	*csrRowPtrA = new int[n+1];
+	*csrRowPtrA = new int[(*n)+1];
 
 	*nnz = *n;
 	copy(E , E+E_size , cooRowIndA);
