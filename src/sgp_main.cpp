@@ -33,10 +33,10 @@ int main( int argc, char** argv ){
     assert( err_test == 0 );
 
     // Construct adjacency matrix of graph
-    int *nnz, *csrRowPtrA, *csrColIndA;
+    int nnz, *csrRowPtrA, *csrColIndA, n;
     double *csrValA;
     cout << "Construct adjacency matrix of graph..." << endl;
-    err_test = GraphAdjacency(E, E_size, &nnz, &csrRowPtrA, &csrColIndA, &csrValA);
+    err_test = GraphAdjacency(E, E_size, &nnz, &csrRowPtrA, &csrColIndA, &csrValA, &n);
     assert( err_test == 0 );
 
     return 0;

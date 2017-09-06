@@ -28,7 +28,7 @@ int readGraph(char *input, double **E, int *E_size);
 ///
 /// @param[in]   E_size  the path to the object file.
 ///
-/// @param[out]  nnz     number of nonzero elements in the matrix; pointer.
+/// @param[out]  nnz     number of nonzero elements in the matrix.
 ///
 /// @param[out]  csrRowPtrA     CSR row pointer; pointer.
 ///
@@ -36,9 +36,11 @@ int readGraph(char *input, double **E, int *E_size);
 ///
 /// @param[out]  csrValA  nonzero values of the matrix; pointer.
 ///
+/// @param[out]  n        size of the matrix;
+///
 /// @note  The output arrays are allocated by this routine (using new).
 ///
 int GraphAdjacency(double *E, int E_size,
-	int **nnz, int **csrRowPtrA,
-	int **csrColIndA, double **csrValA);
+	int *nnz, int **csrRowPtrA,
+	int **csrColIndA, double **csrValA, int *n);
 #endif  // SCSC_SGP_HPP
