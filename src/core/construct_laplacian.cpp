@@ -116,7 +116,7 @@ void GraphLaplacian(int nnz, int *csrRowPtrA,
 
   for (int i = 0; i < n; ++i)
   {
-    sum[i] = accumulate(csrValA+csrRowPtrA[i], csrValA+csrRowPtrA[i+1], 0, std::plus<double>());
+    sum[i] = accumulate(csrValA+csrRowPtrA[i], csrValA+csrRowPtrA[i+1], std::plus<double>());
     cout << "sum[" << i << "] = " << sum[i] << endl;
   }
 
