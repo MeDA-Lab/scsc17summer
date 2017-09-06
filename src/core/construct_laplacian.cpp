@@ -11,6 +11,7 @@
 #include <cmath>
 #include <cassert>
 #include <numeric>
+#include <vector>
 #include <mkl_spblas.h>
 using namespace std;
 
