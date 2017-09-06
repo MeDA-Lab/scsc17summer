@@ -133,7 +133,7 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
 
   for (int i = 0; i < n; i++)
   {
-    cout << "rowsum[" << k << "] = " << rowsum[k] << endl;
+    cout << "rowsum[" << i << "] = " << rowsum[i] << endl;
   }
 
   cout << "test point 2" << endl;
