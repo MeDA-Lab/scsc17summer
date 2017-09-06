@@ -102,7 +102,7 @@ void constructLaplacian(
 
 void GraphLaplacian(int nnz, int *cooRowPtrA,
   int *cooColIndA, double *cooValA, int n){
-  double *sum;
+  double *rowsum;
   int *sumInd, k=0;
   sparse_matrix_t A, D;
   sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
@@ -110,13 +110,13 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
   sparse_status_t stat;
 
   sumInd = new int[n];
-  sum    = new double[n];
+  rowsum = new double[n];
 
   cout << "test point 1" << endl;
 
-  for (int i = 0; i < nnz; ++i)
+  for (int i = 0; i < n; i++)
   {
-    cout << "cooRowPtrA[" << i << "] = " << cooRowPtrA[i] << endl;
+    rowsum[i] = 0;
   }
 
   for (int i = 0; i < nnz; i++)
@@ -126,7 +126,7 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
       k++;
       //cout << "sum[" << k << "] = " << sum[k] << endl;
     }
-    sum[k] = sum[k] + cooValA[i];
+    rowsum[k] = rowsum[k] + cooValA[i];
   }
 
   cout << "test point 2" << endl;
