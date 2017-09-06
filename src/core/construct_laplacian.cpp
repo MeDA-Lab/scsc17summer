@@ -135,6 +135,8 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
   {
     sumInd[i] = i;
   }
+
+  cout << "test point 3" << endl;
 /*
   stat = mkl_sparse_d_create_coo(&A, indexing, n, n, cooRowPtrA, cooRowPtrA+1, csrColIndA, csrValA);
   assert( stat == SPARSE_STATUS_SUCCESS );
