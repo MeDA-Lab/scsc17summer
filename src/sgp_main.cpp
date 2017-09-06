@@ -39,7 +39,7 @@ int main( int argc, char** argv ){
     assert( err_test == 0 );
 
     // Construct Laplacian
-    GraphLaplacia(nnz, csrRowPtrA, csrColIndA, csrValA, n);
+    GraphLaplacian(nnz, csrRowPtrA, csrColIndA, csrValA, n);
 
     return 0;
 }
