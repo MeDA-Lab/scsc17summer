@@ -8,6 +8,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
+#include <iostream>
 #include "sgp.hpp"
 
 using namespace std;
