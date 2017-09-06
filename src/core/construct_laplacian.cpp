@@ -148,7 +148,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
 
   //L = D - A
   job[0] = 2;
-  job[1] = 0;
+  job[1] = 1;
   job[2] = 0;
   job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
