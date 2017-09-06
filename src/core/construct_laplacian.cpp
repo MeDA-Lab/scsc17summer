@@ -151,8 +151,8 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   job[1] = 1;
   job[2] = 0;
   job[5] = 0;
-  mkl_dcsrcoo(job, &n, acsr, ja, ia, &tmp, cooValA, cooRowIndA, cooColIndA, &info);
-  mkl_dcsrcoo(job, &n, dcsr, jd, id, &tmp, rowsum, sumInd, sumInd, &info);
+  mkl_dcsrcoo(job, &n, acsr, ja, ia, &k, cooValA, cooRowIndA, cooColIndA, &info);
+  mkl_dcsrcoo(job, &n, dcsr, jd, id, &k, rowsum, sumInd, sumInd, &info);
   ic = new int[n+1];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
   assert( info == 0 );
@@ -168,7 +168,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   {
     cout << "ccsr[" << i << "] = " << ccsr[i] << endl;
   }
-  mkl_dcsrcoo(job, &n, ccsr, jc, ic, &tmp, cooValA, cooRowIndA, cooColIndA, &info);
+  mkl_dcsrcoo(job, &n, ccsr, jc, ic, &k, cooValA, cooRowIndA, cooColIndA, &info);
   assert( info == 0 );
 
   delete rowsum;
