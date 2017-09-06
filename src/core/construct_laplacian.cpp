@@ -152,7 +152,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   assert( info == 0 );
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
   assert( info == 0 );
-  mkl_dcsradd(trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
+  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
   assert( info == 0 );
 
   delete rowsum;
