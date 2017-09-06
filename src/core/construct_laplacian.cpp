@@ -101,8 +101,8 @@ void constructLaplacian(
 }
 
 void GraphLaplacian(int nnz, int *cooRowIndA,
-  int *cooColIndA, double *cooValA, int n, int *csrRowIndA,
-  int *csrColIndA, double *csrValA){
+  int *cooColIndA, double *cooValA, int n, int **csrRowIndA,
+  int **csrColIndA, double **csrValA){
   double *rowsum, *acsr, *dcsr, tmp=0, beta=-1.0;
   int *sumInd, *ja, *ia, *jd, *id, info, k=0;
   int *job;
