@@ -72,7 +72,7 @@ int GraphAdjacency(int *E, int E_size,
 
 	cusparseXcoosortByRow(handle, *n, *n, *nnz, d_cooRowIndA, d_cooColIndA, P, pBuffer);
 
-	cusparseDgthr(handle, nnz, d_val, d_val_sorted, P, CUSPARSE_INDEX_BASE_ZERO);
+	cusparseDgthr(handle, *nnz, d_val, d_val_sorted, P, CUSPARSE_INDEX_BASE_ZERO);
 
 	cudaMemcpy(cooRowIndA, d_cooRowIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
 	cudaMemcpy(cooColIndA, d_cooColIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
