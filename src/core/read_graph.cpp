@@ -15,7 +15,7 @@
 int readGraph(char *input, int **E, int *E_size){
 	std::fstream pfile;
 	int count = -1, n = 0;
-	double *a, *b;
+	int *a, *b;
 	int tmp;
 
 	pfile.open(input,std::ios::in);
@@ -36,9 +36,9 @@ int readGraph(char *input, int **E, int *E_size){
     pfile.clear();
   	pfile.seekg(0, std::ios::beg);
 
-  	a = new double[count];
-    b = new double[count];
-    *E = new double[2*count];
+  	a  = new int[count];
+    b  = new int[count];
+    *E = new int[2*count];
 
     // Read graph
   	pfile.ignore(4096, '\n');
