@@ -19,5 +19,5 @@
 ///
 /// @note  The arrays are allocated by this routine (using new).
 ///
-int readGraph(char *input, double *E);
+int readGraph(char *input, double **E);
 #endif  // SCSC_SGP_HPP
