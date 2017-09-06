@@ -44,13 +44,16 @@ int readGraph(char *input, double **E){
   	pfile.ignore(4096, '\n');
   	while( !pfile.eof() ) {
     	pfile >> a[n];
-    	std::cout << "a[" << n << "] = " << a[n] << std::endl;
     	pfile >> b[n];
-    	std::cout << "b[" << n << "] = " << b[n] << std::endl;
     	n++;
     	pfile.ignore(4096, '\n');
     }
-    std::cout << "a[" << count-1 << "] = " << a[count-1] << std::endl;
+    std::copy(a, a+count, *E);
+    std::copy(b, b+count, *E+count);
+    for (int i = 0; i < count; i++)
+    {
+    	std::cout << *E[i] << "\t" << *E[i+count] << std::endl;
+    }
 
     return 0;
 }
