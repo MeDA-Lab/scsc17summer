@@ -19,7 +19,7 @@
 ///
 /// @note  The arrays are allocated by this routine (using new).
 ///
-int readGraph(char *input, double **E, int *E_size);
+int readGraph(char *input, int **E, int *E_size);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Construct adjacency matrix of graph.
@@ -40,7 +40,7 @@ int readGraph(char *input, double **E, int *E_size);
 ///
 /// @note  The output arrays are allocated by this routine (using new).
 ///
-int GraphAdjacency(double *E, int E_size,
+int GraphAdjacency(int *E, int E_size,
 	int *nnz, int **csrRowPtrA,
 	int **csrColIndA, double **csrValA, int *n);
 #endif  // SCSC_SGP_HPP

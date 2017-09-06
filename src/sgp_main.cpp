@@ -26,8 +26,7 @@ int main( int argc, char** argv ){
     assert( argv[1] != NULL );
 
     // read file
-    int E_size;
-    double *E;
+    int E_size, *E;
     cout << "read file..." << endl;
     err_test = readGraph(argv[1], &E, &E_size);
     assert( err_test == 0 );
