@@ -11,7 +11,6 @@
 #include <cmath>
 #include <cassert>
 #include <numeric>
-#include <vector>
 #include <mkl_spblas.h>
 using namespace std;
 
@@ -101,12 +100,10 @@ void constructLaplacian(
   }
 }
 
-void GraphLaplacian(int nnz, int *csrRowPtrA,
-  int *csrColIndA, double *csrValA, int n){
+void GraphLaplacian(int nnz, int *cooRowPtrA,
+  int *cooColIndA, double *cooValA, int n){
   double *sum;
-  int *sumInd;
-  vector<int> rowid(&csrRowPtrA);
-  vector<double> val(&csrValA);
+  int *sumInd, k=0;
   sparse_matrix_t A, D;
   sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
   sparse_operation_t op = SPARSE_OPERATION_NON_TRANSPOSE;
@@ -117,11 +114,14 @@ void GraphLaplacian(int nnz, int *csrRowPtrA,
 
   cout << "test point 1" << endl;
 
-  for (int i = 0; i < n; ++i)
+  for (int i = 0; i < nnz; i++)
   {
-    //sum[i] = accumulate(csrValA+csrRowPtrA[i], csrValA+csrRowPtrA[i+1], 0, std::plus<double>());
-    sum[i] = accumulate(val.begin()+rowid[i], val.begin()+rowid[i+1], 0, std::plus<double>());
-    cout << "sum[" << i << "] = " << sum[i] << endl;
+    if (cooRowPtrA[i]!=cooRowPtrA[i-1])
+    {
+      k++;
+      cout << "sum[" << k << "] = " << sum[k] << endl;
+    }
+    sum[k] = sum[k] + cooValA[i];
   }
 
   cout << "test point 2" << endl;

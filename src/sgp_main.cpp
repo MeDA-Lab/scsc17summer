@@ -32,14 +32,14 @@ int main( int argc, char** argv ){
     assert( err_test == 0 );
 
     // Construct adjacency matrix of graph
-    int nnz, *csrRowPtrA, *csrColIndA, n;
-    double *csrValA;
+    int nnz, *cooRowIndA, *cooColIndA, n;
+    double *cooValA;
     cout << "Construct adjacency matrix of graph..." << endl;
-    err_test = GraphAdjacency(E, E_size, &nnz, &csrRowPtrA, &csrColIndA, &csrValA, &n);
+    err_test = GraphAdjacency(E, E_size, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n);
     assert( err_test == 0 );
 
     // Construct Laplacian
-    GraphLaplacian(nnz, csrRowPtrA, csrColIndA, csrValA, n);
+    GraphLaplacian(nnz, cooRowIndA, cooColIndA, cooValA, n);
 
     return 0;
 }

@@ -20,14 +20,18 @@
 using namespace std;
 
 int GraphAdjacency(int *E, int E_size,
-	int *nnz, int **csrRowPtrA,
-	int **csrColIndA, double **csrValA, int *n){
-	int pos1, pos2, *cooRowIndA;
+	int *nnz, int **cooRowIndA,
+	int **cooColIndA, double **cooValA, int *n){
+	int pos1, pos2;
+	int *d_cooRowIndA, *d_cooColIndA, *d_val, *d_val_sorted;
 	double *tmp_array;
 	vector<double> v1 (2*E_size , 1.0);
 	cusparseHandle_t handle;
 	cusparseIndexBase_t idxBase = CUSPARSE_INDEX_BASE_ZERO;
 	cusparseStatus_t stat;
+	size_t pBufferSizeInBytes = 0;
+	void *pBuffer = NULL;
+	int *P = NULL;
 
 	tmp_array = new double[2*E_size];
 	copy(E, E+2*E_size, tmp_array);
@@ -37,22 +41,52 @@ int GraphAdjacency(int *E, int E_size,
 	*n    = max(E[pos1] , E[pos2+E_size]);
 	cout << "n = " << *n << endl;
 
-	cooRowIndA  = new int[2*E_size];
-	*csrColIndA = new int[2*E_size];
-	*csrValA    = new double[2*E_size];
-	*csrRowPtrA = new int[(*n)+1];
+	*cooRowIndA  = new int[2*E_size];
+	*cooColIndA = new int[2*E_size];
+	*cooValA    = new double[2*E_size];
 
-	*nnz = *n;
-	copy(E , E+E_size , cooRowIndA);
-	copy(E+E_size, E+2*E_size, *csrColIndA);
-	copy(E+E_size, E+2*E_size, cooRowIndA+E_size);
-	copy(E , E+E_size, *csrColIndA+E_size);
-	copy(v1.begin(),v1.end(),*csrValA);
+	*nnz = 2*E_size;
+	copy(E , E+E_size , *cooRowIndA);
+	copy(E+E_size, E+2*E_size, *cooColIndA);
+	copy(E+E_size, E+2*E_size, *cooRowIndA+E_size);
+	copy(E , E+E_size, *cooColIndA+E_size);
+	copy(v1.begin(),v1.end(),*cooValA);
 
 	stat = cusparseCreate(&handle);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );
-	stat = cusparseXcoo2csr(handle, cooRowIndA, *nnz, *n, *csrRowPtrA, idxBase);
-	assert( stat == CUSPARSE_STATUS_SUCCESS );
+
+	cudaMalloc( &d_cooColIndA, 2*E_size*sizeof(int) );
+	cudaMalloc( &d_cooRowIndA, 2*E_size*sizeof(int) );
+	cudaMalloc( &d_val, 2*E_size*sizeof(int) );
+	cudaMalloc( &d_val_sorted, 2*E_size*sizeof(int) );
+
+	cudaMemcpy(d_cooColIndA, cooColIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_cooRowIndA, cooRowIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_val, cooValA, 2*E_size*sizeof(double), cudaMemcpyHostToDevice);
+
+	cusparseXcoosort_bufferSizeExt(handle, *n, *n, *nnz, d_cooRowIndA, d_cooColIndA, &pBufferSizeInBytes);
+	cudaMalloc( &pBuffer, sizeof(char)* pBufferSizeInBytes);
+
+	cudaMalloc( (void**)&P, sizeof(int)*(*nnz));
+	cusparseCreateIdentityPermutation(handle, *nnz, P);
+
+	cusparseXcoosortByRow(handle, *n, *n, *nnz, d_cooRowIndA, d_cooColIndA, P, pBuffer);
+
+	cusparseDgthr(handle, nnz, d_val, d_val_sorted, P, CUSPARSE_INDEX_BASE_ZERO);
+
+	cudaMemcpy(cooRowIndA, d_cooRowIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
+	cudaMemcpy(cooColIndA, d_cooColIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
+	cudaMemcpy(cooValA, d_val_sorted, 2*E_size*sizeof(double),  cudaMemcpyDeviceToHost);
+
+	cudaFree(d_cooRowIndA);
+	cudaFree(d_cooColIndA);
+	cudaFree(d_val);
+	cudaFree(d_val_sorted);
+	cudaFree(P);
+	cudaFree(pBuffer);
+
+/*	stat = cusparseXcoo2csr(handle, cooRowIndA, *nnz, *n, *csrRowPtrA, idxBase);
+	assert( stat == CUSPARSE_STATUS_SUCCESS );*/
 
 	stat = cusparseDestroy(handle);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );
