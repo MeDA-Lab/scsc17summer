@@ -29,9 +29,6 @@ int GraphAdjacency(int *E, int E_size,
 	cusparseIndexBase_t idxBase = CUSPARSE_INDEX_BASE_ZERO;
 	cusparseStatus_t stat;
 
-	stat = cusparseCreate(&handle);
-	assert( stat == CUSPARSE_STATUS_SUCCESS );
-
 	tmp_array = new double[2*E_size];
 	copy(E, E+2*E_size, tmp_array);
 
@@ -51,6 +48,9 @@ int GraphAdjacency(int *E, int E_size,
 	copy(E+E_size, E+2*E_size, cooRowIndA+E_size);
 	copy(E , E+E_size, *csrColIndA+E_size);
 	copy(v1.begin(),v1.end(),*csrValA);
+
+	stat = cusparseCreate(&handle);
+	assert( stat == CUSPARSE_STATUS_SUCCESS );
 	stat = cusparseXcoo2csr(handle, cooRowIndA, *nnz, *n, *csrRowPtrA, idxBase);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );
 
