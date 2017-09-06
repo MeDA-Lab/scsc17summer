@@ -21,17 +21,21 @@ int GraphAdjacency(int *E, int E_size,
 	int *nnz, int **csrRowPtrA,
 	int **csrColIndA, double **csrValA, int *n){
 	int pos1, pos2, *cooRowIndA;
+	double *tmp_array;
 	vector<double> v1 (E_size , 1.0);
 
-	pos1 = cblas_idamax(E_size, E, 1);
-	pos2 = cblas_idamax(E_size, E+E_size, 1);
+	tmp_array = new double[2*E_size];
+	copy(E, E+2*E_size, tmp_array);
+
+	pos1 = cblas_idamax(E_size, tmp_array, 1);
+	pos2 = cblas_idamax(E_size, tmp_array+E_size, 1);
 	*n    = max(E[pos1] , E[pos2+E_size]);
 	cout << "n = " << *n << endl;
 
-	cooRowIndA  = new double[E_size];
-	*csrColIndA = new double[E_size];
+	cooRowIndA  = new int[E_size];
+	*csrColIndA = new int[E_size];
 	*csrValA    = new double[E_size];
-	*csrRowPtrA = new double[n+1];
+	*csrRowPtrA = new int[n+1];
 
 	*nnz = *n;
 	copy(E , E+E_size , cooRowIndA);
