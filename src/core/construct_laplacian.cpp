@@ -107,7 +107,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   int *jc, *ic;
   int job[6];
   char trans = 'N';
-  int request = 0;
+  int request = 1;
   int sort, nzmax=n*n;
 
   sumInd = new int[n];
@@ -116,6 +116,8 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   ja     = new int[nnz];
   ia     = new int[n+1];
   dcsr   = new double[n];
+  jd     = new int[n];
+  id     = new int[n+1];
 
   // Compute sum of each row of A
   for (int i = 0; i < n; i++)
@@ -152,6 +154,12 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   assert( info == 0 );
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
   assert( info == 0 );
+  ic = new int[n+1];
+  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
+  assert( info == 0 );
+  request = 2;
+  jc   = new int[ic[n]-1];
+  ccsr = new double[ic[n]-1];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, ccsr, jc, ic, &nzmax, &info);
   assert( info == 0 );
 
