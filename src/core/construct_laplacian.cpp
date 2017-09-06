@@ -102,7 +102,7 @@ void constructLaplacian(
 
 void GraphLaplacian(int nnz, int *cooRowPtrA,
   int *cooColIndA, double *cooValA, int n){
-  double *rowsum;
+  double *rowsum, tmp=0;
   int *sumInd, k=0;
   sparse_matrix_t A, D;
   sparse_index_base_t indexing = SPARSE_INDEX_BASE_ZERO;
@@ -123,10 +123,12 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
   {
     if (cooRowPtrA[i]!=cooRowPtrA[i-1])
     {
+      rowsum[k] = tmp;
+      tmp = 0;
       k++;
       //cout << "sum[" << k << "] = " << sum[k] << endl;
     }
-    rowsum[k] = rowsum[k] + cooValA[i];
+    tmp = tmp + cooValA[i];
   }
 
   cout << "test point 2" << endl;
@@ -137,6 +139,8 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
   }
 
   cout << "test point 3" << endl;
+  delete rowsum;
+  delete sumInd;
 /*
   stat = mkl_sparse_d_create_coo(&A, indexing, n, n, cooRowPtrA, cooRowPtrA+1, csrColIndA, csrValA);
   assert( stat == SPARSE_STATUS_SUCCESS );

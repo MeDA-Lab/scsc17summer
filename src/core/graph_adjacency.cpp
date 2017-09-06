@@ -42,7 +42,7 @@ int GraphAdjacency(int *E, int E_size,
 	*n    = max(E[pos1] , E[pos2+E_size]);
 	cout << "n = " << *n << endl;
 
-	*cooRowIndA  = new int[2*E_size];
+	*cooRowIndA = new int[2*E_size];
 	*cooColIndA = new int[2*E_size];
 	*cooValA    = new double[2*E_size];
 
