@@ -131,7 +131,7 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
 
   cout << "test point 2" << endl;
 
-  for (int i = 0; i < n; ++i)
+  for (int i = 0; i < n; i++)
   {
     sumInd[i] = i;
   }
