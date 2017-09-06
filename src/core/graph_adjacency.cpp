@@ -79,13 +79,6 @@ int GraphAdjacency(int *E, int E_size,
 	cudaMemcpy(*cooColIndA, d_cooColIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
 	cudaMemcpy(*cooValA, d_val_sorted, 2*E_size*sizeof(double),  cudaMemcpyDeviceToHost);
 
-	cudaFree(d_cooRowIndA);
-	cudaFree(d_cooColIndA);
-	cudaFree(d_val);
-	cudaFree(d_val_sorted);
-	cudaFree(P);
-	cudaFree(pBuffer);
-
 /*	stat = cusparseXcoo2csr(handle, cooRowIndA, *nnz, *n, *csrRowPtrA, idxBase);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );*/
 
