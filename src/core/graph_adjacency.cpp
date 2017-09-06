@@ -23,7 +23,8 @@ int GraphAdjacency(int *E, int E_size,
 	int *nnz, int **cooRowIndA,
 	int **cooColIndA, double **cooValA, int *n){
 	int pos1, pos2;
-	int *d_cooRowIndA, *d_cooColIndA, *d_val, *d_val_sorted;
+	int *d_cooRowIndA, *d_cooColIndA;
+	double  *d_val, *d_val_sorted
 	double *tmp_array;
 	vector<double> v1 (2*E_size , 1.0);
 	cusparseHandle_t handle;
@@ -57,8 +58,8 @@ int GraphAdjacency(int *E, int E_size,
 
 	cudaMalloc( &d_cooColIndA, 2*E_size*sizeof(int) );
 	cudaMalloc( &d_cooRowIndA, 2*E_size*sizeof(int) );
-	cudaMalloc( &d_val, 2*E_size*sizeof(int) );
-	cudaMalloc( &d_val_sorted, 2*E_size*sizeof(int) );
+	cudaMalloc( &d_val, 2*E_size*sizeof(double) );
+	cudaMalloc( &d_val_sorted, 2*E_size*sizeof(double) );
 
 	cudaMemcpy(d_cooColIndA, cooColIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_cooRowIndA, cooRowIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
