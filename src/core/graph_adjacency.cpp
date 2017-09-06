@@ -40,8 +40,8 @@ int GraphAdjacency(int *E, int E_size,
 	*nnz = *n;
 	copy(E , E+E_size , cooRowIndA);
 	copy(E+E_size, E+2*E_size, *csrColIndA);
-	copy(E+E_size, E+2*E_size, cooRowIndA);
-	copy(E , E+E_size, *csrColIndA);
+	copy(E+E_size, E+2*E_size, cooRowIndA+E_size);
+	copy(E , E+E_size, *csrColIndA+E_size);
 	copy(v1.begin(),v1.end(),*csrValA);
 
 	return 0;
