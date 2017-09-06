@@ -43,4 +43,21 @@ int readGraph(char *input, int **E, int *E_size);
 int GraphAdjacency(int *E, int E_size,
 	int *nnz, int **csrRowPtrA,
 	int **csrColIndA, double **csrValA, int *n);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  Construct adjacency matrix of graph.
+///
+/// @param[in/out]  nnz     number of nonzero elements in the matrix.
+///
+/// @param[in/out]  csrRowPtrA     CSR row pointer; pointer.
+///
+/// @param[in/out]  csrColIndA     CSR column index; pointer.
+///
+/// @param[in/out]  csrValA  nonzero values of the matrix; pointer.
+///
+/// @param[in/out]  n        size of the matrix;
+///
+/// @note  The output arrays are allocated by this routine (using new).
+///
+void GraphLaplacian(int *nnz, int *csrRowPtrA,
+  int *csrColIndA, double *csrValA, int n);
 #endif  // SCSC_SGP_HPP
