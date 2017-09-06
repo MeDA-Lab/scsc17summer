@@ -12,7 +12,7 @@
 #include <iostream>
 #include <fstream>
 
-int readGraph(char *input, double **E){
+int readGraph(char *input, double **E, int *E_size){
 	std::fstream pfile;
 	int count = -1, n = 0;
 	double *a, *b;
@@ -50,6 +50,7 @@ int readGraph(char *input, double **E){
     }
     std::copy(a, a+count, *E);
     std::copy(b, b+count, *E+count);
+    *E_size = count;
 
     return 0;
 }
