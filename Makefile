@@ -30,7 +30,7 @@ MKLROOT = /opt/intel/mkl
 MKLINCS = -I${MKLROOT}/include
 MKLLNKS = -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
 
-obj = read_graph.o
+obj = read_graph.o graph_adjacency.o
 
 INCS = -I include
 TARGETS_O	:= $(TARGETS_SRC:.cpp=.o)
