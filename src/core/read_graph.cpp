@@ -25,6 +25,8 @@ int readGraph(char *input, double *E){
     pfile.ignore(4096, '\n');
     pfile >> tmp;
     std::cout << "tmp = " << tmp << std::endl;
+    pfile >> tmp;
+    std::cout << "tmp = " << tmp << std::endl;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Count size
