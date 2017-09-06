@@ -5,8 +5,8 @@
 /// @author  William Liao
 ///
 
-#ifndef SCSC_HARMONIC_HPP
-#define SCSC_HARMONIC_HPP
+#ifndef SCSC_SGP_HPP
+#define SCSC_SGP_HPP
 
 #include <cassert>
 
@@ -20,3 +20,4 @@
 /// @note  The arrays are allocated by this routine (using new).
 ///
 int readGraph(char *input, double *E);
+#endif  // SCSC_SGP_HPP
