@@ -12,7 +12,7 @@
 #include <iostream>
 #include <fstream>
 
-int readGraph(char *input, double *E){
+int readGraph(char *input, double **E){
 	std::fstream pfile;
 	int count = -1, n = 0;
 	double *a, *b;
@@ -34,10 +34,10 @@ int readGraph(char *input, double *E){
 
     // Return to top of file
     pfile.clear();
-  	pfile.seekg(0, ios::beg);
+  	pfile.seekg(0, std::ios::beg);
 
-  	*a = new double[count];
-    *b = new double[count];
+  	a = new double[count];
+    b = new double[count];
     *E = new double[2*count];
 
     // Read graph
