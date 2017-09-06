@@ -24,7 +24,7 @@ int GraphAdjacency(double *E, int E_size,
 	cout << "pos1 = " << pos1;
 	pos2 = cblas_idamax(E_size, E+E_size, 1);
 	cout << "pos2 = " << pos2;
-	n    = max(E[pos1-1],E[pos2-1]);
+	n    = max(E[pos1] , E[pos2+E_size]);
 	cout << "n = " << n << endl;
 
 	return 0;

@@ -37,7 +37,7 @@ int main( int argc, char** argv ){
     double *csrValA;
     cout << "Construct adjacency matrix of graph..." << endl;
     err_test = GraphAdjacency(E, E_size, &nnz, &csrRowPtrA, &csrColIndA, &csrValA);
-    assert(err_test);
+    assert( err_test == 0 );
 
     return 0;
 }
