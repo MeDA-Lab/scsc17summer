@@ -41,7 +41,7 @@ int readGraph(char *input, int **E, int *E_size);
 /// @note  The output arrays are allocated by this routine (using new).
 ///
 int GraphAdjacency(int *E, int E_size,
-	int *nnz, int **cooRowPtrA,
+	int *nnz, int **cooRowIndA,
 	int **cooColIndA, double **cooValA, int *n);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Construct adjacency matrix of graph.

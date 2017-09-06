@@ -100,7 +100,7 @@ void constructLaplacian(
   }
 }
 
-void GraphLaplacian(int nnz, int *cooRowPtrA,
+void GraphLaplacian(int nnz, int *cooRowIndA,
   int *cooColIndA, double *cooValA, int n){
   double *rowsum, tmp=0;
   int *sumInd, k=0;
@@ -112,8 +112,7 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
   sumInd = new int[n];
   rowsum = new double[n];
 
-  cout << "test point 1" << endl;
-
+  // Compute sum of each row of A
   for (int i = 0; i < n; i++)
   {
     rowsum[i] = 0;
@@ -121,12 +120,11 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
 
   for (int i = 0; i < nnz; i++)
   {
-    if (i>0 && cooRowPtrA[i]!=cooRowPtrA[i-1])
+    if (i>0 && cooRowIndA[i]!=cooRowIndA[i-1])
     {
       rowsum[k] = tmp;
       tmp = 0;
       k++;
-      //cout << "sum[" << k << "] = " << sum[k] << endl;
     }
     tmp = tmp + cooValA[i];
     if (k==n-1 && i==nnz-1)
@@ -137,24 +135,17 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
 
   for (int i = 0; i < n; i++)
   {
-    cout << "rowsum[" << i << "] = " << rowsum[i] << endl;
-  }
-
-  cout << "test point 2" << endl;
-
-  for (int i = 0; i < n; i++)
-  {
     sumInd[i] = i;
   }
 
-  cout << "test point 3" << endl;
-  delete rowsum;
-  delete sumInd;
-/*
-  stat = mkl_sparse_d_create_coo(&A, indexing, n, n, cooRowPtrA, cooRowPtrA+1, csrColIndA, csrValA);
+  //L = D - A
+  stat = mkl_sparse_d_create_coo(&A, indexing, n, n, nnz, cooRowIndA, csrColIndA, cooValA);
   assert( stat == SPARSE_STATUS_SUCCESS );
-  stat = mkl_sparse_d_create_coo(&D, indexing, n, n, n, sumInd, sumInd, sum);
+  stat = mkl_sparse_d_create_coo(&D, indexing, n, n, n, sumInd, sumInd, rowsum);
   assert( stat == SPARSE_STATUS_SUCCESS );
   stat = mkl_sparse_d_add(op, A, -1.0, D, &A);
-  assert( stat == SPARSE_STATUS_SUCCESS );*/
+  assert( stat == SPARSE_STATUS_SUCCESS );
+
+  delete rowsum;
+  delete sumInd;
 }
