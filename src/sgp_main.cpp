@@ -29,9 +29,10 @@ int main( int argc, char** argv ){
     double *E;
     cout << "read file..." << endl;
     err_test = readGraph(argv[1], &E);
+    assert( err_test == 0 );
     for (int i = 0; i < 1298; i++)
     {
-    	cout << E[i] << "\t" << E[i+count] << endl;
+    	cout << E[i] << "\t" << E[i+1298] << endl;
     }
 
     return 0;
