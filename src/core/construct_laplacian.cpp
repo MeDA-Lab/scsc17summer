@@ -129,7 +129,7 @@ void GraphLaplacian(int nnz, int *cooRowPtrA,
       //cout << "sum[" << k << "] = " << sum[k] << endl;
     }
     tmp = tmp + cooValA[i];
-    if (k==n-1)
+    if (k==n-1 && i==nnz-1)
     {
       rowsum[k] = tmp;
     }
