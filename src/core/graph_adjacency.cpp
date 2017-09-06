@@ -24,7 +24,7 @@ int GraphAdjacency(int *E, int E_size,
 	int **cooColIndA, double **cooValA, int *n){
 	int pos1, pos2;
 	int *d_cooRowIndA, *d_cooColIndA;
-	double  *d_val, *d_val_sorted
+	double  *d_val, *d_val_sorted;
 	double *tmp_array;
 	vector<double> v1 (2*E_size , 1.0);
 	cusparseHandle_t handle;
