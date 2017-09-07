@@ -83,6 +83,7 @@ int GraphAdjacency(int *E, int E_size,
 
 	job[0] = 0;
 	job[4] = *nnz;
+	job[5] = 3;
 	*cooValA    = new double[*nnz];
 	*cooRowIndA = new int[*nnz];
 	*cooColIndA = new int[*nnz];
