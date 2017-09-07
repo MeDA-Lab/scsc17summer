@@ -60,7 +60,7 @@ int main( int argc, char** argv ){
     double mu0 = 1.5, mu;
     double *x;
     x = new double[n];
-    char flag = 'H';
+    char flag = 'D';
 
     switch (flag){
     	case 'H':
