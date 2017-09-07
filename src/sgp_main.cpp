@@ -50,7 +50,7 @@ int main( int argc, char** argv ){
     double mu0 = 0.005, mu;
     double *x;
     x = new double[n];
-    char flag = 'H';
+    char flag = 'D';
 
     switch (flag){
     	case 'H':
