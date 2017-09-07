@@ -5,6 +5,9 @@
 /// @author  Yuhsiang Mike Tsai
 ///
 
+#include <cuda_runtime.h>
+#include <cusparse.h>
+
 void solveShiftEVPHost(
     int m,
     int nnz,
