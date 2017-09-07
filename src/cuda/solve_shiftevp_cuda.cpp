@@ -6,7 +6,7 @@
 ///
 
 #include <cuda_runtime.h>
-#include <cusparse.h>
+#include <cusolverSp.h>
 
 void solveShiftEVPHost(
     int m,
