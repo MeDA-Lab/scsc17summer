@@ -112,8 +112,8 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
 
   sumInd = new int[n];
   rowsum = new double[n];
-  acsr   = new double[nnz];
-  ja     = new int[nnz];
+  acsr   = new double[*nnz];
+  ja     = new int[*nnz];
   ia     = new int[n+1];
   dcsr   = new double[n];
   jd     = new int[n];
@@ -126,7 +126,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
     rowsum[i] = 0;
   }
 
-  for (int i = 0; i < nnz; i++)
+  for (int i = 0; i < *nnz; i++)
   {
     if (i>0 && cooRowIndA[i]!=cooRowIndA[i-1])
     {
@@ -135,7 +135,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
       k++;
     }
     tmp = tmp + cooValA[i];
-    if (k==n-1 && i==nnz-1)
+    if (k==n-1 && i==*nnz-1)
     {
       rowsum[k] = tmp+shift_sigma;
     }
@@ -151,7 +151,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   job[1] = 1;
   job[2] = 0;
   job[5] = 0;
-  mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
+  mkl_dcsrcoo(job, &n, acsr, ja, ia, nnz, cooValA, cooRowIndA, cooColIndA, &info);
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
   *csrRowIndA = new int[n+1];
   tmp_RInd    = new int[n+1];
