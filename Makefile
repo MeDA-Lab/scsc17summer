@@ -39,7 +39,8 @@ CUDA_LD_LIB	    = -L$(CUDA_LIB_PATH) $(CUDA_LD_FLAGS)
 
 #==============================================================
 
-obj = read_graph.o graph_adjacency.o construct_laplacian.o
+obj = read_graph.o graph_adjacency.o construct_laplacian.o \
+      solve_shiftevp_cuda.o
 
 INCS = -I include
 TARGETS_O	:= $(TARGETS_SRC:.cpp=.o)
@@ -54,6 +55,9 @@ MakeObj: $(TARGETS_O)
 	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS)
 
 %.o: src/core/%.cpp
+	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS) $(CUDA_INC)
+
+%.o: src/cuda/%.cpp
 	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS) $(CUDA_INC)
 
 MakeExe:sgp_main.out
