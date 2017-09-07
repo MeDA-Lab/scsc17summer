@@ -112,7 +112,11 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
 
   sumInd = new int[n];
   rowsum = new double[n];
+  acsr   = new double[nnz];
+  ja     = new int[nnz];
   ia     = new int[n+1];
+  dcsr   = new double[n];
+  jd     = new int[n];
   id     = new int[n+1];
   job    = new int[6];
 
@@ -143,20 +147,12 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   }
 
   //L = D - A
+  cout << "nnz = " << nnz << endl;
   job[0] = 2;
   job[1] = 1;
   job[2] = 0;
-  job[5] = 1;
+  job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
-  acsr   = new double[ia[n]-1];
-  ja     = new int[ia[n]-1];
-  job[5] = 2;
-  mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
-  job[5] = 1;
-  mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
-  dcsr   = new double[id[n]-1];
-  jd     = new int[id[n]-1];
-  job[5] = 2;
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
   *csrRowIndA = new int[n+1];
   tmp_RInd    = new int[n+1];
