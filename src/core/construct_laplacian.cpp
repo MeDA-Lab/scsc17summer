@@ -169,4 +169,5 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   delete rowsum;
   delete sumInd;
   delete job;
+  delete tmp_RInd;
 }
