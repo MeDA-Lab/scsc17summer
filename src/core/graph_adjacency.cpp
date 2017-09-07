@@ -55,7 +55,7 @@ int GraphAdjacency(int *E, int E_size,
 	int *test;
 	test = new int[2*E_size];
 	copy(E+E_size, E+2*E_size, test);
-	copy(E, E+E_size, test);
+	copy(E, E+E_size, test+E_size);
 	cout<<test[E_size-1]<<endl;
 	cout<<test[E_size]<<endl;
 

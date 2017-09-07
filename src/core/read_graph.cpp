@@ -48,6 +48,12 @@ int readGraph(char *input, int **E, int *E_size){
     	n++;
     	pfile.ignore(4096, '\n');
     }
+    // Change to zero base
+    for (int i = 0; i < count; i++)
+    {
+    	a[i] = a[i] - 1;
+    	b[i] = b[i] - 1;
+    }
     std::copy(a, a+count, *E);
     std::copy(b, b+count, *E+count);
     *E_size = count;
