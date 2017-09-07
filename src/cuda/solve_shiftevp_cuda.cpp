@@ -32,6 +32,7 @@ void solveShiftEVPHost(
     for (int i = 0; i < m; i++) {
         x0[i] = 0;
     }
+    x0[0] = 1;
     cusolverSpDcsreigvsiHost(sp_handle, m, nnz, descrA, A_val, A_row, A_col,
                              mu0, x0, maxite, tol, mu, x);
     cusparseDestroyMatDescr(descrA);
