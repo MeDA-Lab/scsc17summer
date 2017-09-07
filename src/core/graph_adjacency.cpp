@@ -82,10 +82,11 @@ int GraphAdjacency(int *E, int E_size,
 	assert( info == 0 );
 
 	job[0] = 0;
+	job[4] = *nnz;
 	*cooValA    = new double[*nnz];
 	*cooRowIndA = new int[*nnz];
 	*cooColIndA = new int[*nnz];
-	mkl_dcsrcoo(job, n, csrVal, csrColInd, csrRowInd, nnz, *cooValA, *cooRowIndA, *cooColIndA, &info);
+	mkl_dcsrcoo(job, n, cooVal, cooColInd, cooRowInd, nnz, *cooValA, *cooRowIndA, *cooColIndA, &info);
 	assert( info == 0 );
 
 	stat = cusparseCreate(&handle);
