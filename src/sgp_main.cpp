@@ -60,13 +60,15 @@ int main( int argc, char** argv ){
     double mu0 = 0.005, mu;
     double *x;
     x = new double[n];
-    char flag = 'D';
+    char flag = 'H';
 
     switch (flag){
     	case 'H':
     		solveShiftEVPHost(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
+    	break;
     	case 'D':
     		solveShiftEVP(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
+    	break;
     }
 
     cout << "The estimated eigenvalue near " << mu0 << " = " << mu << endl;
