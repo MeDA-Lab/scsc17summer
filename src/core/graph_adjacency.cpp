@@ -24,7 +24,8 @@ int GraphAdjacency(int *E, int E_size,
 	int **cooColIndA, double **cooValA, int *n){
 	int pos1, pos2, *job, info;
 	int *d_cooRowIndA, *d_cooColIndA;
-	int *csrRowInd, *csrColInd, *csrVal, *cooRowInd, *cooColInd, *cooVal;
+	int *csrRowInd, *csrColInd, *cooRowInd, *cooColInd;
+	double *csrVal, *cooVal;
 	double  *d_val, *d_val_sorted;
 	double *tmp_array, beta = 1.0;
 	vector<double> v1 (E_size , 1.0);
@@ -63,7 +64,7 @@ int GraphAdjacency(int *E, int E_size,
 	job[0] = 2;
   	job[1] = 1;
   	job[2] = 0;
-  	job[4] = n*n;
+  	job[4] = (*n)*(*n);
   	job[5] = 0;
 	mkl_dcsrcoo(job, n, csrVal, csrColInd, csrRowInd, nnz, cooVal, cooRowInd, cooColInd, &info);
 	delete cooVal;
