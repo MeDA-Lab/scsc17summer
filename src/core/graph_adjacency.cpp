@@ -52,7 +52,7 @@ int GraphAdjacency(int *E, int E_size,
 	copy(E , E+E_size, *cooColIndA+E_size);
 	copy(v1.begin(),v1.end(),*cooValA);
 
-	int *test
+	int *test;
 	test = new int[2*E_size];
 	copy(E+E_size, E+2*E_size, test);
 	copy(E, E+E_size, test);
