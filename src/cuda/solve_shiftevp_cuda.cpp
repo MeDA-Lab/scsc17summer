@@ -34,6 +34,7 @@ void solveShiftEVPHost(
     }
     cusolverSpDcsreigvsiHost(sp_handle, m, nnz, descrA, A_val, A_row, A_col,
                              mu0, x0, maxite, tol, mu, x);
+    cusparseDestroyMatDescr(descrA);
     cusolverSpDestroy(sp_handle);
     delete x0;
 }
@@ -90,6 +91,7 @@ void solveShiftEVP(
     cudaFree(dA_row);
     cudaFree(dA_col);
     cudaFree(dA_val);
+    cusparseDestroyMatDescr(descrA);
     cusolverSpDestroy(sp_handle);
     delete x0;
 }
