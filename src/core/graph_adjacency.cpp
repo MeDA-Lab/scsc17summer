@@ -22,17 +22,20 @@ using namespace std;
 int GraphAdjacency(int *E, int E_size,
 	int *nnz, int **cooRowIndA,
 	int **cooColIndA, double **cooValA, int *n){
-	int pos1, pos2;
+	int pos1, pos2, *job, info;
 	int *d_cooRowIndA, *d_cooColIndA;
+	int *csrRowInd, *csrColInd, *csrVal, *cooRowInd, *cooColInd, *cooVal;
 	double  *d_val, *d_val_sorted;
-	double *tmp_array;
-	vector<double> v1 (2*E_size , 1.0);
+	double *tmp_array, beta = 1.0;
+	vector<double> v1 (E_size , 1.0);
 	cusparseHandle_t handle;
 	cusparseIndexBase_t idxBase = CUSPARSE_INDEX_BASE_ZERO;
 	cusparseStatus_t stat;
 	size_t pBufferSizeInBytes = 0;
 	void *pBuffer = NULL;
 	int *P = NULL;
+	char trans = 'T';
+	int request = 1, sort;
 
 	tmp_array = new double[2*E_size];
 	copy(E, E+2*E_size, tmp_array);
@@ -42,27 +45,59 @@ int GraphAdjacency(int *E, int E_size,
 	*n    = max(E[pos1] , E[pos2+E_size])+1;
 	cout << "n = " << *n << endl;
 
-	*cooRowIndA = new int[2*E_size];
-	*cooColIndA = new int[2*E_size];
-	*cooValA    = new double[2*E_size];
+	cooRowInd = new int[E_size];
+	cooColInd = new int[E_size];
+	cooVal   = new double[E_size];
+	job       = new int[6];
 
-	*nnz = 2*E_size;
-	copy(E , E+2*E_size , *cooRowIndA);
-	copy(E+E_size, E+2*E_size, *cooColIndA);
-	copy(E , E+E_size, *cooColIndA+E_size);
-	copy(v1.begin(),v1.end(),*cooValA);
+	*nnz = E_size;
+	copy(E , E+E_size , cooRowInd);
+	copy(E+E_size, E+2*E_size, cooColInd);
+	copy(v1.begin(),v1.end(),cooVal);
+
+	// A+trans(A)
+	csrVal    = new double[*nnz];
+	csrRowInd = new int[*n+1];
+	csrColInd = new int[*nnz];
+
+	job[0] = 2;
+  	job[1] = 1;
+  	job[2] = 0;
+  	job[4] = n*n;
+  	job[5] = 0;
+	mkl_dcsrcoo(job, n, csrVal, csrColInd, csrRowInd, nnz, cooVal, cooRowInd, cooColInd, &info);
+	delete cooVal;
+	delete cooRowInd;
+	delete cooColInd;
+	cooRowInd = new int[*n+1];
+	int nzmax = (*n)*(*n);
+	mkl_dcsradd(&trans, &request, &sort, n, n, csrVal, csrColInd, csrRowInd, &beta, csrVal, csrColInd, csrRowInd, cooVal, cooColInd, cooRowInd, &nzmax, &info);
+	assert( info == 0 );
+	*nnz = cooRowInd[*n]-1;
+	request = 2;
+	cooVal    = new double[*nnz];
+	cooColInd = new int[*nnz];
+	mkl_dcsradd(&trans, &request, &sort, n, n, csrVal, csrColInd, csrRowInd, &beta, csrVal, csrColInd, csrRowInd, cooVal, cooColInd, cooRowInd, &nzmax, &info);
+	assert( info == 0 );
+
+	job[0] = 0;
+	*cooValA    = new double[*nnz];
+	*cooRowIndA = new int[*nnz];
+	*cooColIndA = new int[*nnz];
+	mkl_dcsrcoo(job, n, csrVal, csrColInd, csrRowInd, nnz, *cooValA, *cooRowIndA, *cooColIndA, &info);
+	assert( info == 0 );
 
 	stat = cusparseCreate(&handle);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );
 
-	cudaMalloc( &d_cooColIndA, 2*E_size*sizeof(int) );
-	cudaMalloc( &d_cooRowIndA, 2*E_size*sizeof(int) );
-	cudaMalloc( &d_val, 2*E_size*sizeof(double) );
-	cudaMalloc( &d_val_sorted, 2*E_size*sizeof(double) );
+	cudaMalloc( &d_cooColIndA, (*nnz)*sizeof(int) );
+	cudaMalloc( &d_cooRowIndA, (*nnz)*sizeof(int) );
+	cudaMalloc( &d_val, (*nnz)*sizeof(double) );
+	cudaMalloc( &d_val_sorted, (*nnz)*sizeof(double) );
 
-	cudaMemcpy(d_cooColIndA, *cooColIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_cooRowIndA, *cooRowIndA, 2*E_size*sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_val, *cooValA, 2*E_size*sizeof(double), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_cooColIndA, *cooColIndA, (*nnz)*sizeof(int), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_cooRowIndA, *cooRowIndA, (*nnz)*sizeof(int), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_val, *cooValA, (*nnz)*sizeof(double), cudaMemcpyHostToDevice);
 
 	cusparseXcoosort_bufferSizeExt(handle, *n, *n, *nnz, d_cooRowIndA, d_cooColIndA, &pBufferSizeInBytes);
 	cudaMalloc( &pBuffer, sizeof(char)* pBufferSizeInBytes);
@@ -77,9 +112,6 @@ int GraphAdjacency(int *E, int E_size,
 	cudaMemcpy(*cooRowIndA, d_cooRowIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
 	cudaMemcpy(*cooColIndA, d_cooColIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
 	cudaMemcpy(*cooValA, d_val_sorted, 2*E_size*sizeof(double),  cudaMemcpyDeviceToHost);
-
-/*	stat = cusparseXcoo2csr(handle, cooRowIndA, *nnz, *n, *csrRowPtrA, idxBase);
-	assert( stat == CUSPARSE_STATUS_SUCCESS );*/
 
 	stat = cusparseDestroy(handle);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );
