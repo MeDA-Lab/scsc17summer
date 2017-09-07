@@ -47,11 +47,17 @@ int GraphAdjacency(int *E, int E_size,
 	*cooValA    = new double[2*E_size];
 
 	*nnz = 2*E_size;
-	copy(E , E+E_size , *cooRowIndA);
+	copy(E , E+2*E_size , *cooRowIndA);
 	copy(E+E_size, E+2*E_size, *cooColIndA);
-	copy(E+E_size, E+2*E_size, *cooRowIndA+E_size);
 	copy(E , E+E_size, *cooColIndA+E_size);
 	copy(v1.begin(),v1.end(),*cooValA);
+
+	int *test
+	test = new int[2*E_size];
+	copy(E+E_size, E+2*E_size, test);
+	copy(E, E+E_size, test);
+	cout<<test[E_size-1]<<endl;
+	cout<<test[E_size]<<endl;
 
 	stat = cusparseCreate(&handle);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );
