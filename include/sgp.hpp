@@ -91,7 +91,7 @@ void solveShiftEVPHost(
     const double mu0,
     double *mu,
     double *x
-)
+);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Solve eigenvalue near mu0 on device.
 ///
@@ -122,5 +122,5 @@ void solveShiftEVP(
     const double mu0,
     double *mu,
     double *x
-)
+);
 #endif  // SCSC_SGP_HPP
