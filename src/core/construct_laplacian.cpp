@@ -104,7 +104,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   int *cooColIndA, double *cooValA, int n, int **csrRowIndA,
   int **csrColIndA, double **csrValA){
   double *rowsum, *acsr, *dcsr, tmp=0, beta=-1.0;
-  int *sumInd, *ja, *ia, *jd, *id, info, k=0;
+  int *sumInd, *ja, *ia, *jd, *id, *tmp_RInd, info, k=0;
   int *job;
   char trans = 'N';
   int request = 1;
@@ -154,20 +154,19 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
   *csrRowIndA = new int[n+1];
-  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, *csrRowIndA, &nzmax, &info);
+  tmp_RInd    = new int[n+1];
+  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
   assert( info == 0 );
   request = 2;
   cout << "test point" << endl;
-  k = **csrRowIndA[n]-1;
+  k = tmp_RInd[n]-1;
   cout << k << endl;
   cout << "test point 2" << endl;
   *csrColIndA   = new int[k];
   *csrValA      = new double[k];
-  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, *csrRowIndA, &nzmax, &info);
+  mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
   assert( info == 0 );
-  job[0]=0;
-  job[4]=nnz;
-  job[5]=3;
+  copy(tmp_RInd, tmp_RInd+(n+1), *csrRowIndA);
 
   delete rowsum;
   delete sumInd;
