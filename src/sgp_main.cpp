@@ -46,6 +46,11 @@ int main( int argc, char** argv ){
     GraphLaplacian(&nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
     cout << "nnz = " << nnz << endl;
 
+    for (int i = 0; i < nnz; i++)
+    {
+    	cout << "valA[" << i << "] = " << valA[i] << endl;
+    }
+
     // Solve EVP
     double mu0 = 0.005, mu;
     double *x;
