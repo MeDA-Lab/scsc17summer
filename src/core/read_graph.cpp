@@ -14,7 +14,7 @@
 
 int readGraph(char *input, int **E, int *E_size){
 	std::fstream pfile;
-	int count = -1, n = 0;
+	int count = 0, n = 0;
 	int *a, *b;
 	int tmp;
 
