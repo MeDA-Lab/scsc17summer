@@ -159,7 +159,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   assert( info == 0 );
   request = 2;
   cout << "test point" << endl;
-  k = tmp_RInd[n]-1;
+  k = tmp_RInd[n];
   cout << k << endl;
   cout << "test point 2" << endl;
   *csrColIndA   = new int[k];
