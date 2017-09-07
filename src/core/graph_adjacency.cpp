@@ -87,6 +87,7 @@ int GraphAdjacency(int *E, int E_size,
 	*cooRowIndA = new int[*nnz];
 	*cooColIndA = new int[*nnz];
 	mkl_dcsrcoo(job, n, cooVal, cooColInd, cooRowInd, nnz, *cooValA, *cooRowIndA, *cooColIndA, &info);
+	cout << "info = " << info << endl;
 	assert( info == 0 );
 
 	stat = cusparseCreate(&handle);
