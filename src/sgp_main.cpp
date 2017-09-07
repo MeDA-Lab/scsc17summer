@@ -53,7 +53,7 @@ int main( int argc, char** argv ){
 
     for (int i = 0; i < nnz; i++)
     {
-    	cout << "valA[" << i << "] = " << valA[i] << endl;
+    	cout << "valA[" << i << "] = " << csrValA[i] << endl;
     }
 
     // Solve EVP
