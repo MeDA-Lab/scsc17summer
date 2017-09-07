@@ -153,22 +153,13 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   job[2] = 0;
   job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
-  cout << "ia[n] = " << ia[n] << endl;
-/*  for (int i = 0; i < nnz; i++)
-  {
-    cout << "ja[" << i << "] = " << ja[i] << endl;
-  }*/
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
-  cout << "id[n] = " << id[n] << endl;
   *csrRowIndA = new int[n+1];
   tmp_RInd    = new int[n+1];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
   assert( info == 0 );
   request = 2;
-  cout << "test point" << endl;
-  k = tmp_RInd[n];
-  cout << k << endl;
-  cout << "test point 2" << endl;
+  k = tmp_RInd[n]-1;
   *csrColIndA   = new int[k];
   *csrValA      = new double[k];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
