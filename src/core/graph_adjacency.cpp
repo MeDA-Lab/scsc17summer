@@ -58,6 +58,7 @@ int GraphAdjacency(int *E, int E_size,
 	copy(E, E+E_size, test+E_size);
 	cout<<test[E_size-1]<<endl;
 	cout<<test[E_size]<<endl;
+	cout<<test[E_size+1]<<endl;
 
 	stat = cusparseCreate(&handle);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );

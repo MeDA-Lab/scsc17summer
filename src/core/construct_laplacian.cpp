@@ -154,10 +154,10 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, &nnz, cooValA, cooRowIndA, cooColIndA, &info);
   cout << "ia[n] = " << ia[n] << endl;
-  for (int i = 0; i < nnz; i++)
+/*  for (int i = 0; i < nnz; i++)
   {
     cout << "ja[" << i << "] = " << ja[i] << endl;
-  }
+  }*/
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
   cout << "id[n] = " << id[n] << endl;
   *csrRowIndA = new int[n+1];
