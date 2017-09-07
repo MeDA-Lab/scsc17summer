@@ -39,7 +39,7 @@ int GraphAdjacency(int *E, int E_size,
 
 	pos1 = cblas_idamax(E_size, tmp_array, 1);
 	pos2 = cblas_idamax(E_size, tmp_array+E_size, 1);
-	*n    = max(E[pos1] , E[pos2+E_size]);
+	*n    = max(E[pos1] , E[pos2+E_size])+1;
 	cout << "n = " << *n << endl;
 
 	*cooRowIndA = new int[2*E_size];

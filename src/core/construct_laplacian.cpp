@@ -112,12 +112,12 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
 
   sumInd = new int[n];
   rowsum = new double[n];
-  //acsr   = new double[nnz];
-  //ja     = new int[nnz];
-  //ia     = new int[n+1];
-  //dcsr   = new double[n];
-  //jd     = new int[n];
-  //id     = new int[n+1];
+  acsr   = new double[nnz];
+  ja     = new int[nnz];
+  ia     = new int[n+1];
+  dcsr   = new double[n];
+  jd     = new int[n];
+  id     = new int[n+1];
   job    = new int[6];
 
   // Compute sum of each row of A
