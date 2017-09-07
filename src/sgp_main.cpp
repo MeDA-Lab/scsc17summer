@@ -51,13 +51,8 @@ int main( int argc, char** argv ){
     	csrColIndA[i] = csrColIndA[i]-1;
     }
 
-    for (int i = 0; i < nnz; i++)
-    {
-    	cout << "valA[" << i << "] = " << csrValA[i] << endl;
-    }
-
     // Solve EVP
-    double mu0 = 0.005, mu;
+    double mu0 = 0.004, mu;
     double *x;
     x = new double[n];
     char flag = 'H';
@@ -69,7 +64,7 @@ int main( int argc, char** argv ){
     		solveShiftEVP(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
     }
 
-    cout << "The estimated eigenvalue near" << mu0 << " = " << mu << endl;
+    cout << "The estimated eigenvalue near " << mu0 << " = " << mu << endl;
 
     return 0;
 }
