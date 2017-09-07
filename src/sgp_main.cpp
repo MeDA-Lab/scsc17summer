@@ -48,6 +48,11 @@ int main( int argc, char** argv ){
 
     for (int i = 0; i < nnz; i++)
     {
+    	csrColIndA[i] = csrColIndA[i]-1;
+    }
+
+    for (int i = 0; i < nnz; i++)
+    {
     	cout << "valA[" << i << "] = " << valA[i] << endl;
     }
 
@@ -55,7 +60,7 @@ int main( int argc, char** argv ){
     double mu0 = 0.005, mu;
     double *x;
     x = new double[n];
-    char flag = 'D';
+    char flag = 'H';
 
     switch (flag){
     	case 'H':
