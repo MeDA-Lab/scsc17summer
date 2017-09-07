@@ -57,7 +57,7 @@ int main( int argc, char** argv ){
     }
 
     // Solve EVP
-    double mu0 = 0.006, mu;
+    double mu0 = 1.5, mu;
     double *x;
     x = new double[n];
     char flag = 'H';
