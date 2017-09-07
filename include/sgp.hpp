@@ -60,5 +60,5 @@ int GraphAdjacency(int *E, int E_size,
 ///
 void GraphLaplacian(int nnz, int *cooRowPtrA,
   int *cooColIndA, double *cooValA, int n, int **csrRowIndA,
-  int **csrColIndA, double **csrValA);
+  int **csrColIndA, double **csrValA, double shift_sigma);
 #endif  // SCSC_SGP_HPP

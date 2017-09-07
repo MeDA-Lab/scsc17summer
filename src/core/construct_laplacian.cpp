@@ -102,7 +102,7 @@ void constructLaplacian(
 
 void GraphLaplacian(int nnz, int *cooRowIndA,
   int *cooColIndA, double *cooValA, int n, int **csrRowIndA,
-  int **csrColIndA, double **csrValA){
+  int **csrColIndA, double **csrValA, double shift_sigma){
   double *rowsum, *acsr, *dcsr, tmp=0, beta=-1.0;
   int *sumInd, *ja, *ia, *jd, *id, *tmp_RInd, info, k=0;
   int *job;
@@ -130,14 +130,14 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   {
     if (i>0 && cooRowIndA[i]!=cooRowIndA[i-1])
     {
-      rowsum[k] = tmp;
+      rowsum[k] = tmp+shift_sigma;
       tmp = 0;
       k++;
     }
     tmp = tmp + cooValA[i];
     if (k==n-1 && i==nnz-1)
     {
-      rowsum[k] = tmp;
+      rowsum[k] = tmp+shift_sigma;
     }
   }
 

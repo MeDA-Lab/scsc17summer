@@ -37,12 +37,13 @@ int main( int argc, char** argv ){
     cout << "Construct adjacency matrix of graph..." << endl;
     err_test = GraphAdjacency(E, E_size, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n);
     assert( err_test == 0 );
+    cout << "nnz = " << nnz << endl;
 
     // Construct Laplacian
     int *csrRowIndA, *csrColIndA;
     double  *csrValA;
-    GraphLaplacian(nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA);
-    cout << "nnz = " << nnz << endl;
+    double shift_sigma = 0;
+    GraphLaplacian(nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
 
     // Solve EVP
     double mu0 = 0.005, mu;
