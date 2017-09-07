@@ -147,7 +147,6 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   }
 
   //L = D - A
-  cout << "nnz = " << nnz << endl;
   job[0] = 2;
   job[1] = 1;
   job[2] = 0;
@@ -165,6 +164,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
   assert( info == 0 );
   copy(tmp_RInd, tmp_RInd+(n+1), *csrRowIndA);
+  cout << "nnz = " << k << endl;
 
   delete rowsum;
   delete sumInd;
