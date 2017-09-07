@@ -23,9 +23,9 @@ void solveShiftEVPHost(
     int maxite = 1000;
     cusolverSpCreate(&sp_handle);
     cusparseMatDescr_t descrA;
-    descrA.DiagType = CUSPARSE_DIAG_TYPE_NON_UNIT;
-    descrA.IndexBase = CUSPARSE_INDEX_BASE_ZERO;
-    descrA.MatrixType = CUSPARSE_MATRIX_TYPE_GENERAL;
+    descrA->DiagType = CUSPARSE_DIAG_TYPE_NON_UNIT;
+    descrA->IndexBase = CUSPARSE_INDEX_BASE_ZERO;
+    descrA->MatrixType = CUSPARSE_MATRIX_TYPE_GENERAL;
     x0 = new double[m];
     for (int i = 0; i < m; i++) {
         x0[i] = 0;
@@ -46,7 +46,7 @@ void solveShiftEVP(
     double *mu,
     double *x
 ) {
-    usolverSpHandle_t sp_handle;
+    cusolverSpHandle_t sp_handle;
     double *x0 = nullptr, tol = 1e-8;
     double *dx0 = nullptr, *dmu = nullptr, *dx = nullptr;
     int *dA_row = nullptr, *dA_col = nullptr;
@@ -54,9 +54,9 @@ void solveShiftEVP(
     int maxite = 1000;
     cusolverSpCreate(&sp_handle);
     cusparseMatDescr_t descrA;
-    descrA.DiagType = CUSPARSE_DIAG_TYPE_NON_UNIT;
-    descrA.IndexBase = CUSPARSE_INDEX_BASE_ZERO;
-    descrA.MatrixType = CUSPARSE_MATRIX_TYPE_GENERAL;
+    descrA->DiagType = CUSPARSE_DIAG_TYPE_NON_UNIT;
+    descrA->IndexBase = CUSPARSE_INDEX_BASE_ZERO;
+    descrA->MatrixType = CUSPARSE_MATRIX_TYPE_GENERAL;
     x0 = new double[m];
     for (int i = 0; i < m; i++) {
         x0[i] = 0;
