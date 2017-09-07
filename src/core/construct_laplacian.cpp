@@ -157,7 +157,9 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, *csrRowIndA, &nzmax, &info);
   assert( info == 0 );
   request = 2;
+  cout << "test point" << endl;
   k = *csrRowIndA[n]-1;
+  cout << "test point 2" << endl;
   *csrColIndA   = new int[k];
   *csrValA      = new double[k];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, *csrRowIndA, &nzmax, &info);
