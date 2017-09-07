@@ -46,16 +46,21 @@ int main( int argc, char** argv ){
     GraphLaplacian(&nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
     cout << "nnz = " << nnz << endl;
 
+    // Shift to zero-based indexing
     for (int i = 0; i < nnz; i++)
     {
     	csrColIndA[i] = csrColIndA[i]-1;
     }
+    for (int i = 0; i < n+1; i++)
+    {
+    	csrRowIndA[i] = csrRowIndA[i]-1;
+    }
 
     // Solve EVP
-    double mu0 = 0.004, mu;
+    double mu0 = 0.005, mu;
     double *x;
     x = new double[n];
-    char flag = 'D';
+    char flag = 'H';
 
     switch (flag){
     	case 'H':
