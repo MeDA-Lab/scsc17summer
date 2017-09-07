@@ -100,7 +100,7 @@ void constructLaplacian(
   }
 }
 
-void GraphLaplacian(int nnz, int *cooRowIndA,
+void GraphLaplacian(int *nnz, int *cooRowIndA,
   int *cooColIndA, double *cooValA, int n, int **csrRowIndA,
   int **csrColIndA, double **csrValA, double shift_sigma){
   double *rowsum, *acsr, *dcsr, tmp=0, beta=-1.0;
@@ -164,7 +164,7 @@ void GraphLaplacian(int nnz, int *cooRowIndA,
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
   assert( info == 0 );
   copy(tmp_RInd, tmp_RInd+(n+1), *csrRowIndA);
-  cout << "nnz = " << k << endl;
+  *nnz = k;
 
   delete rowsum;
   delete sumInd;

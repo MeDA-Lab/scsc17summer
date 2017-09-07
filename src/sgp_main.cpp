@@ -43,12 +43,23 @@ int main( int argc, char** argv ){
     int *csrRowIndA, *csrColIndA;
     double  *csrValA;
     double shift_sigma = 0;
-    GraphLaplacian(nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
+    GraphLaplacian(&nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
+    cout << "nnz = " << nnz << endl;
 
     // Solve EVP
     double mu0 = 0.005, mu;
     double *x;
     x = new double[n];
+    char flag = 'H';
+
+    switch (flag){
+    	case 'H':
+    		solveShiftEVPHost(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
+    	case 'D':
+    		solveShiftEVP(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
+    }
+
+    cout << "The estimated eigenvalue near" << mu0 << " = " << mu << endl;
 
     return 0;
 }
