@@ -63,7 +63,7 @@ int main( int argc, char** argv ) {
   cout << "Solving Eigenvalue Problem ......................." << flush;
   double mu0 = 0.1, mu;
   double *x;
-  x = new double[n];
+  x = new double[nv];
   char flag = 'H';
   int nnz = Lii_row[nv]-1;
 

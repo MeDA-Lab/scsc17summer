@@ -195,5 +195,67 @@ void solveHarmonicSparse( const int nv, const int nb,
                           const double *Lii_val, const int *Lii_row, const int *Lii_col,
                           const double *Lib_val, const int *Lib_row, const int *Lib_col,
                           double *U );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  Solve eigenvalue near mu0 on host.
+///
+/// @param[in]  mu0     initial guess of eigenvalue.
+///
+/// @param[in]  nnz     number of nonzero elements in the matrix.
+///
+/// @param[in/out]  A_row     CSR row pointer; pointer.
+///
+/// @param[in/out]  A_col     CSR column index; pointer.
+///
+/// @param[in/out]  A_val  nonzero values of the matrix; pointer.
+///
+/// @param[in]  m        size of the matrix;
+///
+/// @param[out] mu       estimated eigenvalue;
+///
+/// @param[out] x        estimated eigenvector w.r.t. mu; pointer.
+///
+/// @note  All inputs should be stored on host.
+///
+void solveShiftEVPHost(
+    int m,
+    int nnz,
+    const double *A_val,
+    const int *A_row,
+    const int *A_col,
+    const double mu0,
+    double *mu,
+    double *x
+);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  Solve eigenvalue near mu0 on device.
+///
+/// @param[in]  mu0     initial guess of eigenvalue.
+///
+/// @param[in]  nnz     number of nonzero elements in the matrix.
+///
+/// @param[in/out]  A_row     CSR row pointer; pointer.
+///
+/// @param[in/out]  A_col     CSR column index; pointer.
+///
+/// @param[in/out]  A_val  nonzero values of the matrix; pointer.
+///
+/// @param[in]  m        size of the matrix;
+///
+/// @param[out] mu       estimated eigenvalue;
+///
+/// @param[out] x        estimated eigenvector w.r.t. mu; pointer.
+///
+/// @note  All inputs should be stored on host.
+///
+void solveShiftEVP(
+    int m,
+    int nnz,
+    const double *A_val,
+    const int *A_row,
+    const int *A_col,
+    const double mu0,
+    double *mu,
+    double *x
+);
 
 #endif  // SCSC_HARMONIC_HPP
