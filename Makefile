@@ -40,7 +40,10 @@ CUDA_LD_LIB	    = -L$(CUDA_LIB_PATH) $(CUDA_LD_FLAGS)
 #==============================================================
 
 obj = read_graph.o graph_adjacency.o construct_laplacian.o \
-      solve_shiftevp_cuda.o
+      solve_shiftevp_cuda.o map_boundary.o \
+      read_args.o read_object.o reorder_vertex.o \
+      construct_laplacian_sparse.o solve_harmonic_sparse.o \
+      verify_boundary_sparse.o
 
 INCS = -I include
 TARGETS_O	:= $(TARGETS_SRC:.cpp=.o)
@@ -60,9 +63,12 @@ MakeObj: $(TARGETS_O)
 %.o: src/cuda/%.cpp
 	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS) $(CUDA_INC)
 
-MakeExe:sgp_main.out
+MakeExe:sgp_main.out main_3Dface_evp.out
 
 sgp_main.out: sgp_main.o $(obj)
+	$(LOADER) $< -o $@ $(obj) $(CCFLAGS) $(MKLLNKS) $(CUDA_LD_FLAGS)
+
+main_3Dface_evp.out: main_3Dface_evp.o $(obj)
 	$(LOADER) $< -o $@ $(obj) $(CCFLAGS) $(MKLLNKS) $(CUDA_LD_FLAGS)
 
 clean:
