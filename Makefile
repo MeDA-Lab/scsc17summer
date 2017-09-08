@@ -63,6 +63,9 @@ MakeObj: $(TARGETS_O)
 %.o: src/cuda/%.cpp
 	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS) $(CUDA_INC)
 
+%.o: src/sparse/%.cpp
+	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS) $(CUDA_INC)
+
 MakeExe:sgp_main.out main_3Dface_evp.out
 
 sgp_main.out: sgp_main.o $(obj)
