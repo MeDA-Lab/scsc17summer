@@ -61,11 +61,11 @@ int main( int argc, char** argv ) {
 
   // Solve EVP
   cout << "Solving Eigenvalue Problem ......................." << flush;
-  double mu0 = 1.2, mu;
+  double mu0 = 0, mu;
   double *x;
   x = new double[nv];
   char flag = 'H';
-  int nnz = Lii_row[nv]-1;
+  int nnz = Lii_row[nv];
 
   switch (flag){
     case 'H':
