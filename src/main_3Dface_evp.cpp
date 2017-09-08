@@ -66,6 +66,7 @@ int main( int argc, char** argv ) {
   x = new double[nv];
   char flag = 'H';
   int nnz = Lii_row[nv];
+  cout << "nv-nb = " << nv-nb << endl;
 
   switch (flag){
     case 'H':
