@@ -64,7 +64,7 @@ int main( int argc, char** argv ) {
   double mu0 = 0, mu;
   double *x;
   x = new double[nv];
-  char flag = 'H';
+  char flag = 'D';
   int nnz = Lii_row[nv-nb];
   cout << endl;
   cout << "n = " << nv-nb << endl;
