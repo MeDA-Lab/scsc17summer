@@ -84,9 +84,6 @@ int main( int argc, char** argv ) {
 
   cout << endl;
 
-  // Write object
-  writeObject(output, nv, nf, U, C, F);
-
   // Free memory
   delete[] V;
   delete[] C;
