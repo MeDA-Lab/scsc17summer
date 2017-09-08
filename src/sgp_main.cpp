@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <iostream>
+#include <timer.hpp>
 #include "sgp.hpp"
 
 using namespace std;
@@ -58,16 +59,20 @@ int main( int argc, char** argv ){
 
     // Solve EVP
     double mu0 = 1.5, mu;
-    double *x;
+    double *x, timer;
     x = new double[n];
     char flag = 'H';
 
     switch (flag){
     	case 'H':
+    		tic(&timer);
     		solveShiftEVPHost(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
+    		toc(&timer);
     		break;
     	case 'D':
+    		tic(&timer);
     		solveShiftEVP(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
+    		toc(&timer);
     		break;
     }
 
