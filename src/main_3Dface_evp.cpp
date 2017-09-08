@@ -65,18 +65,20 @@ int main( int argc, char** argv ) {
   double *x;
   x = new double[nv];
   char flag = 'H';
-  int nnz = Lii_row[nv];
-  cout << "nv-nb = " << nv-nb << endl;
+  int nnz = Lii_row[nv-nb];
+  cout << endl;
+  cout << "n = " << nv-nb << endl;
+  cout << "nnz = " << nnz << endl;
 
   switch (flag){
     case 'H':
       tic(&timer);
-      solveShiftEVPHost(nv, nnz, Lii_val, Lii_row, Lii_col, mu0, &mu, x);
+      solveShiftEVPHost(nv-nb, nnz, Lii_val, Lii_row, Lii_col, mu0, &mu, x);
       toc(&timer);
       break;
     case 'D':
       tic(&timer);
-      solveShiftEVP(nv, nnz, Lii_val, Lii_row, Lii_col, mu0, &mu, x);
+      solveShiftEVP(nv-nb, nnz, Lii_val, Lii_row, Lii_col, mu0, &mu, x);
       toc(&timer);
       break;
   }
