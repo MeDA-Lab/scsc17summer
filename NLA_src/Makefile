@@ -54,16 +54,16 @@ all: MakeObj MakeExe
 
 MakeObj: $(TARGETS_O)
 
-%.o: src/%.cpp
+%.o: %.cpp
 	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS)
 
-%.o: src/core/%.cpp
+%.o: core/%.cpp
 	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS) $(CUDA_INC)
 
-%.o: src/cuda/%.cpp
+%.o: cuda/%.cpp
 	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS) $(CUDA_INC)
 
-%.o: src/sparse/%.cpp
+%.o: sparse/%.cpp
 	$(CC) -c $< $(INCS) $(CCFLAGS) $(MKLINCS) $(CUDA_INC)
 
 MakeExe:sgp_main.out main_3Dface_evp.out
