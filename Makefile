@@ -39,7 +39,7 @@ CUDA_LD_LIB	    = -L$(CUDA_LIB_PATH) $(CUDA_LD_FLAGS)
 
 #==============================================================
 
-obj = read_graph.o graph_adjacency.o construct_laplacian.o \
+obj = read_graph.o graph_adjacency.o graph_laplacian.o \
       solve_shiftevp_cuda.o map_boundary.o \
       read_args.o read_object.o reorder_vertex.o \
       construct_laplacian_sparse.o solve_harmonic_sparse.o \
