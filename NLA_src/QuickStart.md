@@ -1,10 +1,10 @@
-# SCSC17summer
-Scientific Computing on Supercomputer
+# NLA2017fall
+Numerical Linear Algebra(NTU, NCKU), Matrix Computation (NTNU)
 
 ## Information
 
 ### Git
-* https://github.com/wlab-pro/scsc17summer
+* https://github.com/wlab-pro/scsc17summer/NLA_src
 
 ### Author
 * Yuhsiang Tsai <<yhmtsai@gmail.com>>
@@ -15,9 +15,25 @@ Scientific Computing on Supercomputer
 * Wei-Chien Liao <<b00201028.ntu@gmail.com>>
 
 ## Requirements
-* [CMake](https://cmake.org) 2.8+.
 * C++ compiler with C++11 support.
+* [CUDA](https://developer.nvidia.com/cuda-zone) 8.0+ (Used for cuSOLVER & cuSPARSE)
 * [Intel&reg; Math Kernel Library](https://software.intel.com/en-us/intel-mkl) (Used for BLAS & LAPACK).
 * [MAGMA](http://icl.cs.utk.edu/magma/) 2+ (Used for BLAS & LAPACK with GPU support).
-* [DOxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation).
-* [OpenMP](http://openmp.org) Library.
+* [DOxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation)(optional).
+* [OpenMP](http://openmp.org) Library (optional).
+
+## Usage
+* To build the program, simply type `make` in terminal.
+* For graph laplacian, type the following in terminal:
+
+	`./sgp_main.out [data filename]`
+
+	e.g. `./sgp_main.out data/graph/ChicagoRegional`
+
+* For 3D face animation, the basic usage is
+
+	`./main_3Dface_evp.out [OPTIONS]`
+
+	Type the following in terminal to get more information:
+	
+	`./main_3Dface_evp.out -h` or `./main_3Dface_evp.out --help`
