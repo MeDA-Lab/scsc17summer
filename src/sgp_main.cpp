@@ -63,6 +63,8 @@ int main( int argc, char** argv ){
     x = new double[n];
     char flag = 'H';
 
+    cout << "Solving Eigenvalue Problem..." << endl;
+
     switch (flag){
     	case 'H':
     		tic(&timer);
