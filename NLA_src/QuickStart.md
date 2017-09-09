@@ -19,7 +19,7 @@ Numerical Linear Algebra(NTU, NCKU), Matrix Computation (NTNU)
 * [CUDA](https://developer.nvidia.com/cuda-zone) 8.0+ (Used for cuSOLVER & cuSPARSE)
 * [Intel&reg; Math Kernel Library](https://software.intel.com/en-us/intel-mkl) (Used for BLAS & LAPACK).
 * [MAGMA](http://icl.cs.utk.edu/magma/) 2+ (Used for BLAS & LAPACK with GPU support).
-* [DOxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation)(optional).
+* [Doxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation)(optional).
 * [OpenMP](http://openmp.org) Library (optional).
 
 ## Usage
