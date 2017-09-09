@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    main_sparse.cpp
+/// @file    main_3Dface_evp.cpp
 /// @brief   The main function. (sparse version)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
@@ -63,7 +63,7 @@ int main( int argc, char** argv ) {
   cout << "Solving Eigenvalue Problem ......................." << flush;
   double mu0 = 1.0, mu;
   double *x;
-  x = new double[nv];
+  x = new double[nv-nb];
   char flag = 'D';
   int nnz = Lii_row[nv-nb];
   cout << endl;

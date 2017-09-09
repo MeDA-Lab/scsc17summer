@@ -23,12 +23,20 @@ Numerical Linear Algebra(NTU, NCKU), Matrix Computation (NTNU)
 * [OpenMP](http://openmp.org) Library (optional).
 
 ## Usage
+* You may need to load the required libraries first before building the program. Execute the following commands in a terminal:
+
+	`module load cuda-dev/8.0`
+	
+	`module load intel-mkl`
+
 * To build the program, simply type `make` in terminal.
 * For graph laplacian, type the following in terminal:
 
 	`./sgp_main.out [data filename]`
 
-	e.g. `./sgp_main.out data/graph/ChicagoRegional`
+	Example Usage: `./sgp_main.out data/graph/ChicagoRegional`
+	
+	There are some prepared graph data files in the `data/graph` directory.
 
 * For 3D face animation, the basic usage is
 
@@ -37,3 +45,7 @@ Numerical Linear Algebra(NTU, NCKU), Matrix Computation (NTNU)
 	Type the following in terminal to get more information:
 	
 	`./main_3Dface_evp.out -h` or `./main_3Dface_evp.out --help`
+	
+	Example Usage: `./main_3Dface_evp.out -f data/obj/CYHo.obj -t 1`
+	
+	There are some prepared obj data files in the `data/obj` directory.
