@@ -19,7 +19,7 @@ void solveShiftEVPHost(
     double *x
 ) {
     cusolverSpHandle_t sp_handle;
-    double *x0 = nullptr, tol = 1e-8;
+    double *x0 = nullptr, tol = 1e-12;
     int maxite = 1000;
     cusolverSpCreate(&sp_handle);
 
