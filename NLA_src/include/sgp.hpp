@@ -15,18 +15,36 @@
 ///
 /// @param[in]   input   the path to the object file.
 ///
-/// @param[out]  E       the edge list; pointer.
+/// @param[out]  E_size_r      number of data in each row of the edge list; pointer.
 ///
+/// @param[out]   E_size_c  number of data pair in edge lists.
 /// @note  The arrays are allocated by this routine (using new).
 ///
-int readGraph(char *input, int **E, int *E_size);
-
+int readGraph(char *input, int **E, int *E_size_r, int *E_size_c);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  Sets the graph type.
+///
+/// @param[in]   E_size_c   number of data pair in edge lists.
+///
+/// @param[out]  type  number of data pair in edge lists.
+///
+int setgraphtype(int E_size_c);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief  Sets the graph type.
+///
+/// @param[in]   input      user defined type id from the command line.
+///
+/// @param[in]   E_size_c   number of data pair in edge lists.
+///
+/// @param[out]  type  number of data pair in edge lists.
+///
+int setgraphtype(char *input, int E_size_c);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Construct adjacency matrix of graph.
 ///
 /// @param[in]   E       the edge list; pointer.
 ///
-/// @param[in]   E_size  the path to the object file.
+/// @param[in]   E_size_c  number of data pair in edge lists.
 ///
 /// @param[out]  nnz     number of nonzero elements in the matrix.
 ///
@@ -40,7 +58,7 @@ int readGraph(char *input, int **E, int *E_size);
 ///
 /// @note  The output arrays are allocated by this routine (using new).
 ///
-int GraphAdjacency(int *E, int E_size,
+int GraphAdjacency(int *E, int E_size_c,
 	int *nnz, int **cooRowIndA,
 	int **cooColIndA, double **cooValA, int *n, char flag);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

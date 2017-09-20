@@ -19,7 +19,7 @@
 
 using namespace std;
 
-int GraphAdjacency(int *E, int E_size,
+int GraphAdjacency(int *E, int E_size_c,
 	int *nnz, int **cooRowIndA,
 	int **cooColIndA, double **cooValA, int *n, char flag){
 	int pos1, pos2, info;

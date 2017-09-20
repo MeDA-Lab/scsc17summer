@@ -55,7 +55,7 @@ int main( int argc, char** argv ){
     int nnz, *cooRowIndA, *cooColIndA, n;
     double *cooValA;
     cout << "Construct adjacency matrix of graph..." << endl;
-    err_test = GraphAdjacency(E, E_size, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n, flag);
+    err_test = GraphAdjacency(E, E_size_c, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n, flag);
     assert( err_test == 0 );
     cout << "nnz = " << nnz << endl;
 
