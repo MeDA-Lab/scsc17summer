@@ -34,7 +34,6 @@ int main( int argc, char** argv ){
 
     // set graph type
     int type;
-    char flag;
     if ( argc == 2 )
     {
         type = setgraphtype(E_size_c);
@@ -44,11 +43,11 @@ int main( int argc, char** argv ){
 
     if ( type == 0 )
     {
-        flag = 'S';
+        char flag = 'S';
     }else if( type == 1 ){
-        flag = 'D';
+        char flag = 'D';
     }else if ( type == 2 ){
-        flag = 'W';
+        char flag = 'W';
     }
 
     // Construct adjacency matrix of graph
