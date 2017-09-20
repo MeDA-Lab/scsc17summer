@@ -55,6 +55,11 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
 
   for (int i = 0; i < n; i++)
   {
+    cout << "rowsum[" << i << "] = " << rowsum[i] << endl;
+  }
+
+  for (int i = 0; i < n; i++)
+  {
     sumInd[i] = i;
   }
 
@@ -72,7 +77,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   assert( info == 0 );
   request = 2;
   k = tmp_RInd[n]-1;
-  cout << "k = " << k << endl;
+  //cout << "k = " << k << endl;
   *csrColIndA   = new int[k];
   *csrValA      = new double[k];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
