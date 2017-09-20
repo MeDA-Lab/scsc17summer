@@ -47,7 +47,6 @@ int GraphAdjacency(int *E, int E_size,
 
 	if( flag == 'S' )
 	{
-		cout << "debug S" << endl;
 		int  *job, *csrRowInd, *csrColInd, *cooRowInd, *cooColInd;
 		double  *csrVal, *cooVal;
 
@@ -139,9 +138,9 @@ int GraphAdjacency(int *E, int E_size,
 
 	cusparseDgthr(handle, *nnz, d_val, d_val_sorted, P, CUSPARSE_INDEX_BASE_ZERO);
 
-	cudaMemcpy(*cooRowIndA, d_cooRowIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
-	cudaMemcpy(*cooColIndA, d_cooColIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
-	cudaMemcpy(*cooValA, d_val_sorted, 2*E_size*sizeof(double),  cudaMemcpyDeviceToHost);
+	cudaMemcpy(*cooRowIndA, d_cooRowIndA, (*nnz)*sizeof(int),  cudaMemcpyDeviceToHost);
+	cudaMemcpy(*cooColIndA, d_cooColIndA, (*nnz)*sizeof(int),  cudaMemcpyDeviceToHost);
+	cudaMemcpy(*cooValA, d_val_sorted, (*nnz)*sizeof(double),  cudaMemcpyDeviceToHost);
 
 	cudaFree(d_val);
 	cudaFree(d_val_sorted);
