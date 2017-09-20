@@ -19,7 +19,7 @@
 
 using namespace std;
 
-int GraphAdjacency(int *E, int E_size_c,
+int GraphAdjacency(int *E, int E_size,
 	int *nnz, int **cooRowIndA,
 	int **cooColIndA, double **cooValA, int *n, char flag){
 	int pos1, pos2, info;
@@ -41,17 +41,17 @@ int GraphAdjacency(int *E, int E_size_c,
 
 	pos1 = cblas_idamax(E_size, tmp_array, 1);
 	pos2 = cblas_idamax(E_size, tmp_array+E_size, 1);
-	*n    = max(E[pos1] , E[pos2+E_size])+1;
+	*n   = max(E[pos1] , E[pos2+E_size])+1;
 	cout << "n = " << *n << endl;
-
-	cooRowInd = new int[E_size];
-	cooColInd = new int[E_size];
-	cooVal   = new double[E_size];
 
 	switch(flag){
 		case 'S':
 			int  *job, *csrRowInd, *csrColInd, *cooRowInd, *cooColInd;
 			double  *csrVal, *cooVal;
+
+			cooRowInd = new int[E_size];
+			cooColInd = new int[E_size];
+			cooVal    = new double[E_size];
 
 			job = new int[6];
 			*nnz = E_size;

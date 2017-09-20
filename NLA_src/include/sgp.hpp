@@ -44,7 +44,7 @@ int setgraphtype(char *input, int E_size_c);
 ///
 /// @param[in]   E       the edge list; pointer.
 ///
-/// @param[in]   E_size_c  number of data pair in edge lists.
+/// @param[in]   E_size  number of data pair in edge lists.
 ///
 /// @param[out]  nnz     number of nonzero elements in the matrix.
 ///
@@ -58,7 +58,7 @@ int setgraphtype(char *input, int E_size_c);
 ///
 /// @note  The output arrays are allocated by this routine (using new).
 ///
-int GraphAdjacency(int *E, int E_size_c,
+int GraphAdjacency(int *E, int E_size,
 	int *nnz, int **cooRowIndA,
 	int **cooColIndA, double **cooValA, int *n, char flag);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
