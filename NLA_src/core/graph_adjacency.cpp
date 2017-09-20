@@ -96,6 +96,7 @@ int GraphAdjacency(int *E, int E_size,
 		assert( info == 0 );
 	}else if( strcmp(&flag , "W") ){
 		*nnz = E_size;
+		cout << "nnz = " << *nnz << endl;
 		*cooValA    = new double[*nnz];
 		*cooRowIndA = new int[*nnz];
 		*cooColIndA = new int[*nnz];
@@ -104,6 +105,7 @@ int GraphAdjacency(int *E, int E_size,
 		copy(E+2*E_size, E+3*E_size, *cooValA);
 	}else if( strcmp(&flag , "D")){
 		*nnz = E_size;
+		cout << "nnz = " << *nnz << endl;
 		*cooValA    = new double[*nnz];
 		*cooRowIndA = new int[*nnz];
 		*cooColIndA = new int[*nnz];
