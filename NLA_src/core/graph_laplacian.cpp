@@ -80,8 +80,8 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   *nnz = k;
 
   delete rowsum;
-  delete sumInd;
-  //delete job;
+  //delete sumInd;
+  delete job;
   delete tmp_RInd;
   delete ja;
   delete jd;
