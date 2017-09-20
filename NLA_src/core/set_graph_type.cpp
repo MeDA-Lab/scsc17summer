@@ -18,7 +18,7 @@ int setgraphtype(int E_size_c){
 	{
 		type = 2;
 	}else{
-		type = 1;
+		type = 0;
 	}
 
 	return type;
