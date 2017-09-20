@@ -83,4 +83,10 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   delete sumInd;
   delete job;
   delete tmp_RInd;
+  delete ja;
+  delete jd;
+  delete ia;
+  delete id;
+  delete acsr;
+  delete dcsr;
 }

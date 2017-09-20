@@ -149,6 +149,12 @@ int GraphAdjacency(int *E, int E_size,
 	cudaMemcpy(*cooColIndA, d_cooColIndA, 2*E_size*sizeof(int),  cudaMemcpyDeviceToHost);
 	cudaMemcpy(*cooValA, d_val_sorted, 2*E_size*sizeof(double),  cudaMemcpyDeviceToHost);
 
+	cudaFree(d_val);
+	cudaFree(d_val_sorted);
+	cudaFree(d_cooColIndA);
+	cudaFree(d_cooRowIndA);
+	cudaFree(pBuffer);
+	cudaFree(P);
 	stat = cusparseDestroy(handle);
 	assert( stat == CUSPARSE_STATUS_SUCCESS );
 
