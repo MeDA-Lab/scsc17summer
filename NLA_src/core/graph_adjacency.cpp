@@ -46,6 +46,7 @@ int GraphAdjacency(int *E, int E_size,
 
 	switch(flag){
 		case 'S':
+		{
 			int  *job, *csrRowInd, *csrColInd, *cooRowInd, *cooColInd;
 			double  *csrVal, *cooVal;
 
@@ -95,7 +96,9 @@ int GraphAdjacency(int *E, int E_size,
 			assert( info == 0 );
 
 			break;
+		}
 		case 'W':
+		{
 			*nnz = E_size;
 			*cooValA    = new double[*nnz];
 			*cooRowIndA = new int[*nnz];
@@ -105,7 +108,9 @@ int GraphAdjacency(int *E, int E_size,
 			copy(E+2*E_size, E+3*E_size, *cooValA);
 
 			break;
+		}
 		case 'D':
+		{
 			*nnz = E_size;
 			*cooValA    = new double[*nnz];
 			*cooRowIndA = new int[*nnz];
@@ -115,6 +120,7 @@ int GraphAdjacency(int *E, int E_size,
 			copy(v1.begin(), v1.end(), *cooValA);
 
 			break;
+		}
 	}
 
 	stat = cusparseCreate(&handle);
