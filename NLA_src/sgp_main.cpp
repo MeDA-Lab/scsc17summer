@@ -31,6 +31,7 @@ int main( int argc, char** argv ){
     cout << "read file........." << flush;
     err_test = readGraph(argv[1], &E, &E_size_r, &E_size_c);
     assert( err_test == 0 ); cout << " Done.  " << endl;
+    cout << "Size of data is " << *E_size_r << "x" << *E_size_c << endl;
 
     // set graph type
     int type;
@@ -60,6 +61,7 @@ int main( int argc, char** argv ){
     cout << "Construct adjacency matrix of graph........." << flush;
     err_test = GraphAdjacency(E, E_size_c, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n, flag1);
     assert( err_test == 0 ); cout << " Done.  " << endl;
+    cout << "n = " << n << endl;
     cout << "nnz = " << nnz << endl;
 
     // Construct Laplacian

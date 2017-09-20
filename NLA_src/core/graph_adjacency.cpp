@@ -42,7 +42,7 @@ int GraphAdjacency(int *E, int E_size,
 	pos1 = cblas_idamax(E_size, tmp_array, 1);
 	pos2 = cblas_idamax(E_size, tmp_array+E_size, 1);
 	*n   = max(E[pos1] , E[pos2+E_size])+1;
-	cout << "n = " << *n << endl;
+	//cout << "n = " << *n << endl;
 
 	switch(flag){
 		case 'S':
@@ -92,7 +92,7 @@ int GraphAdjacency(int *E, int E_size,
 			*cooRowIndA = new int[*nnz];
 			*cooColIndA = new int[*nnz];
 			mkl_dcsrcoo(job, n, cooVal, cooColInd, cooRowInd, nnz, *cooValA, *cooRowIndA, *cooColIndA, &info);
-			cout << "info = " << info << endl;
+			//cout << "info = " << info << endl;
 			assert( info == 0 );
 
 			break;

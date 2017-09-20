@@ -47,7 +47,7 @@ int readGraph(char *input, int **E, int *E_size_r, int *E_size_c){
     	count++;
     	pfile.ignore(4096, '\n');
     }
-    std::cout << "Size of data is " << count << "x" << *E_size_c << std::endl;
+    //std::cout << "Size of data is " << count << "x" << *E_size_c << std::endl;
 
     // Return to top of file
     pfile.clear();
