@@ -72,6 +72,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   assert( info == 0 );
   request = 2;
   k = tmp_RInd[n]-1;
+  cout << "k = " << k << endl;
   *csrColIndA   = new int[k];
   *csrValA      = new double[k];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
