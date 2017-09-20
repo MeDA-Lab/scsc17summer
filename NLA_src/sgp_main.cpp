@@ -74,13 +74,16 @@ int main( int argc, char** argv ){
     cout << "nnz of L = " << nnz << endl;
 
     // Shift to zero-based indexing
+    int tmp;
     for (int i = 0; i < nnz; i++)
     {
-    	csrColIndA[i] = csrColIndA[i]-1;
+    	tmp = csrColIndA[i]-1;
+        csrColIndA[i] = tmp;
     }
     for (int i = 0; i < n+1; i++)
     {
-    	csrRowIndA[i] = csrRowIndA[i]-1;
+    	tmp = csrRowIndA[i]-1;
+        csrRowIndA[i] = tmp;
     }
 
     // Solve EVP
