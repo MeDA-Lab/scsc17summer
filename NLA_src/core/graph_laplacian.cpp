@@ -88,6 +88,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   *nnz = k;
 
   cout << "test point 5" << endl;
+  cout << "nnz of L = " << *nnz << endl;
 
   delete rowsum;
   delete sumInd;
