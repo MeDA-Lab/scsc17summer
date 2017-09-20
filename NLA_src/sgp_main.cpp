@@ -28,7 +28,7 @@ int main( int argc, char** argv ){
 
     // read file
     int E_size_r, E_size_c, *E;
-    cout << "read file........." << flush;
+    cout << "read file.........";
     err_test = readGraph(argv[1], &E, &E_size_r, &E_size_c);
     assert( err_test == 0 ); cout << " Done.  " << endl;
     cout << "Size of data is " << E_size_r << "x" << E_size_c << endl;
@@ -58,7 +58,7 @@ int main( int argc, char** argv ){
     // Construct adjacency matrix of graph
     int nnz, *cooRowIndA, *cooColIndA, n;
     double *cooValA;
-    cout << "Construct adjacency matrix of graph........." << flush;
+    cout << "Construct adjacency matrix of graph.........";
     err_test = GraphAdjacency(E, E_size_c, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n, flag1);
     assert( err_test == 0 ); cout << " Done.  " << endl;
     cout << "n = " << n << endl;
@@ -87,7 +87,7 @@ int main( int argc, char** argv ){
     x = new double[n];
     char flag = 'H';
 
-    cout << "Solving Eigenvalue Problem........." << flush;
+    cout << "Solving Eigenvalue Problem.........";
 
     switch (flag){
     	case 'H':
