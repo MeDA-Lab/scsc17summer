@@ -50,7 +50,7 @@ int main( int argc, char** argv ){
     }else if ( type == 2 ){
         flag1 = 'W';
     }
-    cout << "flag: " << flag << endl;
+    cout << "flag: " << flag1 << endl;
 
     // Construct adjacency matrix of graph
     int nnz, *cooRowIndA, *cooColIndA, n;
