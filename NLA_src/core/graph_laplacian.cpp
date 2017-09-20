@@ -100,4 +100,6 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   delete id;
   delete acsr;
   delete dcsr;
+
+  cout << "test point 6" << endl;
 }
