@@ -26,7 +26,7 @@ int setgraphtype(int E_size_c){
 
 int setgraphtype(char *input, int E_size_c){
 	int type, tmp;
-	tmp = atoi(input[0]);
+	tmp = atoi(input);
 	std::cout << "tmp = " << tmp << std::endl;
 	assert( tmp < 3 && tmp >=0 );
 	if (tmp == 2)
