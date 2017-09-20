@@ -55,6 +55,11 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
 
   for (int i = 0; i < n; i++)
   {
+    cout << "rowsum[" << k << "] = " << rowsum[k] << endl;
+  }
+
+  for (int i = 0; i < n; i++)
+  {
     sumInd[i] = i;
   }
 
