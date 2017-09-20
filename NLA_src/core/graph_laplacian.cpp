@@ -79,8 +79,8 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   copy(tmp_RInd, tmp_RInd+(n+1), *csrRowIndA);
   *nnz = k;
 
-  delete rowsum;
-  //delete sumInd;
+  //delete rowsum;
+  delete sumInd;
   delete job;
   delete tmp_RInd;
   delete ja;
