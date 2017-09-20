@@ -62,14 +62,14 @@ int main( int argc, char** argv ){
     err_test = GraphAdjacency(E, E_size_r, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n, flag1);
     assert( err_test == 0 ); cout << " Done.  " << endl;
     cout << "size of matrix = " << n << endl;
-    cout << "nnz = " << nnz << endl;
+    cout << "nnz of A = " << nnz << endl;
 
     // Construct Laplacian
     int *csrRowIndA, *csrColIndA;
     double  *csrValA;
     double shift_sigma = 0;
     GraphLaplacian(&nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
-    cout << "nnz = " << nnz << endl;
+    cout << "nnz of L = " << nnz << endl;
 
     // Shift to zero-based indexing
     for (int i = 0; i < nnz; i++)

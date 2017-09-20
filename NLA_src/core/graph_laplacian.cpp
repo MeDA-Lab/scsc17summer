@@ -32,11 +32,15 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   id     = new int[n+1];
   job    = new int[6];
 
+  cout << "test point 1" << endl;
+
   // Compute sum of each row of A
   for (int i = 0; i < n; i++)
   {
     rowsum[i] = 0;
   }
+
+  cout << "test point 2" << endl;
 
   for (int i = 0; i < *nnz; i++)
   {
