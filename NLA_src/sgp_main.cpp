@@ -68,7 +68,9 @@ int main( int argc, char** argv ){
     int *csrRowIndA, *csrColIndA;
     double  *csrValA;
     double shift_sigma = 0;
+    cout << "Construct Laplacian matrix of graph........." << flush;
     GraphLaplacian(&nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
+    cout << " Done.  " << endl;
     cout << "nnz of L = " << nnz << endl;
 
     // Shift to zero-based indexing
