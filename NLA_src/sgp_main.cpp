@@ -28,9 +28,9 @@ int main( int argc, char** argv ){
 
     // read file
     int E_size_r, E_size_c, *E;
-    cout << "read file..." << endl;
+    cout << "read file........." << flush;
     err_test = readGraph(argv[1], &E, &E_size_r, &E_size_c);
-    assert( err_test == 0 );
+    assert( err_test == 0 ); cout << " Done.  " << endl;
 
     // set graph type
     int type;
@@ -45,19 +45,21 @@ int main( int argc, char** argv ){
     if ( type == 0 )
     {
         flag1 = 'S';
+        cout << "type of graph: simple graph" << endl;
     }else if( type == 1 ){
         flag1 = 'D';
+        cout << "type of graph: directed (multi) graph" << endl;
     }else if ( type == 2 ){
         flag1 = 'W';
+        cout << "type of graph: directed weighted graph" << endl;
     }
-    cout << "flag: " << flag1 << endl;
 
     // Construct adjacency matrix of graph
     int nnz, *cooRowIndA, *cooColIndA, n;
     double *cooValA;
-    cout << "Construct adjacency matrix of graph..." << endl;
+    cout << "Construct adjacency matrix of graph........." << flush;
     err_test = GraphAdjacency(E, E_size_c, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n, flag1);
-    assert( err_test == 0 );
+    assert( err_test == 0 ); cout << " Done.  " << endl;
     cout << "nnz = " << nnz << endl;
 
     // Construct Laplacian
@@ -83,17 +85,18 @@ int main( int argc, char** argv ){
     x = new double[n];
     char flag = 'H';
 
-    cout << "Solving Eigenvalue Problem..." << endl;
+    cout << "Solving Eigenvalue Problem........." << flush;
 
     switch (flag){
     	case 'H':
     		tic(&timer);
     		solveShiftEVPHost(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
+            cout << " Done.  " << endl;
     		toc(&timer);
     		break;
     	case 'D':
     		tic(&timer);
-    		solveShiftEVP(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x);
+    		solveShiftEVP(n, nnz, csrValA, csrRowIndA, csrColIndA, mu0, &mu, x); cout << " Done.  " << endl;
     		toc(&timer);
     		break;
     }
