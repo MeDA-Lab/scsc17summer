@@ -32,15 +32,11 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   id     = new int[n+1];
   job    = new int[6];
 
-  cout << "test point 1" << endl;
-
   // Compute sum of each row of A
   for (int i = 0; i < n; i++)
   {
     rowsum[i] = 0;
   }
-
-  cout << "test point 2" << endl;
 
   for (int i = 0; i < *nnz; i++)
   {
@@ -57,14 +53,10 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
     }
   }
 
-  cout << "test point 3" << endl;
-
   for (int i = 0; i < n; i++)
   {
     sumInd[i] = i;
   }
-
-  cout << "test point 4" << endl;
 
   //L = D - A
   job[0] = 2;
@@ -86,9 +78,6 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   assert( info == 0 );
   copy(tmp_RInd, tmp_RInd+(n+1), *csrRowIndA);
   *nnz = k;
-
-  cout << "test point 5" << endl;
-  cout << "nnz of L = " << *nnz << endl;
 
   delete rowsum;
   delete sumInd;
