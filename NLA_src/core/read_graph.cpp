@@ -11,8 +11,10 @@
 #include <cassert>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
 
-int readGraph(char *input, int **E, int *E_size){
+int readGraph(char *input, int **E, int *E_size_r, int *E_size_c){
 	std::fstream pfile;
 	int count = 0, n = 0;
 	int *a, *b;
@@ -26,11 +28,26 @@ int readGraph(char *input, int **E, int *E_size){
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Count size
+    // row
+    std::string str;
+    std::getline(pfile,str);
+    std::istringstream sin(str);
+    double k;
+    while (sin >> k) {
+      ++count;
+    }
+    *E_size_c = count;
+
+    // col
+    pfile.clear();
+    pfile.seekg(0, std::ios::beg);
+    pfile.ignore(4096, '\n');
+    count = 0;
     while( !pfile.eof() ) {
     	count++;
     	pfile.ignore(4096, '\n');
     }
-    std::cout << "Size of data is " << count << "x" << 2 << std::endl;
+    std::cout << "Size of data is " << count << "x" << *E_size_c << std::endl;
 
     // Return to top of file
     pfile.clear();
@@ -56,7 +73,7 @@ int readGraph(char *input, int **E, int *E_size){
     }
     std::copy(a, a+count, *E);
     std::copy(b, b+count, *E+count);
-    *E_size = count;
+    *E_size_r = count;
 
     pfile.close();
 

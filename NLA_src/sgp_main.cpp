@@ -20,23 +20,42 @@ using namespace std;
 int main( int argc, char** argv ){
 	int err_test;
 
-	// need 2 argument!
-    assert( argc == 2 );
+	// need at least 2 argument!
+    assert( argc >= 2 );
 
     // check 2nd argument
     assert( argv[1] != NULL );
 
     // read file
-    int E_size, *E;
+    int E_size_r, E_size_c, *E;
     cout << "read file..." << endl;
-    err_test = readGraph(argv[1], &E, &E_size);
+    err_test = readGraph(argv[1], &E, &E_size_r, &E_size_c);
     assert( err_test == 0 );
+
+    // set graph type
+    int type;
+    char flag;
+    if ( argc == 2 )
+    {
+        type = setgraphtype(E_size_c);
+    }else if( argc == 3 ){
+        type = setgraphtype(argv[2], E_size_c);
+    }
+
+    if ( type == 0 )
+    {
+        flag = 'S';
+    }else if( type == 1 ){
+        flag = 'D';
+    }else if ( type == 2 ){
+        flag = 'W';
+    }
 
     // Construct adjacency matrix of graph
     int nnz, *cooRowIndA, *cooColIndA, n;
     double *cooValA;
     cout << "Construct adjacency matrix of graph..." << endl;
-    err_test = GraphAdjacency(E, E_size, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n);
+    err_test = GraphAdjacency(E, E_size, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n, flag);
     assert( err_test == 0 );
     cout << "nnz = " << nnz << endl;
 

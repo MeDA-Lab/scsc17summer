@@ -42,7 +42,7 @@ int readGraph(char *input, int **E, int *E_size);
 ///
 int GraphAdjacency(int *E, int E_size,
 	int *nnz, int **cooRowIndA,
-	int **cooColIndA, double **cooValA, int *n);
+	int **cooColIndA, double **cooValA, int *n, char flag);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @brief  Construct adjacency matrix of graph.
 ///
@@ -55,6 +55,8 @@ int GraphAdjacency(int *E, int E_size,
 /// @param[in/out]  csrValA  nonzero values of the matrix; pointer.
 ///
 /// @param[in]  n        size of the matrix;
+///
+/// @param[in]  flag     graph type indicator;
 ///
 /// @note  The output arrays are allocated by this routine (using new).
 ///
