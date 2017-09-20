@@ -31,7 +31,7 @@ int main( int argc, char** argv ){
     cout << "read file........." << flush;
     err_test = readGraph(argv[1], &E, &E_size_r, &E_size_c);
     assert( err_test == 0 ); cout << " Done.  " << endl;
-    cout << "Size of data is " << *E_size_r << "x" << *E_size_c << endl;
+    cout << "Size of data is " << E_size_r << "x" << E_size_c << endl;
 
     // set graph type
     int type;
