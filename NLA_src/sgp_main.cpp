@@ -34,6 +34,7 @@ int main( int argc, char** argv ){
 
     // set graph type
     int type;
+    char flag[1];
     if ( argc == 2 )
     {
         type = setgraphtype(E_size_c);
@@ -43,12 +44,13 @@ int main( int argc, char** argv ){
 
     if ( type == 0 )
     {
-        char flag = 'S';
+        flag[0] = 'S';
     }else if( type == 1 ){
-        char flag = 'D';
+        flag[0] = 'D';
     }else if ( type == 2 ){
-        char flag = 'W';
+        flag[0] = 'W';
     }
+    cout << "flag: " << flag << endl;
 
     // Construct adjacency matrix of graph
     int nnz, *cooRowIndA, *cooColIndA, n;
