@@ -78,7 +78,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   assert( info == 0 );
   copy(tmp_RInd, tmp_RInd+(n+1), *csrRowIndA);
   *nnz = k;
-
+/*
   delete rowsum;
   delete sumInd;
   delete job;
@@ -88,7 +88,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   delete ia;
   delete id;
   delete acsr;
-  delete dcsr;
+  delete dcsr;*/
 
   cout << "test point 6" << endl;
 }
