@@ -43,7 +43,7 @@ obj = read_graph.o graph_adjacency.o graph_laplacian.o \
       solve_shiftevp_cuda.o map_boundary.o \
       read_args.o read_object.o reorder_vertex.o \
       construct_laplacian_sparse.o solve_harmonic_sparse.o \
-      verify_boundary_sparse.o set_graph_type.cpp.o
+      verify_boundary_sparse.o set_graph_type.o
 
 INCS = -I include
 TARGETS_O	:= $(TARGETS_SRC:.cpp=.o)
