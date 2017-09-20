@@ -68,7 +68,7 @@ int main( int argc, char** argv ){
     int *csrRowIndA, *csrColIndA;
     double  *csrValA;
     double shift_sigma = 0;
-    cout << "Construct Laplacian matrix of graph.........";
+    cout << "Construct Laplacian matrix of graph........." << flush;
     GraphLaplacian(&nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
     cout << " Done.  " << endl;
     cout << "nnz of L = " << nnz << endl;
@@ -92,7 +92,7 @@ int main( int argc, char** argv ){
     x = new double[n];
     char flag = 'H';
 
-    cout << "Solving Eigenvalue Problem.........";
+    cout << "Solving Eigenvalue Problem........." << flush;
 
     switch (flag){
     	case 'H':
