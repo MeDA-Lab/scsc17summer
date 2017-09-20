@@ -58,7 +58,7 @@ int main( int argc, char** argv ){
     // Construct adjacency matrix of graph
     int nnz, *cooRowIndA, *cooColIndA, n;
     double *cooValA;
-    cout << "Construct adjacency matrix of graph.........";
+    cout << "Construct adjacency matrix of graph........." << flush;
     err_test = GraphAdjacency(E, E_size_r, &nnz, &cooRowIndA, &cooColIndA, &cooValA, &n, flag1);
     assert( err_test == 0 ); cout << " Done.  " << endl;
     cout << "size of matrix = " << n << endl;
