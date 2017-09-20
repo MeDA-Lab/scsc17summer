@@ -34,4 +34,6 @@ int setgraphtype(char *input, int E_size_c){
 		assert( E_size_c == 3 );
 	}
 	type = tmp;
+
+	return type;
 }
