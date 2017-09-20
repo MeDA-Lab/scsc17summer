@@ -34,7 +34,8 @@ int main( int argc, char** argv ){
 
     // set graph type
     int type;
-    char flag[1];
+    char *flag;
+    flag = new char[1];
     if ( argc == 2 )
     {
         type = setgraphtype(E_size_c);
