@@ -45,7 +45,7 @@ int GraphAdjacency(int *E, int E_size,
 	*n   = max(E[pos1] , E[pos2+E_size])+1;
 	//cout << "n = " << *n << endl;
 
-	if( strcmp(&flag , "S") == 0 )
+	if( flag == 'S' )
 	{
 		cout << "debug S" << endl;
 		int  *job, *csrRowInd, *csrColInd, *cooRowInd, *cooColInd;
@@ -95,7 +95,7 @@ int GraphAdjacency(int *E, int E_size,
 		mkl_dcsrcoo(job, n, cooVal, cooColInd, cooRowInd, nnz, *cooValA, *cooRowIndA, *cooColIndA, &info);
 		//cout << "info = " << info << endl;
 		assert( info == 0 );
-	}else if( strcmp(&flag , "W") == 0 ){
+	}else if( flag == 'W' ){
 		cout << "debug W" << endl;
 		*nnz = E_size;
 		cout << "nnz = " << *nnz << endl;
@@ -105,7 +105,7 @@ int GraphAdjacency(int *E, int E_size,
 		copy(E , E+E_size , *cooRowIndA);
 		copy(E+E_size, E+2*E_size, *cooColIndA);
 		copy(E+2*E_size, E+3*E_size, *cooValA);
-	}else if( strcmp(&flag , "D") == 0){
+	}else if( flag == 'D' ){
 		cout << "debug D" << endl;
 		*nnz = E_size;
 		cout << "nnz = " << *nnz << endl;
