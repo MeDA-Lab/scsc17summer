@@ -34,8 +34,7 @@ int main( int argc, char** argv ){
 
     // set graph type
     int type;
-    char *flag;
-    flag = new char[1];
+    char flag1;
     if ( argc == 2 )
     {
         type = setgraphtype(E_size_c);
@@ -45,11 +44,11 @@ int main( int argc, char** argv ){
 
     if ( type == 0 )
     {
-        flag[0] = 'S';
+        flag1 = 'S';
     }else if( type == 1 ){
-        flag[0] = 'D';
+        flag1 = 'D';
     }else if ( type == 2 ){
-        flag[0] = 'W';
+        flag1 = 'W';
     }
     cout << "flag: " << flag << endl;
 
