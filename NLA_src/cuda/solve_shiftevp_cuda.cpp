@@ -65,7 +65,7 @@ void solveShiftEVP(
     //cusparseSetMatDiagType(descrA, CUSPARSE_DIAG_TYPE_NON_UNIT);
     x0 = new double[m];
     for (int i = 0; i < m; i++) {
-        x0[i] = 1;
+        x0[i] = 0;
     }
     //x0[0] = 1;
 
