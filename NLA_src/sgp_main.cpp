@@ -66,11 +66,7 @@ int main( int argc, char** argv ){
 
     for (int i = 0; i < nnz; ++i)
     {
-        cout << "cooColIndA[" << i << "] = " << cooColIndA[i] << endl;
-    }
-    for (int i = 0; i < nnz; ++i)
-    {
-        cout << "cooRowIndA[" << i << "] = " << cooRowIndA[i] << endl;
+        cout << "cooRowIndA[" << i << "] = " << cooRowIndA[i] << ", cooColIndA[" << i << "] = " << cooColIndA[i] << endl;
     }
     for (int i = 0; i < nnz; ++i)
     {
