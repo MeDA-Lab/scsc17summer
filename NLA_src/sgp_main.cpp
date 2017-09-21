@@ -64,6 +64,19 @@ int main( int argc, char** argv ){
     cout << "size of matrix = " << n << endl;
     cout << "nnz of A = " << nnz << endl;
 
+    for (int i = 0; i < nnz; ++i)
+    {
+        cout << "cooColIndA[" << i << "] = " << cooColIndA[i] << endl;
+    }
+    for (int i = 0; i < nnz; ++i)
+    {
+        cout << "cooRowIndA[" << i << "] = " << cooRowIndA[i] << endl;
+    }
+    for (int i = 0; i < nnz; ++i)
+    {
+        cout << "cooValA[" << i << "] = " << cooValA[i] << endl;
+    }
+
     // Construct Laplacian
     int *csrRowIndA, *csrColIndA;
     double  *csrValA;
