@@ -16,7 +16,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   int *cooColIndA, double *cooValA, int n, int **csrRowIndA,
   int **csrColIndA, double **csrValA, double shift_sigma){
   double *rowsum, *acsr, *dcsr, tmp=0, beta=-1.0, *cooValD;
-  int *sumInd, *ja, *ia, *jd, *id, *tmp_RInd, info, k=0;
+  int *sumInd, *ja, *ia, *jd, *id, *tmp_RInd, info, k=0, tmp1;
   int *job;
   char trans = 'N';
   int request = 1;
@@ -41,7 +41,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   {
     if (i>0 && cooRowIndA[i]!=cooRowIndA[i-1])
     {
-      int tmp1 = cooRowIndA[i]-cooRowIndA[i-1];
+      tmp1 = cooRowIndA[i]-cooRowIndA[i-1];
       if( tmp1 == 1 ){
           rowsum[k] = tmp+shift_sigma;
           tmp = 0;
@@ -62,18 +62,18 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
     }
   }
 
-  tmp = 0;
+  tmp1 = 0;
   for (int i = 0; i < n; i++)
   {
     if ( rowsum[i] != 0 )
     {
-      tmp++;
+      tmp1++;
     }
   }
-  cout << "tmp = " << tmp << endl;
+  cout << "tmp1 = " << tmp1 << endl;
 
-  sumInd  = new int[tmp];
-  cooValD = new double[tmp];
+  sumInd  = new int[tmp1];
+  cooValD = new double[tmp1];
 
   k = 0;
   for (int i = 0; i < n; i++)
@@ -86,11 +86,11 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
     }
   }
 
-  for (int i = 0; i < tmp; i++)
+  for (int i = 0; i < tmp1; i++)
   {
     cout << "sumInd[" << i << "] = " << sumInd[i] << endl;
   }
-  for (int i = 0; i < tmp; i++)
+  for (int i = 0; i < tmp1; i++)
   {
     cout << "cooValD[" << i << "] = " << cooValD[i] << endl;
   }
