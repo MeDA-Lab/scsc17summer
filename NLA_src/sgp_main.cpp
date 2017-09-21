@@ -99,7 +99,7 @@ int main( int argc, char** argv ){
     double mu0 = 0.1, mu;
     double *x, timer;
     x = new double[n];
-    char flag = 'H';
+    char flag = 'D';
 
     cout << "Solving Eigenvalue Problem........." << flush;
 

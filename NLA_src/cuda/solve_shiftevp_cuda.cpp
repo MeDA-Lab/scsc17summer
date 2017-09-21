@@ -27,7 +27,7 @@ void solveShiftEVPHost(
     cusparseCreateMatDescr(&descrA); 
     cusparseSetMatType(descrA, CUSPARSE_MATRIX_TYPE_GENERAL);
     cusparseSetMatIndexBase(descrA, CUSPARSE_INDEX_BASE_ZERO);
-    cusparseSetMatDiagType(descrA, CUSPARSE_DIAG_TYPE_NON_UNIT);
+    //cusparseSetMatDiagType(descrA, CUSPARSE_DIAG_TYPE_NON_UNIT);
     x0 = new double[m];
     for (int i = 0; i < m; i++) {
         x0[i] = 0;
@@ -62,7 +62,7 @@ void solveShiftEVP(
     cusparseCreateMatDescr(&descrA);
     cusparseSetMatType(descrA, CUSPARSE_MATRIX_TYPE_GENERAL);
     cusparseSetMatIndexBase(descrA, CUSPARSE_INDEX_BASE_ZERO);
-    cusparseSetMatDiagType(descrA, CUSPARSE_DIAG_TYPE_NON_UNIT);
+    //cusparseSetMatDiagType(descrA, CUSPARSE_DIAG_TYPE_NON_UNIT);
     x0 = new double[m];
     for (int i = 0; i < m; i++) {
         x0[i] = 0;
