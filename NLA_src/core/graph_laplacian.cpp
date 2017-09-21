@@ -15,14 +15,13 @@ using namespace std;
 void GraphLaplacian(int *nnz, int *cooRowIndA,
   int *cooColIndA, double *cooValA, int n, int **csrRowIndA,
   int **csrColIndA, double **csrValA, double shift_sigma){
-  double *rowsum, *acsr, *dcsr, tmp=0, beta=-1.0;
+  double *rowsum, *acsr, *dcsr, tmp=0, beta=-1.0, *cooValD;
   int *sumInd, *ja, *ia, *jd, *id, *tmp_RInd, info, k=0;
   int *job;
   char trans = 'N';
   int request = 1;
   int sort, nzmax=n*n;
 
-  sumInd = new int[n];
   rowsum = new double[n];
   acsr   = new double[*nnz];
   ja     = new int[*nnz];
@@ -31,11 +30,6 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   jd     = new int[n];
   id     = new int[n+1];
   job    = new int[6];
-
-  for (int i = 0; i < *nnz; i++)
-  {
-    cout << "cooRowIndA[" << i << "] = " << cooRowIndA[i] << endl;
-  }
 
   // Compute sum of each row of A
   for (int i = 0; i < n; i++)
@@ -68,14 +62,37 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
     }
   }
 
+  tmp = 0;
   for (int i = 0; i < n; i++)
   {
-    cout << "rowsum[" << i << "] = " << rowsum[i] << endl;
+    if ( rowsum[i] != 0 )
+    {
+      tmp++;
+    }
+  }
+  cout << "tmp = " << tmp << endl;
+
+  sumInd  = new int[tmp];
+  cooValD = new double[tmp];
+
+  k = 0;
+  for (int i = 0; i < n; i++)
+  {
+    if ( rowsum[i] != 0 )
+    {
+      sumInd[k]  = k;
+      cooValD[k] = rowsum[i];
+      k++;
+    }
   }
 
-  for (int i = 0; i < n; i++)
+  for (int i = 0; i < tmp; i++)
   {
-    sumInd[i] = i;
+    cout << "sumInd[" << i << "] = " << sumInd[i] << endl;
+  }
+  for (int i = 0; i < tmp; i++)
+  {
+    cout << "cooValD[" << i << "] = " << cooValD[i] << endl;
   }
 
   //L = D - A
@@ -85,7 +102,8 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   job[4] = n*n;
   job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, nnz, cooValA, cooRowIndA, cooColIndA, &info);
-  mkl_dcsrcoo(job, &n, dcsr, jd, id, &n, rowsum, sumInd, sumInd, &info);
+
+  mkl_dcsrcoo(job, &n, dcsr, jd, id, tmp, cooValD, sumInd, sumInd, &info);
   *csrRowIndA = new int[n+1];
   tmp_RInd    = new int[n+1];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
