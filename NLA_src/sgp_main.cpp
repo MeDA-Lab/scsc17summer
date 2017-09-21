@@ -72,6 +72,7 @@ int main( int argc, char** argv ){
     GraphLaplacian(&nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
     cout << " Done.  " << endl;
     cout << "nnz of L = " << nnz << endl;
+    cout << "n = " << n << endl;
 
     // Shift to zero-based indexing
     int tmp;
