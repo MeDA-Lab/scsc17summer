@@ -70,7 +70,6 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
       tmp1++;
     }
   }
-  cout << "tmp1 = " << tmp1 << endl;
 
   sumInd  = new int[tmp1];
   cooValD = new double[tmp1];
@@ -84,15 +83,6 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
       cooValD[k] = rowsum[i];
       k++;
     }
-  }
-
-  for (int i = 0; i < tmp1; i++)
-  {
-    cout << "sumInd[" << i << "] = " << sumInd[i] << endl;
-  }
-  for (int i = 0; i < tmp1; i++)
-  {
-    cout << "cooValD[" << i << "] = " << cooValD[i] << endl;
   }
 
   //L = D - A
@@ -120,6 +110,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
 
   delete rowsum;
   delete sumInd;
+  delete cooValD;
   delete job;
   delete tmp_RInd;
   delete ja;
