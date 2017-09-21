@@ -94,6 +94,10 @@ int main( int argc, char** argv ){
     {
         cout << "csrRowIndA[" << i << "] = " << csrRowIndA[i] << endl;
     }
+    for (int i = 0; i < nnz; i++)
+    {
+        cout << "csrValA[" << i << "] = " << csrValA[i] << endl;
+    }
 
     // Solve EVP
     double mu0 = 0.1, mu;
