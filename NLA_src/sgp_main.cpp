@@ -73,7 +73,6 @@ int main( int argc, char** argv ){
     GraphLaplacian(&nnz, cooRowIndA, cooColIndA, cooValA, n, &csrRowIndA, &csrColIndA, &csrValA, shift_sigma);
     cout << " Done.  " << endl;
     cout << "nnz of L = " << nnz << endl;
-    cout << "n = " << n << endl;
 
     // Shift to zero-based indexing
     int tmp;
@@ -89,7 +88,7 @@ int main( int argc, char** argv ){
     }
 
     // Solve EVP
-    double mu0 = 0.2, mu;
+    double mu0 = 0.18, mu;
     double *x, timer;
     x = new double[n];
     char flag = 'D';
