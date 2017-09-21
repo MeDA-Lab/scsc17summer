@@ -20,7 +20,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   int *job;
   char trans = 'N';
   int request = 1;
-  int sort, nzmax=n*n;
+  int sort = 3, nzmax=n*n;
 
   rowsum = new double[n];
   acsr   = new double[*nnz];
@@ -92,7 +92,6 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   job[4] = n*n;
   job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, nnz, cooValA, cooRowIndA, cooColIndA, &info);
-
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &tmp1, cooValD, sumInd, sumInd, &info);
   *csrRowIndA = new int[n+1];
   tmp_RInd    = new int[n+1];
