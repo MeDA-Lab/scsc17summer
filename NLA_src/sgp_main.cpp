@@ -95,14 +95,14 @@ int main( int argc, char** argv ){
     	tmp = csrRowIndA[i]-1;
         csrRowIndA[i] = tmp;
     }
-/*    for (int i = 0; i < nnz; i++)
+    for (int i = 0; i < nnz; i++)
     {
         cout << "csrColIndA[" << i << "] = " << csrColIndA[i] << endl;
-    }*/
-    for (int i = 0; i < n+1; i++)
+    }
+/*    for (int i = 0; i < n+1; i++)
     {
         cout << "csrRowIndA[" << i << "] = " << csrRowIndA[i] << endl;
-    }
+    }*/
     for (int i = 0; i < nnz; i++)
     {
         cout << "csrValA[" << i << "] = " << csrValA[i] << endl;
