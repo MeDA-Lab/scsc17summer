@@ -65,15 +65,6 @@ int main( int argc, char** argv ){
     cout << "size of matrix = " << n << endl;
     cout << "nnz of A = " << nnz << endl;
 
-    for (int i = 0; i < nnz; ++i)
-    {
-        cout << "cooRowIndA[" << i << "] = " << cooRowIndA[i] << ", cooColIndA[" << i << "] = " << cooColIndA[i] << endl;
-    }
-    for (int i = 0; i < nnz; ++i)
-    {
-        cout << "cooValA[" << i << "] = " << cooValA[i] << endl;
-    }
-
     // Construct Laplacian
     int *csrRowIndA, *csrColIndA;
     double  *csrValA;
@@ -95,18 +86,6 @@ int main( int argc, char** argv ){
     {
     	tmp = csrRowIndA[i]-1;
         csrRowIndA[i] = tmp;
-    }
-    for (int i = 0; i < nnz; i++)
-    {
-        cout << "csrColIndA[" << i << "] = " << csrColIndA[i] << endl;
-    }
-/*    for (int i = 0; i < n+1; i++)
-    {
-        cout << "csrRowIndA[" << i << "] = " << csrRowIndA[i] << endl;
-    }*/
-    for (int i = 0; i < nnz; i++)
-    {
-        cout << "csrValA[" << i << "] = " << csrValA[i] << endl;
     }
 
     // Solve EVP
