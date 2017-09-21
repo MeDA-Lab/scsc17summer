@@ -79,7 +79,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   }
 
   //L = D - A
-  job[0] = 2;
+  job[0] = 1;
   job[1] = 1;
   job[2] = 0;
   job[4] = n*n;
