@@ -109,7 +109,7 @@ int main( int argc, char** argv ){
     }
 
     // Solve EVP
-    double mu0 = 3, mu;
+    double mu0 = 3.5, mu;
     double *x, timer;
     x = new double[n];
     char flag = 'D';
@@ -130,7 +130,7 @@ int main( int argc, char** argv ){
     		break;
     }
 
-    cout << "The estimated eigenvalue near "  << mu0 << " = " << mu << endl;
+    cout << "The estimated eigenvalue near "  << mu0 << " = " << setprecision(13) << mu << endl;
 
     return 0;
 }
