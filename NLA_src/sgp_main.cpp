@@ -108,7 +108,7 @@ int main( int argc, char** argv ){
     		break;
     }
 
-    cout << "The estimated eigenvalue near " << mu0 << " = " << mu << endl;
+    cout << "The estimated eigenvalue near "  << scientific << mu0 << " = " << mu << endl;
 
     return 0;
 }
