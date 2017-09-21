@@ -86,7 +86,7 @@ int main( int argc, char** argv ){
     	tmp = csrRowIndA[i]-1;
         csrRowIndA[i] = tmp;
     }
-    for (int i = 0; i < nnz; i++)
+/*    for (int i = 0; i < nnz; i++)
     {
         cout << "csrColIndA[" << i << "] = " << csrColIndA[i] << endl;
     }
@@ -97,7 +97,7 @@ int main( int argc, char** argv ){
     for (int i = 0; i < nnz; i++)
     {
         cout << "csrValA[" << i << "] = " << csrValA[i] << endl;
-    }
+    }*/
 
     // Solve EVP
     double mu0 = 0.1, mu;

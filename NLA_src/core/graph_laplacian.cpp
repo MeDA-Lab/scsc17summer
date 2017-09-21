@@ -93,6 +93,10 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   job[5] = 0;
   mkl_dcsrcoo(job, &n, acsr, ja, ia, nnz, cooValA, cooRowIndA, cooColIndA, &info);
   mkl_dcsrcoo(job, &n, dcsr, jd, id, &tmp1, cooValD, sumInd, sumInd, &info);
+  for (int i = 0; i < tmp1; i++)
+  {
+    cout << "dcsr[" << i << "] = " << dcsr[i] << endl;
+  }
   *csrRowIndA = new int[n+1];
   tmp_RInd    = new int[n+1];
   mkl_dcsradd(&trans, &request, &sort, &n, &n, dcsr, jd, id, &beta, acsr, ja, ia, *csrValA, *csrColIndA, tmp_RInd, &nzmax, &info);
