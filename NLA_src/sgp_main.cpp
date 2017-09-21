@@ -110,7 +110,7 @@ int main( int argc, char** argv ){
     }
 
     // Solve EVP
-    double mu0 = 3, mu;
+    double mu0 = 2.2, mu;
     double *x, timer;
     x = new double[n];
     char flag = 'D';
