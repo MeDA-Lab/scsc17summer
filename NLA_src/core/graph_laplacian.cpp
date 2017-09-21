@@ -48,7 +48,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
     if (i>0 && cooRowIndA[i]!=cooRowIndA[i-1])
     {
       int tmp1 = cooRowIndA[i]-cooRowIndA[i-1];
-      if( tmp == 1 ){
+      if( tmp1 == 1 ){
           rowsum[k] = tmp+shift_sigma;
           tmp = 0;
           k++;
