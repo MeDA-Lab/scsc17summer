@@ -20,7 +20,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   int *job;
   char trans = 'N';
   int request = 1;
-  int sort = 3, nzmax=n*n;
+  int sort, nzmax=n*n;
 
   rowsum = new double[n];
   acsr   = new double[*nnz];
@@ -86,7 +86,7 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   }
 
   //L = D - A
-  job[0] = 1;
+  job[0] = 2;
   job[1] = 1;
   job[2] = 0;
   job[4] = n*n;
