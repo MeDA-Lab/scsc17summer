@@ -95,7 +95,7 @@ int GraphAdjacency(int *E, int E_size,
 		//cout << "info = " << info << endl;
 		assert( info == 0 );
 	}else if( flag == 'W' ){
-		cout << "debug W" << endl;
+		//cout << "debug W" << endl;
 		*nnz = E_size;
 		cout << "nnz = " << *nnz << endl;
 		*cooValA    = new double[*nnz];
@@ -105,7 +105,7 @@ int GraphAdjacency(int *E, int E_size,
 		copy(E+E_size, E+2*E_size, *cooColIndA);
 		copy(E+2*E_size, E+3*E_size, *cooValA);
 	}else if( flag == 'D' ){
-		cout << "debug D" << endl;
+		//cout << "debug D" << endl;
 		*nnz = E_size;
 		cout << "nnz = " << *nnz << endl;
 		*cooValA    = new double[*nnz];
