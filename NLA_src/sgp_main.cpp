@@ -132,7 +132,7 @@ int main( int argc, char** argv ){
     }
 
     cout.setf(ios::showpoint);
-    cout << "The estimated eigenvalue near "  << mu0 << " = " << setprecision(13) << mu << endl;
+    cout << "The estimated eigenvalue near "  << mu0 << " = " << fixed << setprecision(13) << mu << endl;
 
     return 0;
 }
