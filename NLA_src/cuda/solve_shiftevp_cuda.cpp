@@ -19,7 +19,7 @@ void solveShiftEVPHost(
     double *x
 ) {
     cusolverSpHandle_t sp_handle;
-    double *x0 = nullptr, tol = 1e-12;
+    double *x0 = nullptr, tol = 1e-8;
     int maxite = 1000;
     cusolverSpCreate(&sp_handle);
 
@@ -32,7 +32,7 @@ void solveShiftEVPHost(
     for (int i = 0; i < m; i++) {
         x0[i] = 0;
     }
-    x0[0] = 1;
+    x0[0] = 1.0;
     cusolverSpDcsreigvsiHost(sp_handle, m, nnz, descrA, A_val, A_row, A_col,
                              mu0, x0, maxite, tol, mu, x);
     cusparseDestroyMatDescr(descrA);
@@ -51,7 +51,7 @@ void solveShiftEVP(
     double *x
 ) {
     cusolverSpHandle_t sp_handle;
-    double *x0 = nullptr, tol = 1e-12;
+    double *x0 = nullptr, tol = 1e-8;
     double *dx0 = nullptr, *dmu = nullptr, *dx = nullptr;
     int *dA_row = nullptr, *dA_col = nullptr;
     double *dA_val = nullptr;
