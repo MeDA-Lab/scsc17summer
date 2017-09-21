@@ -90,9 +90,9 @@ int main( int argc, char** argv ){
     {
         cout << "csrColIndA[" << i << "] = " << csrColIndA[i] << endl;
     }
-    for (int i = 0; i < nnz; i++)
+    for (int i = 0; i < n+1; i++)
     {
-        cout << "csrColIndA[" << i << "] = " << csrColIndA[i] << endl;
+        cout << "csrRowIndA[" << i << "] = " << csrRowIndA[i] << endl;
     }
 
     // Solve EVP
