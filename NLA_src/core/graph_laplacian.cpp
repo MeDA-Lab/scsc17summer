@@ -26,9 +26,6 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
   acsr   = new double[*nnz];
   ja     = new int[*nnz];
   ia     = new int[n+1];
-  dcsr   = new double[n];
-  jd     = new int[n];
-  id     = new int[n+1];
   job    = new int[6];
 
   // Compute sum of each row of A
@@ -73,6 +70,9 @@ void GraphLaplacian(int *nnz, int *cooRowIndA,
 
   sumInd  = new int[tmp1];
   cooValD = new double[tmp1];
+  dcsr    = new double[tmp1];
+  jd      = new int[tmp1];
+  id      = new int[n+1];
 
   k = 0;
   for (int i = 0; i < n; i++)
