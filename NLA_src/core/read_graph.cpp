@@ -53,27 +53,64 @@ int readGraph(char *input, int **E, int *E_size_r, int *E_size_c){
     pfile.clear();
   	pfile.seekg(0, std::ios::beg);
 
-  	a  = new int[count];
-    b  = new int[count];
-    *E = new int[2*count];
-
-    // Read graph
-  	pfile.ignore(4096, '\n');
-  	while( !pfile.eof() ) {
-    	pfile >> a[n];
-    	pfile >> b[n];
-    	n++;
-    	pfile.ignore(4096, '\n');
-    }
-    // Change to zero base
-    for (int i = 0; i < count; i++)
+    if ( *E_size_c == 3 )
     {
-    	a[i] = a[i] - 1;
-    	b[i] = b[i] - 1;
+        int *c;
+        a  = new int[count];
+        b  = new int[count];
+        c  = new int[count];
+        *E = new int[3*count];
+
+        // Read graph
+        pfile.ignore(4096, '\n');
+        while( !pfile.eof() ) {
+            pfile >> a[n];
+            pfile >> b[n];
+            pfile >> c[n];
+            n++;
+            pfile.ignore(4096, '\n');
+        }
+        // Change to zero base
+        for (int i = 0; i < count; i++)
+        {
+            a[i] = a[i] - 1;
+            b[i] = b[i] - 1;
+        }
+        std::copy(a, a+count, *E);
+        std::copy(b, b+count, *E+count);
+        std::copy(c, c+count, *E+2*count);
+        *E_size_r = count;
+
+        delete a;
+        delete b;
+        delete c;
+    }else if ( *E_size_c == 2 )
+    {
+        a  = new int[count];
+        b  = new int[count];
+        *E = new int[2*count];
+
+        // Read graph
+        pfile.ignore(4096, '\n');
+        while( !pfile.eof() ) {
+            pfile >> a[n];
+            pfile >> b[n];
+            n++;
+            pfile.ignore(4096, '\n');
+        }
+        // Change to zero base
+        for (int i = 0; i < count; i++)
+        {
+            a[i] = a[i] - 1;
+            b[i] = b[i] - 1;
+        }
+        std::copy(a, a+count, *E);
+        std::copy(b, b+count, *E+count);
+        *E_size_r = count;
+
+        delete a;
+        delete b;
     }
-    std::copy(a, a+count, *E);
-    std::copy(b, b+count, *E+count);
-    *E_size_r = count;
 
     pfile.close();
 
